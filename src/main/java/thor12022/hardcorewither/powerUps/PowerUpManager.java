@@ -116,6 +116,7 @@ public class PowerUpManager implements INBTStorageClass
       registerPowerUp(new PowerUpSkeletonMinionSpawner());
       registerPowerUp(new PowerUpLightning());
       //registerPowerUp(new PowerUpSpeedBoost());
+      registerPowerUp(new PowerUpTeleport());
    }
    
    /**
