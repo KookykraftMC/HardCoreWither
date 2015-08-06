@@ -59,9 +59,13 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
                double teleportZPos = 0.0;
                do
                {
-                  teleportXPos = target.lastTickPosX + (8 * random.nextGaussian() * teleportInaccuracy);
-                  teleportYPos = target.lastTickPosY + (8 * random.nextGaussian() * teleportInaccuracy);
-                  teleportZPos = target.lastTickPosZ + (8 * random.nextGaussian() * teleportInaccuracy);
+                  teleportXPos = target.lastTickPosX + (4 * random.nextGaussian() * teleportInaccuracy * (random.nextBoolean() ? 1 : -1));
+                  teleportYPos = target.lastTickPosY + (4 * random.nextGaussian() * teleportInaccuracy * (random.nextBoolean() ? 1 : -1));
+                  teleportZPos = target.lastTickPosZ + (4 * random.nextGaussian() * teleportInaccuracy * (random.nextBoolean() ? 1 : -1));
+                  if(teleportYPos < 0)
+                  {
+                     teleportYPos = 0;
+                  }
                   ++retryCount;
                }while(!teleportTo(teleportXPos,teleportYPos, teleportZPos) && retryCount < 4);
                setNextRandomTick(); 
