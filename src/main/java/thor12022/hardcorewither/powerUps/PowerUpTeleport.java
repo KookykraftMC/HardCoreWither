@@ -57,14 +57,12 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
                double teleportXPos = 0.0;
                double teleportYPos = 0.0;
                double teleportZPos = 0.0;
-               do
+               int meanDistance = ownerWither.getDistanceSqToEntity(target) >= 256D ? 16 : 8;
+               double standardDeviation = 4 * teleportInaccuracy;
                {
-                  if(ownerWither.getDistanceToEntity(target) > )
-                  {
-                     teleportXPos = target.lastTickPosX + (4 * random.nextGaussian() * teleportInaccuracy);
-                     teleportYPos = target.lastTickPosY + (4 * random.nextGaussian() * teleportInaccuracy);
-                     teleportZPos = target.lastTickPosZ + (4 * random.nextGaussian() * teleportInaccuracy);
-                  }
+                  teleportXPos = target.lastTickPosX + (meanDistance * (random.nextBoolean() ? 1 : -1)) + (standardDeviation * random.nextGaussian());
+                  teleportYPos = target.lastTickPosY + (meanDistance * (random.nextBoolean() ? 1 : -1)) + (standardDeviation * random.nextGaussian());
+                  teleportZPos = target.lastTickPosZ + (meanDistance * (random.nextBoolean() ? 1 : -1)) + (standardDeviation * random.nextGaussian());
                   if(teleportYPos < 0)
                   {
                      teleportYPos = 0;
