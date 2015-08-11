@@ -156,7 +156,7 @@ public class PowerUpManager implements INBTStorageClass
       else if(!usedPowerUps.containsKey(wither.getUniqueID()))
       {
          usedPowerUps.put(wither.getUniqueID(), new HashMap<String, IPowerUp>());
-         int powerUpSize = sizeOfPowerUp != 0 ? sizeOfPowerUp : largestPowerUp + 1;
+         int powerUpSize = sizeOfPowerUp != -1 ? sizeOfPowerUp : largestPowerUp + 1;
          Collection<IPowerUp> validPowerUpPrototypes = powerUpPrototypes.values();
          int usedStrength = 0;
          while(usedStrength < sizeOfPowerUp && validPowerUpPrototypes.size() > 0)
@@ -261,6 +261,7 @@ public class PowerUpManager implements INBTStorageClass
          }
          nbt.setTag(witherUuid.toString(), witherNbt);
       }
+      nbt.setInteger("largestPowerUp", largestPowerUp );
    }
 
    @Override
@@ -278,6 +279,7 @@ public class PowerUpManager implements INBTStorageClass
          // we have no way to look up Withers by UUID until the chunk they are in gets loaded
          savedWitherData.put(witherUuid, witherNbt);
       }
+      largestPowerUp = nbt.getInteger("largestPowerUp");
    }  
    
    /**

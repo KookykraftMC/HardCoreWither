@@ -61,13 +61,20 @@ public class EventHandler
             if( !powerUpManager.isWitherPoweredUp(theWither) )
             {
                List nearbyPlayers = theWither.worldObj.getEntitiesWithinAABB(EntityPlayer.class, theWither.boundingBox.expand(64.0D, 64.0D, 64.0D));
-               double powerUpSize = 0.0;
-               for (int index = 0; index < nearbyPlayers.size(); ++index)
+               if(nearbyPlayers.size() > 0)
                {
-                  EntityPlayer player = (EntityPlayer)nearbyPlayers.get(index);
-                  powerUpSize += playerHandler.wasAtWitherSpawn(player);
+                  double powerUpSize = 0.0;
+                  for (int index = 0; index < nearbyPlayers.size(); ++index)
+                  {
+                     EntityPlayer player = (EntityPlayer)nearbyPlayers.get(index);
+                     powerUpSize += playerHandler.wasAtWitherSpawn(player);
+                  }
+                  powerUpManager.powerUpWither(theWither, (int)Math.round(powerUpSize));
                }
-               powerUpManager.powerUpWither( theWither, (int)Math.round(powerUpSize));
+               else
+               {
+                  powerUpManager.powerUpWither(theWither, -1);
+               }
             }
          }
       }
