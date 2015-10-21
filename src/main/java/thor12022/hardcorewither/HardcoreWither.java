@@ -58,20 +58,15 @@ public class HardcoreWither
    public static Logger logger = LogManager.getLogger(ModInformation.NAME);
 
    @Mod.Instance
-   public   static HardcoreWither   instance;
+   public static HardcoreWither instance;
 
-   private  PowerUpManager    powerUpManager;
-   private  PlayerHandler     playerHandler;
-   private  DataStoreManager  dataStore;
-   private  EventHandler      eventHandler;
-   
+   private PowerUpManager     powerUpManager =  new PowerUpManager();
+   private PlayerHandler      playerHandler  =  new PlayerHandler();;
+   private DataStoreManager   dataStore      =  new DataStoreManager(ModInformation.CHANNEL);
+   private EventHandler       eventHandler   =  new EventHandler(playerHandler, powerUpManager);
+
    public HardcoreWither()
    {
-      powerUpManager =  new PowerUpManager();
-      playerHandler  =  new PlayerHandler();
-      dataStore      =  DataStoreManager.getInstance();
-      eventHandler   =  new EventHandler(playerHandler, powerUpManager);
-      
       dataStore.addStorageClass(playerHandler, "PlayerHandler");
       dataStore.addStorageClass(powerUpManager, "witherData");
    }
@@ -80,7 +75,7 @@ public class HardcoreWither
    public void preInit(FMLPreInitializationEvent event)
    {
       logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.preInit"));
-      
+
       ConfigManager.getInstance().init(event.getModConfigurationDirectory());
 
       powerUpManager.init();
@@ -88,7 +83,7 @@ public class HardcoreWither
       BlockRegistry.registerBlocks();
       PotionRegistry.registerPotions();
       EntityRegistry.register();
-      
+
       FMLCommonHandler.instance().bus().register(eventHandler);
       NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
    }
@@ -101,7 +96,7 @@ public class HardcoreWither
       ItemRecipeRegistry.registerItemRecipes();
       BlockRecipeRegistry.registerBlockRecipes();
 
-      if( Loader.isModLoaded("TConstruct") )
+      if(Loader.isModLoaded("TConstruct"))
       {
          TinkersConstructHandler.init(event);
       }
@@ -112,7 +107,7 @@ public class HardcoreWither
    {
       logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.postInit"));
    }
-   
+
    @Mod.EventHandler
    public void serverStarting(FMLServerStartingEvent event)
    {

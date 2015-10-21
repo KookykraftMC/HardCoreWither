@@ -26,20 +26,14 @@ import net.minecraftforge.event.world.WorldEvent.Unload;
 
 public class DataStoreManager
 {
-   private static DataStoreManager instance = new DataStoreManager();
+   private String dataStoreName;
+   private File saveFile = null;   
+   private Map<INBTStorageClass, String> storageClasses = new HashMap<INBTStorageClass, String>();
    
-   static public DataStoreManager getInstance()
+   public DataStoreManager(String dataStoreName)
    {
-      return instance;
-   }
-   
-   private File saveFile = null;
-   private Map<INBTStorageClass, String> storageClasses;
-   
-   private DataStoreManager()
-   {
+      this.dataStoreName = dataStoreName;
       MinecraftForge.EVENT_BUS.register(this);
-      storageClasses = new HashMap<INBTStorageClass, String>();
    }
    
    public void addStorageClass( INBTStorageClass theClass, String tagName )
@@ -57,7 +51,7 @@ public class DataStoreManager
       }
       else
       {
-         saveFile = new File(hardcoreWitherFolder, ModInformation.CHANNEL + ".dat");
+         saveFile = new File(hardcoreWitherFolder, dataStoreName + ".dat");
          try
          {
             if( !saveFile.exists() && !saveFile.createNewFile() )
@@ -81,7 +75,7 @@ public class DataStoreManager
    public void onWorldSave(  Save event )
    {
       // we only need to do this once per Save, not per level
-      if( event.world.provider.dimensionId != 0 )
+      if( event.world.provider.dimensionId != 0 || event.world.isRemote)
       {
          return;
       }
@@ -117,7 +111,7 @@ public class DataStoreManager
    public void onWorldUnload(Unload event)
    {
       // we only need to do this once per Save, not per level
-      if( event.world.provider.dimensionId != 0 )
+      if( event.world.provider.dimensionId != 0 || event.world.isRemote)
       {
          return;
       }
@@ -130,8 +124,8 @@ public class DataStoreManager
    @SubscribeEvent
    public void onWorldLoad(Load event)
    {
-      // we only need to do this once per Save, not per level
-      if( event.world.provider.dimensionId != 0 )
+      // we only need to do this once per Save and only on the server
+      if( event.world.provider.dimensionId != 0  || event.world.isRemote)
       {
          return;
       }
@@ -157,7 +151,7 @@ public class DataStoreManager
          }
          catch( Throwable e )
          {
-            HardcoreWither.logger.error("Error loading data" + e.getLocalizedMessage());
+            HardcoreWither.logger.warn("Failed to  load data " + e.getLocalizedMessage() + ", hopefully a new world.");
          }
       }
    }
