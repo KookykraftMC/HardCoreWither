@@ -24,7 +24,7 @@ import thor12022.hardcorewither.interfaces.INBTStorageClass;
 
 public class PowerUpManager implements INBTStorageClass
 {
-   private Map<String, IPowerUp>              powerUpPrototypes;
+   private Map<String, IPowerUp>             powerUpPrototypes;
    private Map<UUID, Map<String, IPowerUp>>  usedPowerUps;
    private Map<UUID, NBTTagCompound>         savedWitherData;
    private int largestPowerUp;
@@ -130,8 +130,7 @@ public class PowerUpManager implements INBTStorageClass
       if(!powerUpPrototypes.containsKey(powerUp.getName()))
       {
          powerUpPrototypes.put(powerUp.getName(), powerUp);
-         HardcoreWither.logger.info("Registering Prototype for " + powerUp.getName().toString());
-         
+         HardcoreWither.logger.info("Registering Prototype for " + powerUp.getName().toString());  
       }
       else
       {
@@ -245,7 +244,7 @@ public class PowerUpManager implements INBTStorageClass
    public void writeToNBT(NBTTagCompound nbt)
    {
       //! @todo I feel like NBTTagList might be of use here
-      
+      NBTTagCompound witherListNbt = new NBTTagCompound();
       Iterator witherIter = usedPowerUps.keySet().iterator();
       while (witherIter.hasNext()) 
       {
@@ -259,8 +258,9 @@ public class PowerUpManager implements INBTStorageClass
             usedPowerUps.get(witherUuid).get(powerUpName).writeToNBT(powerUpNbt);
             witherNbt.setTag(powerUpName, powerUpNbt);
          }
-         nbt.setTag(witherUuid.toString(), witherNbt);
+         witherListNbt.setTag(witherUuid.toString(), witherNbt);
       }
+      nbt.setTag("witherListNbt", witherListNbt);
       nbt.setInteger("largestPowerUp", largestPowerUp );
    }
 
@@ -268,16 +268,23 @@ public class PowerUpManager implements INBTStorageClass
    public void readFromNBT(NBTTagCompound nbt)
    {
       //! @todo I feel like NBTTagList might be of use here
-      
-      Set witherTags = nbt.func_150296_c();
+      NBTTagCompound witherListNbt = (NBTTagCompound) nbt.getTag("witherListNbt");
+      Set witherTags = witherListNbt.func_150296_c();
       Iterator witherIter = witherTags.iterator();
       while (witherIter.hasNext()) 
       {
          String witherUuidString = (String)witherIter.next();
          UUID witherUuid = UUID.fromString(witherUuidString);
-         NBTTagCompound witherNbt = (NBTTagCompound) nbt.getTag(witherUuidString);
-         // we have no way to look up Withers by UUID until the chunk they are in gets loaded
-         savedWitherData.put(witherUuid, witherNbt);
+         NBTTagCompound witherNbt = (NBTTagCompound) witherListNbt.getTag(witherUuidString);
+         if(witherNbt != null)
+         {
+            // we have no way to look up Withers by UUID until the chunk they are in gets loaded
+            savedWitherData.put(witherUuid, witherNbt);
+         }
+         else
+         {
+            HardcoreWither.logger.warn("Cannot load Wither for " + witherUuidString);
+         }
       }
       largestPowerUp = nbt.getInteger("largestPowerUp");
    }  
