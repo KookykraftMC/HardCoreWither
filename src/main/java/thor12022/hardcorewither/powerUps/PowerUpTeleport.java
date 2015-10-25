@@ -81,9 +81,8 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
        double oldX = ownerWither.posX;
        double oldY = ownerWither.posY;
        double oldZ = ownerWither.posZ;
-       ownerWither.posX = x;
-       ownerWither.posY = y;
-       ownerWither.posZ = z;
+       
+       ownerWither.setPosition(x, y, z);
        
        if (!ownerWither.worldObj.getCollidingBoundingBoxes(ownerWither, ownerWither.boundingBox).isEmpty())
        {
@@ -120,7 +119,7 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
    @Override
    public int minPower()
    {
-      return 5;
+      return 4;
    }
    
 
