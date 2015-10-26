@@ -27,16 +27,7 @@ class PowerUpHealthBoost extends AbstractPowerUp
 
    @Override
    public void updateWither()
-   {
-      // the Wither's Charging time does not take a different health amount into account
-      if(ownerWither.func_82212_n() > 0)
-      {
-         if (ownerWither.ticksExisted % 10 == 0)
-         {
-            ownerWither.heal( (10.0f * healthBoostMultiplier) - 10 );
-         }
-      }
-   }
+   {}
 
    @Override
    public void witherDied()
@@ -48,7 +39,11 @@ class PowerUpHealthBoost extends AbstractPowerUp
       if(super.powerStrength < 20)
       {
          double health = ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
-         ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(health * healthBoostMultiplier);
+         double newHealth = health * healthBoostMultiplier;
+         ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(newHealth);
+         // We need to adjust the charging time for the new health situation
+         ownerWither.func_82215_s((int)(newHealth * (2.0F/3.0F)) + 20);
+         ownerWither.setHealth((float)(newHealth) / 3.0F);
          return super.increasePower();
       }
       else
