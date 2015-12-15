@@ -4,10 +4,14 @@ package thor12022.hardcorewither.client.gui;
 
 import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.items.ItemRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSilverfish;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPiston;
+import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
 
 public class CreativeTabBaseMod extends CreativeTabs
@@ -25,14 +29,14 @@ public class CreativeTabBaseMod extends CreativeTabs
 
    public boolean hasSearchBar()
    {
-      return true;
+      return false;
    }
 
    // The tab icon is what you return here.
    @Override
    public ItemStack getIconItemStack()
    {
-      return new ItemStack(new ItemPiston(Blocks.sticky_piston));
+      return new ItemStack( Items.skull, 0, 1);
    }
 
    @Override
