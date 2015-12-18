@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import tconstruct.armor.TinkerArmor;
-import tconstruct.util.ItemHelper;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -19,8 +17,10 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
@@ -35,20 +35,28 @@ public class TinkersConstructHandler implements IConfigClass
    private static boolean enableGreenHeartCanister = true;
    private static boolean enableGreenHeartWitherDrop = true;
    private static int greenHeartDropRarity = 2;
+   private static Item heartCanister = GameRegistry.findItem("TConstruct", "heartCanister");
    
    private TinkersConstructHandler()
    {
-      MinecraftForge.EVENT_BUS.register(this);
-      ConfigManager.getInstance().addConfigClass(this);
+	  if(heartCanister != null)
+	  {
+		  MinecraftForge.EVENT_BUS.register(this);
+		  ConfigManager.getInstance().addConfigClass(this);
+	  }
+	  else
+	  {
+	     HardcoreWither.logger.warn("Cannot find TConstruct:heartCanister, disabling Tinkers' Construct support");
+	  }
    }
    
    public static void init(FMLInitializationEvent event)
    {
-      if(enableGreenHeartCanister)
+      if(enableGreenHeartCanister && heartCanister != null)
       {
-         GameRegistry.addShapelessRecipe( new ItemStack(TinkerArmor.heartCanister, 1, 6), 
-                                          new ItemStack(TinkerArmor.heartCanister, 1, 4), 
-                                          new ItemStack(TinkerArmor.heartCanister, 1, 5), 
+         GameRegistry.addShapelessRecipe( new ItemStack(heartCanister, 1, 6), 
+                                          new ItemStack(heartCanister, 1, 4), 
+                                          new ItemStack(heartCanister, 1, 5), 
                                           new ItemStack(Items.nether_star));
       }
    }
@@ -81,7 +89,9 @@ public class TinkersConstructHandler implements IConfigClass
                    {
                       numberOfHearts += rand.nextInt(greenHeartDropRarity) == 0 ? 1 : 0;
                    }
-                   ItemHelper.addDrops(event, new ItemStack(TinkerArmor.heartCanister, numberOfHearts, 5));
+                   EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(heartCanister, numberOfHearts, 5));
+                   entityitem.delayBeforeCanPickup = 10;
+                   event.drops.add(entityitem);
                    HardcoreWither.logger.debug("Withered Anti-Withered Player killed Wither, dropping Miniture" + numberOfHearts + " Green Hearts");
                 }
              }
