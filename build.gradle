@@ -10,6 +10,22 @@ buildscript {
     }
 }
 
+
+repositories {
+  maven {
+        name 'CB Maven FS'
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+        name 'DVS1 Maven FS'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+          name 'ForgeFS'
+          url 'http://files.minecraftforge.net/maven'
+     }
+}
+
 apply plugin: 'forge'
 
 ext.configFile = file "build.properties"
@@ -44,9 +60,10 @@ dependencies {
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
       
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+
+    // compile "codechicken:CodeChickenLib:${config.mc_version}-${config.CCLIB_version}:dev"
+    // compile "codechicken:CodeChickenCore:${config.mc_version}-${config.ccc_version}:dev"
+    // compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.NEI_version}:dev"
 
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
