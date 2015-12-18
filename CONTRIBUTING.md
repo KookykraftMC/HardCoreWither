@@ -5,7 +5,7 @@
  * There is a Eclipse Java Code Style XML provided to assist with this.
  * Generally:
   * Indentation is 3 spaces
-  * `{` and `}` Should usually be on there own line
+  * `{` and `}` Should usually be on their own line
 5. By submitting a contribution, you are affirming that you are legally able to 
     distribute the contents of your contribution.
 4. By having a contribution merged into the project you are allowing the 
