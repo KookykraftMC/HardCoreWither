@@ -2,14 +2,18 @@ package thor12022.hardcorewither.powerUps;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
+import net.minecraftforge.common.config.Configuration;
 
 class PowerUpHealthBoost extends AbstractPowerUp
 {
-   private static final float healthBoostMultiplier = 1.1f;
+   private final static int DEFAULT_MAX_STRENGTH = 64;
+   private final static int DEFAULT_MIN_LEVEL = 3;
+   
+   private static float healthBoostMultiplier = 1.1f;
    
    protected PowerUpHealthBoost()
    {
-      super();
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
    }
    
    private PowerUpHealthBoost(EntityWither theOwnerWither)
@@ -36,7 +40,7 @@ class PowerUpHealthBoost extends AbstractPowerUp
    @Override
    public boolean increasePower() 
    {
-      if(super.powerStrength < 20)
+      if(super.increasePower())
       {
          double health = ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
          double newHealth = health * healthBoostMultiplier;
@@ -44,7 +48,7 @@ class PowerUpHealthBoost extends AbstractPowerUp
          // We need to adjust the charging time for the new health situation
          ownerWither.func_82215_s((int)(newHealth * (2.0F/3.0F)) + 20);
          ownerWither.setHealth((float)(newHealth) / 3.0F);
-         return super.increasePower();
+         return true;
       }
       else
       {
@@ -53,8 +57,15 @@ class PowerUpHealthBoost extends AbstractPowerUp
    }
    
    @Override
-   public int minPower()
+   public String getSectionName()
    {
-      return 1;
+      return "PowerUpHealthBoost";
+   }
+   
+   @Override
+   public void syncConfig(Configuration config)
+   {
+      super.syncConfig(config);
+      healthBoostMultiplier = config.getFloat("healthBoostMultiplier", this.getSectionName(), healthBoostMultiplier, 1.0f, 10.0f, "");
    }
 };

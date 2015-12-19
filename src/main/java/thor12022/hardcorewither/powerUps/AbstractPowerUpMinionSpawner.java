@@ -84,9 +84,9 @@ public abstract class AbstractPowerUpMinionSpawner extends AbstractPowerUp imple
    static protected float        spawnDelayModifier   =  0.8f;
    static protected float        maxEntitiesModifier  =  1.1f;
    
-   public AbstractPowerUpMinionSpawner()
+   public AbstractPowerUpMinionSpawner(int minLevel, int maxStrength)
    {
-      super();
+      super(minLevel, maxStrength);
       spawner = null;
       ConfigManager.getInstance().addConfigClass(this);
    }
@@ -130,17 +130,23 @@ public abstract class AbstractPowerUpMinionSpawner extends AbstractPowerUp imple
    @Override
    public boolean increasePower()
    {
-      spawnerData.spawnCount *= spawnCountModifier;
-      spawnerData.delay *= spawnDelayModifier;
-      spawnerData.minDelay *=  spawnDelayModifier;
-      spawnerData.maxDelay *=  spawnDelayModifier;
-      spawnerData.maxEntities *=  maxEntitiesModifier;
-      ResetSpawnerToData();
-      return super.increasePower();
+      if(super.increasePower())
+      {
+         spawnerData.spawnCount *= spawnCountModifier;
+         spawnerData.delay *= spawnDelayModifier;
+         spawnerData.minDelay *=  spawnDelayModifier;
+         spawnerData.maxDelay *=  spawnDelayModifier;
+         spawnerData.maxEntities *=  maxEntitiesModifier;
+         ResetSpawnerToData();
+         return true;
+      }
+      return false;
    };
    
    public void syncConfig(Configuration config)
    {
+      super.syncConfig(config);
+      
       defaultSpawnerData = new SpawnerData();
       defaultSpawnerData.delay = config.getInt("defaultDelay", this.getSectionName(), defaultSpawnerData.delay, 0, 65535, "");
       defaultSpawnerData.playerRange = config.getInt("defaultPlayerRange", this.getSectionName(), defaultSpawnerData.playerRange, 0, 65535, "");

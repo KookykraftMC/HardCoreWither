@@ -9,11 +9,14 @@ import net.minecraftforge.common.config.Configuration;
 
 public class PowerUpSpeedBoost extends AbstractPowerUp implements IConfigClass
 {
+   private final static int DEFAULT_MAX_STRENGTH = 6;
+   private final static int DEFAULT_MIN_LEVEL = 3;
+   
    private static int speedBoostMultiplier = 1;
 
    protected PowerUpSpeedBoost()
    {
-      super();
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
       ConfigManager.getInstance().addConfigClass(this);
    }
 
@@ -37,23 +40,13 @@ public class PowerUpSpeedBoost extends AbstractPowerUp implements IConfigClass
       return new PowerUpSpeedBoost(theOwnerWither);
    }
 
-  @Override
-   public int minPower()
-   {
-      return 3;
-   }
-
    @Override
    public boolean increasePower()
    {
-      if(powerStrength < 3)
+      if(super.increasePower())
       {
-         boolean result = super.increasePower();
-         if(result)
-         {
-            // @todo Increase Wither's speed
-         }
-         return result;
+         // @todo Increase Wither's speed
+         return true;
       }
       return false;
    }
@@ -67,6 +60,7 @@ public class PowerUpSpeedBoost extends AbstractPowerUp implements IConfigClass
    @Override
    public void syncConfig(Configuration config)
    {
+      super.syncConfig(config);
       speedBoostMultiplier = config.getInt("speedBoostMultiplier", this.getSectionName(), speedBoostMultiplier, 0, 10, "I'd really reccomend 1");
    }
 

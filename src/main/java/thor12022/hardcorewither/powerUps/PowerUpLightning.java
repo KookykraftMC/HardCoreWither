@@ -2,6 +2,8 @@ package thor12022.hardcorewither.powerUps;
 
 import java.util.Random;
 
+import org.apache.http.impl.execchain.MinimalClientExec;
+
 import thor12022.hardcorewither.config.IConfigClass;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +14,10 @@ import net.minecraftforge.common.config.Configuration;
 
 class PowerUpLightning extends AbstractPowerUp implements IConfigClass
 {
-   private static final Random random = new Random();
+   private final static int DEFAULT_MAX_STRENGTH = 20;
+   private final static int DEFAULT_MIN_LEVEL = 1;
+   private final static Random random = new Random();
+   
    private static float lightningFrequencyMultiplier  = 1.1f;
    private static float lightningRandomness           = 0.5f;
    private static int   lightningFequencyBase         = 100;
@@ -22,7 +27,7 @@ class PowerUpLightning extends AbstractPowerUp implements IConfigClass
    
    protected PowerUpLightning()
    {
-      super();
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
    }
    
    private PowerUpLightning(EntityWither theOwnerWither)
@@ -73,7 +78,7 @@ class PowerUpLightning extends AbstractPowerUp implements IConfigClass
    @Override
    public boolean increasePower() 
    {
-      if(super.powerStrength < 20 && super.increasePower())
+      if(super.increasePower())
       {
          setNextRandomTick();
          return true;
@@ -82,12 +87,6 @@ class PowerUpLightning extends AbstractPowerUp implements IConfigClass
       {
          return false;
       }
-   }
-   
-   @Override
-   public int minPower()
-   {
-      return 1;
    }
 
    @Override
@@ -99,6 +98,7 @@ class PowerUpLightning extends AbstractPowerUp implements IConfigClass
    @Override
    public void syncConfig(Configuration config)
    {
+      super.syncConfig(config);
       lightningFrequencyMultiplier = config.getFloat("LightningFrequencyMultiplier", this.getSectionName(), lightningFrequencyMultiplier, 0.0f, 10.0f, "");
       lightningRandomness = config.getFloat("LightningRandomness", this.getSectionName(), lightningRandomness, 0.0f, 10.0f, "0 is not random, 1 is more random");
       lightningFequencyBase = config.getInt("LightningFequencyBase", this.getSectionName(), lightningFequencyBase, 1, Integer.MAX_VALUE, "Avg number of ticks between lightning");

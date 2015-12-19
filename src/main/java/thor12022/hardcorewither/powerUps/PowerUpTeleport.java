@@ -15,7 +15,10 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
 class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
 {
+   private final static int DEFAULT_MAX_STRENGTH = 20;
+   private final static int DEFAULT_MIN_LEVEL = 4;
    private static final Random random = new Random();
+   
    private static float teleportFrequencyMultiplier  = 1.1f;
    private static float teleportRandomness           = 0.5f;
    private static int   teleportFequencyBase         = 100;
@@ -26,7 +29,7 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
    
    protected PowerUpTeleport()
    {
-      super();
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
    }
    
    private PowerUpTeleport(EntityWither theOwnerWither)
@@ -105,7 +108,7 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
    @Override
    public boolean increasePower() 
    {
-      if(super.powerStrength < 20 && super.increasePower())
+      if(super.increasePower())
       {
          setNextRandomTick();
          return true;
@@ -114,14 +117,7 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
       {
          return false;
       }
-   }
-   
-   @Override
-   public int minPower()
-   {
-      return 4;
-   }
-   
+   }   
 
    @Override
    public String getSectionName()
@@ -132,6 +128,7 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
    @Override
    public void syncConfig(Configuration config)
    {
+      super.syncConfig(config);
       teleportFrequencyMultiplier = config.getFloat("TeleportFrequencyMultiplier", this.getSectionName(), teleportFrequencyMultiplier, 0.0f, 10.0f, "");
       teleportRandomness = config.getFloat("TeleportRandomness", this.getSectionName(), teleportRandomness, 0.0f, 10.0f, "0 is not random, 1 is more random");
       teleportFequencyBase = config.getInt("TeleportFequencyBase", this.getSectionName(), teleportFequencyBase, 1, Integer.MAX_VALUE, "Avg number of ticks between teleport");

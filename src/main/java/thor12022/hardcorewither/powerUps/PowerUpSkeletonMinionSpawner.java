@@ -5,9 +5,12 @@ import thor12022.hardcorewither.entity.EntitySkeletonMinion;
 
 class PowerUpSkeletonMinionSpawner extends AbstractPowerUpMinionSpawner
 {
+   private final static int DEFAULT_MAX_STRENGTH = 64;
+   private final static int DEFAULT_MIN_LEVEL = 3;
+   
    protected PowerUpSkeletonMinionSpawner()
    {
-      super();
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
    }
    
    private PowerUpSkeletonMinionSpawner(EntityWither theOwnerWither)
@@ -39,11 +42,5 @@ class PowerUpSkeletonMinionSpawner extends AbstractPowerUpMinionSpawner
    public String getSectionName()
    {
       return "PowerUpSkeletonMinionSpawner";
-   }
-   
-   @Override
-   public int minPower()
-   {
-      return 2;
    }
 };

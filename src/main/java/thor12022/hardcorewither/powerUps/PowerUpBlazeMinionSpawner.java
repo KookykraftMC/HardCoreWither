@@ -5,9 +5,12 @@ import thor12022.hardcorewither.entity.EntityBlazeMinion;
 
 class PowerUpBlazeMinionSpawner extends AbstractPowerUpMinionSpawner
 {
+   private final static int DEFAULT_MAX_STRENGTH = 20;
+   private final static int DEFAULT_MIN_LEVEL = 2;
+   
    protected PowerUpBlazeMinionSpawner()
    {
-      super();
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
    }
    
    private PowerUpBlazeMinionSpawner(EntityWither theOwnerWither)
@@ -39,11 +42,5 @@ class PowerUpBlazeMinionSpawner extends AbstractPowerUpMinionSpawner
    public String getSectionName()
    {
       return "PowerUpBlazeMinionSpawner";
-   }
-
-   @Override
-   public int minPower()
-   {
-      return 2;
    }
 };

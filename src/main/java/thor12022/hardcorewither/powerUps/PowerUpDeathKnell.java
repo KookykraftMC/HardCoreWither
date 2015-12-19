@@ -6,14 +6,16 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraftforge.common.config.Configuration;
 
-class PowerUpDeathKnell extends AbstractPowerUp implements IConfigClass
+class PowerUpDeathKnell extends AbstractPowerUp
 {
+   private final static int DEFAULT_MAX_STRENGTH = 20;
+   private final static int DEFAULT_MIN_LEVEL = 1;
+   
    private static float knellStrengthMultiplier = 0.6666667f;
    
    protected PowerUpDeathKnell()
    {
-      super();
-      ConfigManager.getInstance().addConfigClass(this);
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
    }
    
    private PowerUpDeathKnell(EntityWither theOwnerWither)
@@ -42,15 +44,12 @@ class PowerUpDeathKnell extends AbstractPowerUp implements IConfigClass
 	@Override
 	public boolean increasePower() 
 	{
-	   if(super.powerStrength > 20)
-	   {
-	      return false;
-	   }
-	   else
+	   if(super.increasePower())
 	   {
 	      knellStrengthMultiplier *= 1.5f;
-	      return super.increasePower();
+         return true;
 	   }
+	   return false;
 	}
 
    @Override
@@ -62,13 +61,7 @@ class PowerUpDeathKnell extends AbstractPowerUp implements IConfigClass
    @Override
    public void syncConfig(Configuration config)
    {
+      super.syncConfig(config);
       knellStrengthMultiplier = config.getFloat("KnellStrengthMultiplier", this.getSectionName(), knellStrengthMultiplier, 0.0f, 10.0f, "");
-      
-   }
-
-   @Override
-   public int minPower()
-   {
-      return 1;
    }
 };
