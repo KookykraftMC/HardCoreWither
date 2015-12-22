@@ -10,6 +10,8 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import thor12022.hardcorewither.HardcoreWither;
@@ -49,13 +51,17 @@ public class ConfigManager
       {
          for(Object configClass : configClasses)
          {
-            processClass(configClass);
+            processConfigClass(configClass);
          }
          configuration.save();
+         for(Object configClass : configClasses)
+         {
+            processNotificationClass(configClass);
+         }
       }
    }
    
-   private void processClass(Object target)
+   private void processConfigClass(Object target)
    {
       Configurable targetAnnotation = target.getClass().getAnnotation(Configurable.class);
       String sectionName = targetAnnotation.sectionName();
@@ -64,6 +70,25 @@ public class ConfigManager
          sectionName = target.getClass().getSimpleName();
       }
       processClass(sectionName, target, target.getClass());
+   }
+   
+   private void processNotificationClass(Object target)
+   {
+      Configurable targetAnnotation = target.getClass().getAnnotation(Configurable.class);
+      
+      String callbackName = targetAnnotation.syncNotification();
+      if(!callbackName.isEmpty())
+      {
+            try
+         {
+            Method method = target.getClass().getDeclaredMethod(callbackName);
+            method.invoke(target);
+         }
+         catch(Exception excp)
+         {
+            //! @todo error reporting
+         }
+      }
    }
    
    /**

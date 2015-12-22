@@ -182,9 +182,13 @@ public class PowerUpManager implements INBTStorageClass
             // If this is a new powerup for this Wither
             else
             {
-               powerUpsUsed.put(powerUpPrototpe.getName(), powerUpPrototpe.createPowerUp(wither));
-               usedStrength += powerUpPrototpe.minPower() > 0 ? powerUpPrototpe.minPower() : 1;
-               HardcoreWither.logger.debug("Adding " + powerUpPrototpe.getName());
+               IPowerUp newPowerUp = powerUpPrototpe.createPowerUp(wither);
+               if(newPowerUp != null)
+               {
+                  powerUpsUsed.put(powerUpPrototpe.getName(), newPowerUp);
+                  usedStrength += powerUpPrototpe.minPower() > 0 ? powerUpPrototpe.minPower() : 1;
+                  HardcoreWither.logger.debug("Adding " + powerUpPrototpe.getName());
+               }
             }
          }
          if(powerUpSize > largestPowerUp)

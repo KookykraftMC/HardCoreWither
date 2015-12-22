@@ -10,4 +10,6 @@ import java.lang.annotation.Target;
 public @interface Configurable
 {
    String sectionName() default "";
+   
+   String syncNotification() default "";
 }

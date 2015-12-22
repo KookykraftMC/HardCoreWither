@@ -10,11 +10,12 @@ import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
+import thor12022.hardcorewither.util.MultiRange;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
 
-@Configurable
+@Configurable (syncNotification = "configChangeNotification")
 abstract class AbstractPowerUp implements IPowerUp
 {
    final protected EntityWither ownerWither;
@@ -29,6 +30,10 @@ abstract class AbstractPowerUp implements IPowerUp
    
    @Config(minInt = 1, comment = "The Minimum Wither Level for which this Power Up is available")
    private int minLevel = 1;
+   
+   @Config(comment="Dimensions where this Power Up will not be used, e.g. \"-1,0,1-100000\"")
+   private String blacklistDims = "";
+   private MultiRange blacklistDimsRanges;
    
    static private Set<String> constructedPrototypeClasses = new HashSet<String>();
       
@@ -52,6 +57,16 @@ abstract class AbstractPowerUp implements IPowerUp
    {
       powerStrength = 1;
       ownerWither = theOwnerWither;
+   }
+   
+   protected boolean isValidApplication(EntityWither theOwnerWither)
+   {
+      return ((blacklistDimsRanges != null) && !blacklistDimsRanges.contains(theOwnerWither.dimension));
+   }
+   
+   private void configChangeNotification()
+   {
+      blacklistDimsRanges = new MultiRange(blacklistDims);
    }
    
    @Override
