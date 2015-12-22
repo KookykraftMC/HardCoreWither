@@ -8,9 +8,9 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
@@ -20,19 +20,12 @@ public class ConfigManager
 
    private static ConfigManager instance = new ConfigManager();
    
-   /**
-    * @todo This was supposed to map IConfigClasses to Categories in a single Configuration
-    *    however, this proved impractical as the Configuration class and ConfigurationCategory
-    *    class do not provide high level methods for ConfigurationCategory. It doesn't have 
-    *    getString getInt getDouble, etc . It should function similarly to the DataStoreManager,
-    *    passing to each IConfigClass an object containing only its own data
-    */
-   private Map<IConfigClass, Configuration> configClasses;
-   private File configDirectory;
+   private ArrayList<Object> configClasses = new ArrayList<Object>();
+   private Configuration configuration;
    
-   public void init(File configDirectory)
+   public void init(File config)
    {
-      this.configDirectory = configDirectory;
+      configuration = new Configuration(config);
       syncConfig();
    }
    
@@ -41,36 +34,92 @@ public class ConfigManager
       return instance;
    }
    
-   private ConfigManager()
+   public void register(Object target)
    {
-      configClasses = new HashMap<IConfigClass, Configuration>();
-   }
-   
-   public void addConfigClass( IConfigClass theClass )
-   {
-      Configuration theConfig = new Configuration(new File( configDirectory + File.separator + ModInformation.CHANNEL + File.separator + theClass.getSectionName() + ".cfg"));
-      configClasses.put(theClass, theConfig);
-      theClass.syncConfig(theConfig);
-      theConfig.save();
+      Configurable annotation = target.getClass().getAnnotation(Configurable.class);
+      if(annotation != null)
+      {
+         configClasses.add(target);
+      }
    }
 
    public void syncConfig()
    {
-      try
+      if(configuration != null)
       {
-         Iterator iter = configClasses.keySet().iterator();
-         while (iter.hasNext()) 
+         for(Object configClass : configClasses)
          {
-            IConfigClass theClass = (IConfigClass)iter.next();
-            Configuration theConfig = configClasses.get(theClass);
-            theClass.syncConfig(theConfig);
-            theConfig.save();
+            processClass(configClass);
          }
-         HardcoreWither.logger.debug("Synced config data");
-      }
-      catch( Throwable e )
-      {
-         HardcoreWither.logger.error("Error syncing config data: " + e.getLocalizedMessage());
+         configuration.save();
       }
    }
+   
+   private void processClass(Object target)
+   {
+      Configurable targetAnnotation = target.getClass().getAnnotation(Configurable.class);
+      String sectionName = targetAnnotation.sectionName();
+      if(sectionName.isEmpty())
+      {
+         sectionName = target.getClass().getSimpleName();
+      }
+      processClass(sectionName, target, target.getClass());
+   }
+   
+   /**
+    * Recurses over the class hierarchy of an object
+    * @param sectionName name of the config section to write to
+    * @param classObj object currently being processed 
+    * @param currentClass the level in the classObj 's hierarchy being processed
+    **/
+   private void processClass(String sectionName, Object classObj, Class<?> currentClass)
+   {
+      if(currentClass == Object.class)
+      {
+         return;
+      }
+      processClass(sectionName, classObj, currentClass.getSuperclass());
+      for(Field field : currentClass.getDeclaredFields())
+      {
+         Config configAnnotation = field.getAnnotation(Config.class);
+         if(configAnnotation != null)
+         {
+            String fieldName = configAnnotation.fieldName();
+            if(fieldName.isEmpty())
+            {
+               fieldName = field.getName();
+            }
+            try
+            {
+               boolean isAccessible = field.isAccessible();
+               field.setAccessible(true);
+               if(field.getType() == boolean.class)
+               {
+                  field.set(classObj, configuration.getBoolean(fieldName, sectionName, field.getBoolean(classObj), configAnnotation.comment()));
+               }
+               else if(field.getType() == float.class)
+               {
+                  field.set(classObj, configuration.getFloat(fieldName, sectionName, field.getFloat(classObj), configAnnotation.minFloat(), configAnnotation.maxFloat(), configAnnotation.comment()));
+               }
+               else if(field.getType() == int.class)
+               {
+                  field.set(classObj, configuration.getInt(fieldName, sectionName, field.getInt(classObj), configAnnotation.minInt(), configAnnotation.maxInt(), configAnnotation.comment()));
+               }
+               else if(field.getType() == String.class)
+               {
+                  field.set(classObj, configuration.getString(fieldName, sectionName, (String)field.get(classObj), configAnnotation.comment()));
+               }
+               else
+               {
+                  processClass(sectionName, field.get(classObj), field.getType());
+               }
+               field.setAccessible(isAccessible);
+            }
+            catch(IllegalAccessException excp)
+            {
+               //! @todo Error Reporting
+            }
+         }
+      }
+   }  
 }

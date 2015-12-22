@@ -7,8 +7,9 @@ import java.util.Random;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
-import thor12022.hardcorewither.config.IConfigClass;
+import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.potions.PotionAntiWither;
@@ -25,24 +26,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
-public class TinkersConstructHandler implements IConfigClass
+@Configurable(sectionName = "TinkersConstruct")
+public class TinkersConstructHandler
 {
-   private static TinkersConstructHandler eventHandler = new TinkersConstructHandler();
-   
+   @Config
    private static boolean enableGreenHeartCanister = true;
+   
+   @Config
    private static boolean enableGreenHeartWitherDrop = true;
+   
+   @Config(minInt = 0, maxInt = 10)
    private static int greenHeartDropRarity = 2;
+   
    private static Item heartCanister = GameRegistry.findItem("TConstruct", "heartCanister");
    
-   private TinkersConstructHandler()
+   public TinkersConstructHandler()
    {
-	  if(heartCanister != null)
+     ConfigManager.getInstance().register(this);
+	  
+     if(heartCanister != null)
 	  {
 		  MinecraftForge.EVENT_BUS.register(this);
-		  ConfigManager.getInstance().addConfigClass(this);
 	  }
 	  else
 	  {
@@ -50,7 +56,7 @@ public class TinkersConstructHandler implements IConfigClass
 	  }
    }
    
-   public static void init(FMLInitializationEvent event)
+   public void init(FMLInitializationEvent event)
    {
       if(enableGreenHeartCanister && heartCanister != null)
       {
@@ -99,19 +105,4 @@ public class TinkersConstructHandler implements IConfigClass
           }
        }
     }
-
-   @Override
-   public void syncConfig(Configuration config)
-   {
-      enableGreenHeartCanister = config.getBoolean("Enable Green Heart Canister Crafting",getSectionName(), enableGreenHeartCanister, "Requires Tinkers' Construct");
-      enableGreenHeartWitherDrop = config.getBoolean("Enable Withers Dropping Green Hearts",getSectionName(), enableGreenHeartWitherDrop, "Requires Tinkers' Construct");
-      greenHeartDropRarity = config.getInt("Green Heart Drop Rarity", getSectionName(), greenHeartDropRarity, 0, Integer.MAX_VALUE, "How rare the Green Heart drop is, 0 is a guarnenteed 1 per level of fortune");
-      
-   }
-
-   @Override
-   public String getSectionName()
-   {
-      return "TinkersConstruct";
-   }
 }

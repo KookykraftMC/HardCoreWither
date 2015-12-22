@@ -2,7 +2,9 @@ package thor12022.hardcorewither.powerUps;
 
 import java.util.Random;
 
-import thor12022.hardcorewither.config.IConfigClass;
+import thor12022.hardcorewither.config.Config;
+import thor12022.hardcorewither.config.ConfigManager;
+import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -10,19 +12,26 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
-class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
+@Configurable
+class PowerUpTeleport extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
    private final static int DEFAULT_MIN_LEVEL = 4;
    private static final Random random = new Random();
    
-   private static float teleportFrequencyMultiplier  = 1.1f;
-   private static float teleportRandomness           = 0.5f;
-   private static int   teleportFequencyBase         = 100;
-   private static float teleportInaccuracy           = 0.25f;
+   @Config(minFloat = 1f, maxFloat = 10f)
+   private static float teleportFrequencyMultiplier = 1.1f;
+   
+   @Config(minFloat = 0f, maxFloat = 10f, comment = "0 is not random, 1 is more random")
+   private static float teleportRandomness = 0.5f;
+   
+   @Config(minInt = 20, comment = "Avg number of ticks between teleport")
+   private static int   teleportFequencyBase = 100;
+   
+   @Config(minFloat = 0f, maxFloat = 10f, comment = "0 is prefect")
+   private static float teleportInaccuracy = 0.25f;
    
    private long   teleportNextTick;
    
@@ -30,6 +39,7 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
    protected PowerUpTeleport()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
+      ConfigManager.getInstance().register(this);   
    }
    
    private PowerUpTeleport(EntityWither theOwnerWither)
@@ -118,22 +128,6 @@ class PowerUpTeleport extends AbstractPowerUp implements IConfigClass
          return false;
       }
    }   
-
-   @Override
-   public String getSectionName()
-   {
-      return getName();
-   }
-   
-   @Override
-   public void syncConfig(Configuration config)
-   {
-      super.syncConfig(config);
-      teleportFrequencyMultiplier = config.getFloat("TeleportFrequencyMultiplier", this.getSectionName(), teleportFrequencyMultiplier, 0.0f, 10.0f, "");
-      teleportRandomness = config.getFloat("TeleportRandomness", this.getSectionName(), teleportRandomness, 0.0f, 10.0f, "0 is not random, 1 is more random");
-      teleportFequencyBase = config.getInt("TeleportFequencyBase", this.getSectionName(), teleportFequencyBase, 1, Integer.MAX_VALUE, "Avg number of ticks between teleport");
-      teleportInaccuracy = config.getFloat("TeleportInnacuracy", this.getSectionName(), teleportInaccuracy, 0.0f, 10.0f, "0 is prefect");
-   }
    
    private void setNextRandomTick()
    {

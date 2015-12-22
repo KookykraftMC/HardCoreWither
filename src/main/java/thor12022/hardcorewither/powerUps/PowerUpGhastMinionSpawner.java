@@ -1,8 +1,11 @@
 package thor12022.hardcorewither.powerUps;
 
 import net.minecraft.entity.boss.EntityWither;
+import thor12022.hardcorewither.config.ConfigManager;
+import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.entity.EntityGhastMinion;
 
+@Configurable
 class PowerUpGhastMinionSpawner extends AbstractPowerUpMinionSpawner
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
@@ -11,12 +14,13 @@ class PowerUpGhastMinionSpawner extends AbstractPowerUpMinionSpawner
    protected PowerUpGhastMinionSpawner()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
+      ConfigManager.getInstance().register(this);   
    }
    
    private PowerUpGhastMinionSpawner(EntityWither theOwnerWither)
    {
       super(theOwnerWither, EntityGhastMinion.LOCALIZED_NAME);
-      super.spawnerData.spawnRange = 16;
+      super.spawnRange = 16;
       super.ResetSpawnerToData();
    }
 
@@ -39,10 +43,4 @@ class PowerUpGhastMinionSpawner extends AbstractPowerUpMinionSpawner
    @Override
    public void witherDied()
    {}
-
-   @Override
-   public String getSectionName()
-   {
-      return "PowerUpGhastMinionSpawner";
-   }
 };

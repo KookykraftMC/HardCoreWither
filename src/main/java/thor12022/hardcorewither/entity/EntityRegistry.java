@@ -5,7 +5,7 @@ import thor12022.hardcorewither.ModInformation;
 
 public class EntityRegistry
 {
-   public static void register()
+   public void register()
    {
 int id = 0;
       cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(

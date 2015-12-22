@@ -6,20 +6,28 @@ import java.util.List;
 import java.util.Set;
 
 import thor12022.hardcorewither.HardcoreWither;
+import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
-import thor12022.hardcorewither.config.IConfigClass;
+import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
 
-abstract class AbstractPowerUp implements IPowerUp, IConfigClass
+@Configurable
+abstract class AbstractPowerUp implements IPowerUp
 {
    final protected EntityWither ownerWither;
    final protected String className = getClass().getSimpleName();
    protected int powerStrength;
+   
+   @Config
    protected boolean powerUpEnabled = true;
+   
+   @Config(minInt = 2, comment = "The Maximum Strength this Power Up can reach")
    private int maxStrength = 20;
+   
+   @Config(minInt = 1, comment = "The Minimum Wither Level for which this Power Up is available")
    private int minLevel = 1;
    
    static private Set<String> constructedPrototypeClasses = new HashSet<String>();
@@ -37,7 +45,6 @@ abstract class AbstractPowerUp implements IPowerUp, IConfigClass
       else
       {
          constructedPrototypeClasses.add(className);
-         ConfigManager.getInstance().addConfigClass(this);
       }
    }
    
@@ -81,13 +88,5 @@ abstract class AbstractPowerUp implements IPowerUp, IConfigClass
    public int minPower()
    {
       return powerUpEnabled ? minLevel : Integer.MAX_VALUE;
-   }
-   
-   @Override
-   public void syncConfig(Configuration config)
-   {
-      powerUpEnabled = config.getBoolean("Enabled", this.getSectionName(), powerUpEnabled, "");
-      minLevel = config.getInt("minLevel", this.getSectionName(), minLevel, 0, Integer.MAX_VALUE, "The Minimum Wither Level for which this Power Up is available");
-      maxStrength = config.getInt("maxStrength", this.getSectionName(), maxStrength, 0, Integer.MAX_VALUE, "The Maximum Strength this Power Up can reach");
    }
 }

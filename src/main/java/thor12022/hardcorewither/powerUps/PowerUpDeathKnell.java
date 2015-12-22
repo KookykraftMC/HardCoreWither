@@ -1,21 +1,24 @@
 package thor12022.hardcorewither.powerUps;
 
+import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
-import thor12022.hardcorewither.config.IConfigClass;
+import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
-import net.minecraftforge.common.config.Configuration;
 
+@Configurable
 class PowerUpDeathKnell extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
    private final static int DEFAULT_MIN_LEVEL = 1;
    
+   @Config(minFloat = 0f, maxFloat = 10f)
    private static float knellStrengthMultiplier = 0.6666667f;
    
    protected PowerUpDeathKnell()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
+      ConfigManager.getInstance().register(this);   
    }
    
    private PowerUpDeathKnell(EntityWither theOwnerWither)
@@ -51,17 +54,4 @@ class PowerUpDeathKnell extends AbstractPowerUp
 	   }
 	   return false;
 	}
-
-   @Override
-   public String getSectionName()
-   {
-      return "PowerUpDeathKnell";
-   }
-
-   @Override
-   public void syncConfig(Configuration config)
-   {
-      super.syncConfig(config);
-      knellStrengthMultiplier = config.getFloat("KnellStrengthMultiplier", this.getSectionName(), knellStrengthMultiplier, 0.0f, 10.0f, "");
-   }
 };

@@ -60,10 +60,15 @@ public class HardcoreWither
    @Mod.Instance
    public static HardcoreWither instance;
 
-   private PowerUpManager     powerUpManager =  new PowerUpManager();
-   private PlayerHandler      playerHandler  =  new PlayerHandler();;
-   private DataStoreManager   dataStore      =  new DataStoreManager(ModInformation.CHANNEL);
-   private EventHandler       eventHandler   =  new EventHandler(playerHandler, powerUpManager);
+   private PowerUpManager           powerUpManager =  new PowerUpManager();
+   private PlayerHandler            playerHandler  =  new PlayerHandler();;
+   private DataStoreManager         dataStore      =  new DataStoreManager(ModInformation.CHANNEL);
+   private EventHandler             eventHandler   =  new EventHandler(playerHandler, powerUpManager);
+   private ItemRegistry             itemRegistry   =  new ItemRegistry();
+   private BlockRegistry            blockRegistry  =  new BlockRegistry();
+   private PotionRegistry           potionRegistry =  new PotionRegistry();
+   private EntityRegistry           entityRegistry =  new EntityRegistry();
+   private TinkersConstructHandler  tiCoRegistry   =  new TinkersConstructHandler();
 
    public HardcoreWither()
    {
@@ -76,13 +81,14 @@ public class HardcoreWither
    {
       logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.preInit"));
 
-      ConfigManager.getInstance().init(event.getModConfigurationDirectory());
-
       powerUpManager.init();
-      ItemRegistry.registerItems();
-      BlockRegistry.registerBlocks();
-      PotionRegistry.registerPotions();
-      EntityRegistry.register();
+      
+      ConfigManager.getInstance().init(event.getSuggestedConfigurationFile());
+
+      itemRegistry.registerItems();
+      blockRegistry.registerBlocks();
+      potionRegistry.registerPotions();
+      entityRegistry.register();
 
       FMLCommonHandler.instance().bus().register(eventHandler);
       NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
@@ -98,7 +104,7 @@ public class HardcoreWither
 
       if(Loader.isModLoaded("TConstruct"))
       {
-         TinkersConstructHandler.init(event);
+         tiCoRegistry.init(event);
       }
    }
 

@@ -2,32 +2,40 @@ package thor12022.hardcorewither.powerUps;
 
 import java.util.Random;
 
-import org.apache.http.impl.execchain.MinimalClientExec;
-
-import thor12022.hardcorewither.config.IConfigClass;
+import thor12022.hardcorewither.config.Config;
+import thor12022.hardcorewither.config.ConfigManager;
+import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraftforge.common.config.Configuration;
 
-class PowerUpLightning extends AbstractPowerUp implements IConfigClass
+@Configurable
+class PowerUpLightning extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
    private final static int DEFAULT_MIN_LEVEL = 1;
    private final static Random random = new Random();
    
+   @Config(minFloat = 1f, maxFloat = 5f)
    private static float lightningFrequencyMultiplier  = 1.1f;
-   private static float lightningRandomness           = 0.5f;
+   
+   @Config(minFloat = 1f, maxFloat = 5f, comment = "0 is not random, 1 is more random")
+   private static float lightningRandomness = 0.5f;
+   
+   @Config(minFloat = 1f, maxFloat = 5f, comment = "Avg number of ticks between lightning")
    private static int   lightningFequencyBase         = 100;
-   private static float lightningInaccuracy           = 0.5f;
+   
+   @Config(minFloat = 0f, maxFloat = 5f, comment = "0 is prefect")
+   private static float lightningInaccuracy = 0.5f;
    
    private long   lightningNextTick;
    
    protected PowerUpLightning()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
+      ConfigManager.getInstance().register(this);
    }
    
    private PowerUpLightning(EntityWither theOwnerWither)
@@ -87,21 +95,5 @@ class PowerUpLightning extends AbstractPowerUp implements IConfigClass
       {
          return false;
       }
-   }
-
-   @Override
-   public String getSectionName()
-   {
-      return "PowerUpLightning";
-   }
-
-   @Override
-   public void syncConfig(Configuration config)
-   {
-      super.syncConfig(config);
-      lightningFrequencyMultiplier = config.getFloat("LightningFrequencyMultiplier", this.getSectionName(), lightningFrequencyMultiplier, 0.0f, 10.0f, "");
-      lightningRandomness = config.getFloat("LightningRandomness", this.getSectionName(), lightningRandomness, 0.0f, 10.0f, "0 is not random, 1 is more random");
-      lightningFequencyBase = config.getInt("LightningFequencyBase", this.getSectionName(), lightningFequencyBase, 1, Integer.MAX_VALUE, "Avg number of ticks between lightning");
-      lightningInaccuracy = config.getFloat("LightningInnacuracy", this.getSectionName(), lightningInaccuracy, 0.0f, 10.0f, "0 is prefect");
    }
 };

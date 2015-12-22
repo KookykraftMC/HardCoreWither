@@ -11,7 +11,7 @@ public class BlockRegistry
    // blocks
    // public static Block exampleOre;
 
-   public static void registerBlocks()
+   public void registerBlocks()
    {
       // exampleOre = new BlockOreExample();
       // GameRegistry.registerBlock(exampleOre, "BlockOreExample");

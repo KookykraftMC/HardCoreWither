@@ -2,18 +2,23 @@ package thor12022.hardcorewither.powerUps;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
-import net.minecraftforge.common.config.Configuration;
+import thor12022.hardcorewither.config.Config;
+import thor12022.hardcorewither.config.ConfigManager;
+import thor12022.hardcorewither.config.Configurable;
 
+@Configurable
 class PowerUpHealthBoost extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 64;
    private final static int DEFAULT_MIN_LEVEL = 3;
    
+   @Config(minFloat = 1f, maxFloat = 10f)
    private static float healthBoostMultiplier = 1.1f;
    
    protected PowerUpHealthBoost()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
+      ConfigManager.getInstance().register(this);   
    }
    
    private PowerUpHealthBoost(EntityWither theOwnerWither)
@@ -54,18 +59,5 @@ class PowerUpHealthBoost extends AbstractPowerUp
       {
          return false;
       }
-   }
-   
-   @Override
-   public String getSectionName()
-   {
-      return "PowerUpHealthBoost";
-   }
-   
-   @Override
-   public void syncConfig(Configuration config)
-   {
-      super.syncConfig(config);
-      healthBoostMultiplier = config.getFloat("healthBoostMultiplier", this.getSectionName(), healthBoostMultiplier, 1.0f, 10.0f, "");
    }
 };
