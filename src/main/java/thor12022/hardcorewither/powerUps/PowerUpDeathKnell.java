@@ -9,7 +9,7 @@ import net.minecraft.entity.boss.EntityWither;
 @Configurable
 class PowerUpDeathKnell extends AbstractPowerUp
 {
-   private final static int DEFAULT_MAX_STRENGTH = 20;
+   private final static int DEFAULT_MAX_STRENGTH = 10;
    private final static int DEFAULT_MIN_LEVEL = 1;
    
    @Config(minFloat = 0f, maxFloat = 10f)
