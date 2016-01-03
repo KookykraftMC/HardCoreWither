@@ -104,4 +104,11 @@ abstract class AbstractPowerUp implements IPowerUp
    {
       return powerUpEnabled ? minLevel : Integer.MAX_VALUE;
    }
+
+   /**
+    * Most (all?) powerups will not persist when the world is unloaded anyway
+    */
+   @Override
+   public void resetNBT()
+   {}
 }

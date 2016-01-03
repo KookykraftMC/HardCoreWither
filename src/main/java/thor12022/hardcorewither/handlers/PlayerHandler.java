@@ -20,13 +20,8 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 public class PlayerHandler implements INBTStorageClass
 {
-   private Map<UUID, Double> playerXp;
-   
-   public PlayerHandler()
-   {
-      playerXp = new HashMap<UUID, Double>();
-   }
-   
+   private Map<UUID, Double> playerXp  = new HashMap<UUID, Double>();
+
    public double wasAtWitherSpawn(EntityPlayer player)
    {
       return addWitherExperience(player, 1.0 );
@@ -62,5 +57,12 @@ public class PlayerHandler implements INBTStorageClass
          String tag = (String)iter.next();
          playerXp.put( UUID.fromString(tag), nbt.getDouble(tag));
       }
+   }
+
+   @Override
+   public void resetNBT()
+   {
+      playerXp.clear();
+      
    }
 }

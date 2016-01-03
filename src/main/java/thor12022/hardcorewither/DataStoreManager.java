@@ -117,6 +117,10 @@ public class DataStoreManager
       }
       if( saveFile != null )
       {
+         for(INBTStorageClass starageClass : storageClasses.keySet())
+         {
+            starageClass.resetNBT();
+         }
          saveFile = null;
       }
    }

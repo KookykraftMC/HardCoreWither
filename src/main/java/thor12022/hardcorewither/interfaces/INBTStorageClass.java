@@ -7,4 +7,6 @@ public interface INBTStorageClass
    public void writeToNBT(NBTTagCompound nbt);
    
    public void readFromNBT(NBTTagCompound nbt);
+   
+   public void resetNBT();
 }

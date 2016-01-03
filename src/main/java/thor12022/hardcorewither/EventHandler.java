@@ -16,9 +16,11 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.HardcoreWither;
@@ -92,6 +94,15 @@ public class EventHandler
       }
    }
 
+   @SubscribeEvent(priority=EventPriority.HIGHEST)
+   public void onEntityDieing(LivingDropsEvent event)
+   {
+      if(!event.entity.worldObj.isRemote && event.entityLiving != null && event.entityLiving.getClass() == EntityWither.class)
+      {
+         powerUpManager.witherLootDrops(event);
+      }
+   }
+   
    @SubscribeEvent
    public void onEntityDieing(LivingDeathEvent event)
    {
@@ -99,6 +110,8 @@ public class EventHandler
       {
          if (event.entityLiving != null && event.entityLiving.getClass() == EntityWither.class)
          {
+            powerUpManager.witherDied((EntityWither)event.entityLiving);
+            
             List nearbyPlayers = event.entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, event.entity.boundingBox.expand(64.0D, 64.0D, 64.0D));
             double powerUpSize = 0.0;
             for (int index = 0; index < nearbyPlayers.size(); ++index)
@@ -107,7 +120,6 @@ public class EventHandler
                powerUpSize += playerHandler.wasAtWitherSpawn(player);
                player.addChatMessage(new ChatComponentText(TextHelper.localize("info." + ModInformation.ID + ".chat.wither-experience")));
             }
-            powerUpManager.witherDied((EntityWither) event.entityLiving);
          }
       }
    }
