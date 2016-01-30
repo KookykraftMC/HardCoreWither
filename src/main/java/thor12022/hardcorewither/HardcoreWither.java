@@ -8,17 +8,6 @@ package thor12022.hardcorewither;
 //import biomesoplenty.api.content.BOPCBiomes;
 import java.io.File;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartedEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import thor12022.hardcorewither.blocks.BlockRecipeRegistry;
 import thor12022.hardcorewither.blocks.BlockRegistry;
 import thor12022.hardcorewither.client.gui.CreativeTabBaseMod;
@@ -41,6 +30,16 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
@@ -90,8 +89,7 @@ public class HardcoreWither
       potionRegistry.registerPotions();
       entityRegistry.register();
 
-      FMLCommonHandler.instance().bus().register(eventHandler);
-      NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+      MinecraftForge.EVENT_BUS.register(eventHandler);
    }
 
    @Mod.EventHandler

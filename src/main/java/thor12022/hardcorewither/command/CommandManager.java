@@ -5,13 +5,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import cpw.mods.fml.common.event.FMLServerStartedEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import thor12022.hardcorewither.ModInformation;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public class CommandManager extends CommandBase
 {
@@ -63,7 +62,7 @@ public class CommandManager extends CommandBase
    }
    
    @Override
-   public void processCommand(ICommandSender sender, String[] args)
+   public void processCommand(ICommandSender sender, String[] args) throws WrongUsageException
    {
       if (args.length == 0)
       {

@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,21 +39,16 @@ public class PlayerHandler implements INBTStorageClass
    
    public void writeToNBT(NBTTagCompound nbt)
    {
-      Iterator playerIter = playerXp.keySet().iterator();
-      while( playerIter.hasNext())
+      for(UUID uuid : playerXp.keySet())
       {
-         UUID uuid = (UUID) playerIter.next();
          nbt.setDouble(uuid.toString(), playerXp.get(uuid));
       }
    }
    
    public void readFromNBT(NBTTagCompound nbt)
    {
-      Set tags = nbt.func_150296_c();
-      Iterator iter = tags.iterator();
-      while (iter.hasNext()) 
+      for(String tag : nbt.getKeySet()) 
       {
-         String tag = (String)iter.next();
          playerXp.put( UUID.fromString(tag), nbt.getDouble(tag));
       }
    }

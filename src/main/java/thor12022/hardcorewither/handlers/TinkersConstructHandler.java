@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
@@ -27,6 +24,9 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Configurable(sectionName = "TinkersConstruct")
 public class TinkersConstructHandler
@@ -96,7 +96,8 @@ public class TinkersConstructHandler
                       numberOfHearts += rand.nextInt(greenHeartDropRarity) == 0 ? 1 : 0;
                    }
                    EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(heartCanister, numberOfHearts, 5));
-                   entityitem.delayBeforeCanPickup = 10;
+                   //! @todo check if a replacement for this is needed
+                   //entityitem.delayBeforeCanPickup = 10;
                    event.drops.add(entityitem);
                    HardcoreWither.logger.debug("Withered Anti-Withered Player killed Wither, dropping Miniture" + numberOfHearts + " Green Hearts");
                 }
