@@ -13,8 +13,6 @@ import java.util.UUID;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.DimensionManager;
@@ -23,6 +21,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.event.world.WorldEvent.Unload;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DataStoreManager
 {
@@ -75,7 +74,7 @@ public class DataStoreManager
    public void onWorldSave(  Save event )
    {
       // we only need to do this once per Save, not per level
-      if( event.world.provider.dimensionId != 0 || event.world.isRemote)
+      if( event.world.provider.getDimensionId() != 0 || event.world.isRemote)
       {
          return;
       }
@@ -111,7 +110,7 @@ public class DataStoreManager
    public void onWorldUnload(Unload event)
    {
       // we only need to do this once per Save, not per level
-      if( event.world.provider.dimensionId != 0 || event.world.isRemote)
+      if( event.world.provider.getDimensionId() != 0 || event.world.isRemote)
       {
          return;
       }
@@ -129,7 +128,7 @@ public class DataStoreManager
    public void onWorldLoad(Load event)
    {
       // we only need to do this once per Save and only on the server
-      if( event.world.provider.dimensionId != 0  || event.world.isRemote)
+      if( event.world.provider.getDimensionId() != 0  || event.world.isRemote)
       {
          return;
       }

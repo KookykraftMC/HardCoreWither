@@ -32,7 +32,7 @@ class PowerUpBlazeMinionSpawner extends AbstractPowerUpMinionSpawner
    @Override
    public void updateWither()
    {
-      if(ownerWither.func_82212_n() > 0)
+      if(ownerWither.getInvulTime() > 0)
       {
          super.updateWither();
       }

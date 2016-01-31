@@ -9,6 +9,7 @@ import thor12022.hardcorewither.entity.EntityBlazeMinion;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 @Configurable
@@ -48,6 +49,12 @@ public abstract class AbstractPowerUpMinionSpawner extends AbstractPowerUp
       {
          return (int) Math.round(ownerWither.lastTickPosZ);
       }
+
+	@Override
+	public BlockPos getSpawnerPosition() {
+		// TODO Auto-generated method stub
+		return new BlockPos(ownerWither);
+	}
    }
 
    @Config

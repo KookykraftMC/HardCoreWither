@@ -51,7 +51,7 @@ class PowerUpHealthBoost extends AbstractPowerUp
          double newHealth = health * healthBoostMultiplier;
          ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(newHealth);
          // We need to adjust the charging time for the new health situation
-         ownerWither.func_82215_s((int)(newHealth * (2.0F/3.0F)) + 20);
+         ownerWither.setInvulTime((int)(newHealth * (2.0F/3.0F)) + 20);
          ownerWither.setHealth((float)(newHealth) / 3.0F);
          return true;
       }
