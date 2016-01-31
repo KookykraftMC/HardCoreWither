@@ -62,7 +62,7 @@ public class EventHandler
             EntityWither theWither = (EntityWither)event.entity;
             if( !powerUpManager.isWitherPoweredUp(theWither) )
             {
-               List nearbyPlayers = theWither.worldObj.getEntitiesWithinAABB(EntityPlayer.class, theWither.boundingBox.expand(64.0D, 64.0D, 64.0D));
+               List nearbyPlayers = theWither.worldObj.getEntitiesWithinAABB(EntityPlayer.class, theWither.getEntityBoundingBox().expand(64.0D, 64.0D, 64.0D));
                if(nearbyPlayers.size() > 0)
                {
                   double powerUpSize = 0.0;
@@ -112,7 +112,7 @@ public class EventHandler
          {
             powerUpManager.witherDied((EntityWither)event.entityLiving);
             
-            List nearbyPlayers = event.entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, event.entity.boundingBox.expand(64.0D, 64.0D, 64.0D));
+            List nearbyPlayers = event.entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, event.entity.getEntityBoundingBox().expand(64.0D, 64.0D, 64.0D));
             double powerUpSize = 0.0;
             for (int index = 0; index < nearbyPlayers.size(); ++index)
             {

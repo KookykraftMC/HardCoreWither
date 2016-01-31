@@ -6,7 +6,6 @@ package thor12022.hardcorewither.items;
  * Keep that in mind if you like nicely organized creative tabs.
  */
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
@@ -14,6 +13,7 @@ import thor12022.hardcorewither.ModInformation;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Configurable
 public class ItemRegistry

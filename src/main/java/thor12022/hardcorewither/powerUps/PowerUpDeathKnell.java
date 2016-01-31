@@ -41,7 +41,7 @@ class PowerUpDeathKnell extends AbstractPowerUp
    @Override
    public void witherDied()
    {
-      ownerWither.worldObj.newExplosion(ownerWither, ownerWither.posX, ownerWither.posY + (double)ownerWither.getEyeHeight(), ownerWither.posZ, 7.0F * knellStrengthMultiplier, false, ownerWither.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"));
+      ownerWither.worldObj.newExplosion(ownerWither, ownerWither.posX, ownerWither.posY + (double)ownerWither.getEyeHeight(), ownerWither.posZ, 7.0F * knellStrengthMultiplier, false, ownerWither.worldObj.getGameRules().getBoolean("mobGriefing"));
    }
 
 	@Override

@@ -97,7 +97,7 @@ class PowerUpTeleport extends AbstractPowerUp
        
        ownerWither.setPosition(x, y, z);
        
-       if (!ownerWither.worldObj.getCollidingBoundingBoxes(ownerWither, ownerWither.boundingBox).isEmpty())
+       if (!ownerWither.worldObj.getCollidingBoundingBoxes(ownerWither, ownerWither.getEntityBoundingBox()).isEmpty())
        {
            ownerWither.setPosition(oldX, oldY, oldZ);
            return false;

@@ -7,7 +7,6 @@ package thor12022.hardcorewither.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.blocks.BlockRegistry;
@@ -15,6 +14,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class ItemRecipeRegistry

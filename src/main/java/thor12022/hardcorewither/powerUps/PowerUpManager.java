@@ -19,6 +19,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -116,7 +117,7 @@ public class PowerUpManager implements INBTStorageClass
       }
 
       @Override
-      public void processCommand(ICommandSender sender, String[] args, int startingIndex)
+      public void processCommand(ICommandSender sender, String[] args, int startingIndex) throws WrongUsageException
       {
          if( args.length < startingIndex + 2 )
          {
@@ -132,7 +133,7 @@ public class PowerUpManager implements INBTStorageClass
                for(int argIndex = startingIndex; argIndex < args.length - 1; argIndex += 2)
                {
                   String powerUpName = args[argIndex];
-                  int powerUpStrength = parseIntWithMin(sender, args[argIndex + 1], 1);
+                  int powerUpStrength = parseInt(args[argIndex + 1], 1);
                   IPowerUp powerUpPrototype = powerUpPrototypes.get(powerUpName);
                   IPowerUp powerUp = powerUpPrototype.createPowerUp(spawnedWither);
                   // @todo should be able to set or create with correct strength
@@ -153,8 +154,8 @@ public class PowerUpManager implements INBTStorageClass
                throw new WrongUsageException(getCommandUsage(sender));
             }
             spawnedWither.func_82206_m();
-            ChunkCoordinates chunkCoords = sender.getPlayerCoordinates();
-            spawnedWither.setPosition(chunkCoords.posX, chunkCoords.posY, chunkCoords.posZ);
+            BlockPos coords = sender.getPosition();
+            spawnedWither.setPosition(coords.getX(), coords.getY(), coords.getZ());
             savedWitherDataNbt.put(spawnedWither.getUniqueID(), nbt);
             sender.getEntityWorld().spawnEntityInWorld(spawnedWither);
          }
@@ -403,7 +404,7 @@ public class PowerUpManager implements INBTStorageClass
       int formatVersion = nbt.getInteger("formatVersion");
       //! @todo I feel like NBTTagList might be of use here
       NBTTagCompound witherListNbt = (NBTTagCompound) nbt.getTag("witherListNbt");
-      for(String witherUuidString : (Collection<String>)witherListNbt.func_150296_c())
+      for(String witherUuidString : (Collection<String>)witherListNbt.getKeySet())
       {
          UUID witherUuid = UUID.fromString(witherUuidString);
          NBTTagCompound witherNbt = (NBTTagCompound) witherListNbt.getTag(witherUuidString);
@@ -418,12 +419,12 @@ public class PowerUpManager implements INBTStorageClass
             {
                NBTTagCompound newWitherNbt = new NBTTagCompound();
                NBTTagCompound powerUpListNbt = new NBTTagCompound();
-               for(String powerUpName : (Collection<String>)witherNbt.func_150296_c()) 
+               for(String powerUpName : (Collection<String>)witherNbt.getKeySet()) 
                {
                   powerUpListNbt.setTag(powerUpName, witherNbt.getTag("powerUpName"));
                }
                newWitherNbt.setTag("powerUps", powerUpListNbt);
-               newWitherNbt.setInteger("totalStrength", powerUpListNbt.func_150296_c().size());
+               newWitherNbt.setInteger("totalStrength", powerUpListNbt.getKeySet().size());
                newWitherNbt.setBoolean("hasDied", false);
                newWitherNbt.setBoolean("isPendingLootDrops", false);
                // we have no way to look up Withers by UUID until the chunk they are in gets loaded
@@ -465,7 +466,7 @@ public class PowerUpManager implements INBTStorageClass
       witherData.hasDied = nbt.getBoolean("hasDied");
       witherData.isPendingLootDrops = nbt.getBoolean("pendingDrops");
       NBTTagCompound powerUpList = nbt.getCompoundTag("powerUps");
-      for(String powerUpName : (Collection<String>)powerUpList.func_150296_c()) 
+      for(String powerUpName : (Collection<String>)powerUpList.getKeySet()) 
       {
          try 
          {
