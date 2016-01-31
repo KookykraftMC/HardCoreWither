@@ -8,7 +8,7 @@ public class EntityRegistry
    public void register()
    {
 int id = 0;
-      cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(
+      net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(
             EntityBlazeMinion.class,
             EntityBlazeMinion.UNLOCALIZED_NAME,
             id++, 
@@ -16,7 +16,7 @@ int id = 0;
             64, 
             10, 
             true);
-      cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(
+      net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(
             EntityGhastMinion.class,
             EntityGhastMinion.UNLOCALIZED_NAME,
             id++, 
@@ -24,7 +24,7 @@ int id = 0;
             64, 
             10, 
             true);
-      cpw.mods.fml.common.registry.EntityRegistry.registerModEntity(
+      net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(
             EntitySkeletonMinion.class,
             EntitySkeletonMinion.UNLOCALIZED_NAME,
             id++, 

@@ -11,7 +11,6 @@ import java.io.File;
 import thor12022.hardcorewither.blocks.BlockRecipeRegistry;
 import thor12022.hardcorewither.blocks.BlockRegistry;
 import thor12022.hardcorewither.client.gui.CreativeTabBaseMod;
-import thor12022.hardcorewither.client.gui.GuiHandler;
 import thor12022.hardcorewither.command.CommandManager;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.entity.EntityRegistry;

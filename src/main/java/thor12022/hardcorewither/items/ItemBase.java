@@ -14,16 +14,6 @@ public class ItemBase extends Item
 
    // If you aren't setting multiple textures for your item. IE: Non-Metadata
    // items.
-   public ItemBase(String unlocName, String textureName)
-   {
-      super();
-
-      setUnlocalizedName(ModInformation.ID + "." + unlocName);
-      setTextureName(ModInformation.ID + ":" + textureName);
-      setCreativeTab(HardcoreWither.tabBaseMod);
-   }
-
-   // If you are setting multiple textures for your item. IE: Metadata items.
    public ItemBase(String unlocName)
    {
       super();

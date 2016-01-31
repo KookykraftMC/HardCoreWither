@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntitySkeletonMinion extends EntitySkeleton
@@ -45,12 +46,14 @@ public class EntitySkeletonMinion extends EntitySkeleton
    {}
    
    @Override
-   public IEntityLivingData onSpawnWithEgg(IEntityLivingData livingData)
+   public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingData)
    {
       // Apply the Wither Skeleton's standard attributes
+      //! @todo get the base class's aiAttackOnCollide
       this.tasks.addTask(4, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false));
       this.setCurrentItemOrArmor(0, new ItemStack(Items.stone_sword));
       this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0D);
+      this.setCanPickUpLoot(false);
       return livingData;
    }
    
