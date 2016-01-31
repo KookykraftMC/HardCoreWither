@@ -7,9 +7,6 @@ import java.util.Set;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
 import net.minecraft.client.Minecraft;
@@ -22,16 +19,20 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PotionAntiWither extends Potion
 {
+   public static final String UNLOCALIZED_NAME = "antiWither";
    public static int id;
    private static final Map<EntityLivingBase,Integer> affectedEntities = Maps.newHashMap();
    private static final Set<EntityLivingBase> affectedWitheredEntities = Sets.newHashSet();
    
-   public PotionAntiWither( int id )
+   public PotionAntiWither()
    {
-      super( id, false, 1310740);
+      super(new ResourceLocation(UNLOCALIZED_NAME), false, 1310740);
       this.setIconIndex(1, 0);
       MinecraftForge.EVENT_BUS.register(this);
    }
@@ -87,7 +88,7 @@ public class PotionAntiWither extends Potion
             if( witherEffect.getDuration() > affectedEntities.get(event.entityLiving) )
             {
                int newDuration = ( witherEffect.getDuration() - affectedEntities.get(event.entityLiving) ) / ( 2 * (antiWitherEffect.getAmplifier() + 1));
-               HardcoreWither.logger.debug("Anti-Wither reducing Wither effect to " + newDuration/20 + " seconds for " + event.entityLiving.getCommandSenderName());
+               HardcoreWither.logger.debug("Anti-Wither reducing Wither effect to " + newDuration/20 + " seconds for " + event.entityLiving.getDisplayName());
                int amplifier = witherEffect.getAmplifier();
                event.entityLiving.removePotionEffect(Potion.wither.id);
                event.entityLiving.addPotionEffect(new PotionEffect(Potion.wither.id, newDuration, amplifier));
