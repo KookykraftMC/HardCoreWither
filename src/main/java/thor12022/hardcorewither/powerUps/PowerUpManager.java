@@ -19,7 +19,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -289,7 +288,7 @@ public class PowerUpManager implements INBTStorageClass
          // Recalculate the looting based upon Wither strength 
          int lootingLevel = (witherLooting ? event.lootingLevel : 0) + (int)Math.round( Math.log10(witherData.strength + 1) * lootingLevelMultiplier);
          // and resend the drops event
-         if(!ForgeHooks.onLivingDrops(event.entityLiving, event.source, event.drops, lootingLevel, event.recentlyHit, event.specialDropValue))
+         if(!ForgeHooks.onLivingDrops(event.entityLiving, event.source, (ArrayList)event.drops, lootingLevel, event.recentlyHit))
          {
             //then do the same thing EntityLivingBase does
             for (EntityItem item : event.drops)
@@ -317,7 +316,8 @@ public class PowerUpManager implements INBTStorageClass
              if( j > 0)
              {
                 EntityItem entityItem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(Items.nether_star, j, 0));
-                entityItem.delayBeforeCanPickup = 10;
+                //! @todo see if replacement is needed 
+                //entityItem.delayBeforeCanPickup = 10;
                 event.drops.add(entityItem);
              }
          }   
