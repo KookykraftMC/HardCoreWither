@@ -58,7 +58,7 @@ class PowerUpTeleport extends AbstractPowerUp
    @Override
    public void updateWither()
    {
-      if( ownerWither.worldObj.getTotalWorldTime() > teleportNextTick )
+      if( ownerWither.getInvulTime() <= 0 &&  ownerWither.worldObj.getTotalWorldTime() > teleportNextTick )
       {
          int targetId = ownerWither.getWatchedTargetId(0);
          if( targetId != -1)
