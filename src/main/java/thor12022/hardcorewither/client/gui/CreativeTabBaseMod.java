@@ -13,35 +13,44 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPiston;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CreativeTabBaseMod extends CreativeTabs
 {
 
+   private ItemStack icon = new ItemStack( Items.skull, 1, 1);;
+   
    public CreativeTabBaseMod(String tabLabel)
    {
       super(tabLabel);
-      setBackgroundImageName(ModInformation.ID + ".png"); // Automagically has
-                                                          // tab_ applied to it.
-                                                          // Make sure you
-                                                          // change the texture
-                                                          // name.
+      setBackgroundImageName(ModInformation.ID + ".png");
    }
 
    public boolean hasSearchBar()
    {
       return false;
    }
-
+   
    // The tab icon is what you return here.
+   @SideOnly(Side.CLIENT)
    @Override
    public ItemStack getIconItemStack()
    {
-      return new ItemStack( Items.skull, 0, 1);
+      return icon;
    }
 
+
+   @SideOnly(Side.CLIENT)
+   @Override
+   public int getIconItemDamage() {
+     return icon.getItemDamage();
+   }
+   
+   @SideOnly(Side.CLIENT)
    @Override
    public Item getTabIconItem()
    {
-      return new Item();
+      return icon.getItem();
    }
 }
