@@ -10,16 +10,20 @@ import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.ModInformation;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Configurable
 public class ItemRegistry
 {
    // public static Item exampleItem;
-   public static Item starryApple;
+   public static ItemStarryApple starryApple;
 
    @Config
    private boolean enableStarryApple = true;
@@ -34,7 +38,13 @@ public class ItemRegistry
       starryApple = new ItemStarryApple();
       if(enableStarryApple)
       {
-         GameRegistry.registerItem(starryApple, "StarryApple");
+         GameRegistry.registerItem(starryApple, starryApple.NAME);
       }
+   }
+   
+   @SideOnly(Side.CLIENT)
+   public void registerModels()
+   {
+      ModelLoader.setCustomModelResourceLocation(starryApple, 0, new ModelResourceLocation(ModInformation.ID + ":" + starryApple.NAME));
    }
 }

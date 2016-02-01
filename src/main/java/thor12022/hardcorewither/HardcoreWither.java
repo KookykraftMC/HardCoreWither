@@ -62,7 +62,6 @@ public class HardcoreWither
    private PlayerHandler            playerHandler  =  new PlayerHandler();;
    private DataStoreManager         dataStore      =  new DataStoreManager(ModInformation.CHANNEL);
    private EventHandler             eventHandler   =  new EventHandler(playerHandler, powerUpManager);
-   private ItemRegistry             itemRegistry   =  new ItemRegistry();
    private BlockRegistry            blockRegistry  =  new BlockRegistry();
    private PotionRegistry           potionRegistry =  new PotionRegistry();
    private EntityRegistry           entityRegistry =  new EntityRegistry();
@@ -83,7 +82,8 @@ public class HardcoreWither
       
       ConfigManager.getInstance().init(event.getSuggestedConfigurationFile());
 
-      itemRegistry.registerItems();
+      proxy.preInit();
+      
       blockRegistry.registerBlocks();
       potionRegistry.registerPotions();
       entityRegistry.register();

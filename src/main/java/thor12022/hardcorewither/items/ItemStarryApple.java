@@ -22,10 +22,12 @@ import java.util.List;
 
 public class ItemStarryApple extends ItemFood
 {
+   public final static String NAME = "starryApple";
+      
    public ItemStarryApple()
    {
       super(4, 1.2F, false);
-      setUnlocalizedName(ModInformation.ID + ".starryApple");
+      setUnlocalizedName(ModInformation.ID + "." + NAME);
       setCreativeTab(HardcoreWither.tabBaseMod);
       this.setAlwaysEdible();
    }
