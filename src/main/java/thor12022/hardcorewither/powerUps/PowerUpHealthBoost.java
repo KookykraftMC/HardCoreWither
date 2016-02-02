@@ -11,16 +11,16 @@ class PowerUpHealthBoost extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 64;
    private final static int DEFAULT_MIN_LEVEL = 3;
-   
+
    @Config(minFloat = 1f, maxFloat = 10f)
    private static float healthBoostMultiplier = 1.1f;
-   
+
    protected PowerUpHealthBoost()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
-      ConfigManager.getInstance().register(this);   
+      ConfigManager.getInstance().register(this);
    }
-   
+
    private PowerUpHealthBoost(EntityWither theOwnerWither)
    {
       super(theOwnerWither);
@@ -36,14 +36,25 @@ class PowerUpHealthBoost extends AbstractPowerUp
 
    @Override
    public void updateWither()
-   {}
+   {
+      if(!ownerWither.worldObj.isRemote)
+      {
+         if(ownerWither.func_82212_n() >= 20)
+         {
+            float baseHealth = (float) ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
+            // ! @todo this is close, but not quite right, it is a bit too fast
+            // at higher levels
+            ownerWither.heal((((baseHealth * (2f / 3f)) - 200) / 200));
+         }
+      }
+   }
 
    @Override
    public void witherDied()
    {}
 
    @Override
-   public boolean increasePower() 
+   public boolean increasePower()
    {
       if(super.increasePower())
       {
@@ -51,8 +62,8 @@ class PowerUpHealthBoost extends AbstractPowerUp
          double newHealth = health * healthBoostMultiplier;
          ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(newHealth);
          // We need to adjust the charging time for the new health situation
-         ownerWither.func_82215_s((int)(newHealth * (2.0F/3.0F)) + 20);
-         ownerWither.setHealth((float)(newHealth) / 3.0F);
+         ownerWither.func_82215_s((int) (newHealth * (2.0F / 3.0F)) + 20);
+         ownerWither.setHealth((float) (newHealth) / 3.0F);
          return true;
       }
       else
