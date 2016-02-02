@@ -11,16 +11,16 @@ class PowerUpHealthBoost extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 64;
    private final static int DEFAULT_MIN_LEVEL = 3;
-   
+
    @Config(minFloat = 1f, maxFloat = 10f)
    private static float healthBoostMultiplier = 1.1f;
-   
+
    protected PowerUpHealthBoost()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
-      ConfigManager.getInstance().register(this);   
+      ConfigManager.getInstance().register(this);
    }
-   
+
    private PowerUpHealthBoost(EntityWither theOwnerWither)
    {
       super(theOwnerWither);
@@ -39,12 +39,12 @@ class PowerUpHealthBoost extends AbstractPowerUp
    {
       if(ownerWither.isServerWorld())
       {
-         int invulTime = ownerWither.getInvulTime(); 
-         if(invulTime >= 20)
+         if(ownerWither.getInvulTime() >= 20)
          {
-            float baseHealth = (float)ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
-            //! @todo this is close, but not quite right, it is a bit too fast at higher levels
-            ownerWither.heal( (((baseHealth * (2f/3f)) - 200) / 200));
+            float baseHealth = (float) ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
+            // ! @todo this is close, but not quite right, it is a bit too fast
+            // at higher levels
+            ownerWither.heal((((baseHealth * (2f / 3f)) - 200) / 200));
          }
       }
    }
@@ -54,7 +54,7 @@ class PowerUpHealthBoost extends AbstractPowerUp
    {}
 
    @Override
-   public boolean increasePower() 
+   public boolean increasePower()
    {
       if(super.increasePower())
       {
