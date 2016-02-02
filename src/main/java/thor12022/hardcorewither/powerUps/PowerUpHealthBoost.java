@@ -36,7 +36,18 @@ class PowerUpHealthBoost extends AbstractPowerUp
 
    @Override
    public void updateWither()
-   {}
+   {
+      if(ownerWither.isServerWorld())
+      {
+         int invulTime = ownerWither.getInvulTime(); 
+         if(invulTime >= 20)
+         {
+            float baseHealth = (float)ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
+            //! @todo this is close, but not quite right, it is a bit too fast at higher levels
+            ownerWither.heal( (((baseHealth * (2f/3f)) - 200) / 200));
+         }
+      }
+   }
 
    @Override
    public void witherDied()
@@ -50,9 +61,6 @@ class PowerUpHealthBoost extends AbstractPowerUp
          double health = ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
          double newHealth = health * healthBoostMultiplier;
          ownerWither.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(newHealth);
-         // We need to adjust the charging time for the new health situation
-         ownerWither.setInvulTime((int)(newHealth * (2.0F/3.0F)) + 20);
-         ownerWither.setHealth((float)(newHealth) / 3.0F);
          return true;
       }
       else
