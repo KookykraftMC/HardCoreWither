@@ -1,19 +1,14 @@
 package thor12022.hardcorewither.powerUps;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.config.Config;
-import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
-import thor12022.hardcorewither.interfaces.INBTStorageClass;
 import thor12022.hardcorewither.util.MultiRange;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.config.Configuration;
 
 @Configurable (syncNotification = "configChangeNotification")
 abstract class AbstractPowerUp implements IPowerUp
@@ -64,6 +59,7 @@ abstract class AbstractPowerUp implements IPowerUp
       return ((blacklistDimsRanges != null) && !blacklistDimsRanges.contains(theOwnerWither.dimension));
    }
    
+   @SuppressWarnings("unused")
    private void configChangeNotification()
    {
       blacklistDimsRanges = new MultiRange(blacklistDims);

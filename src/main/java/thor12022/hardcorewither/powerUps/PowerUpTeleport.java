@@ -5,14 +5,8 @@ import java.util.Random;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.util.MathHelper;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
 @Configurable
 class PowerUpTeleport extends AbstractPowerUp

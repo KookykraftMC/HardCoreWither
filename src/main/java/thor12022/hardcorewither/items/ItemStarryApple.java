@@ -2,18 +2,14 @@ package thor12022.hardcorewither.items;
 
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
-import thor12022.hardcorewither.potions.PotionAntiWither;
 import thor12022.hardcorewither.potions.PotionRegistry;
 import thor12022.hardcorewither.util.TextHelper;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

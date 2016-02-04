@@ -1,21 +1,13 @@
 package thor12022.hardcorewither.handlers;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
-import thor12022.hardcorewither.HardcoreWither;
+
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 public class PlayerHandler implements INBTStorageClass
 {

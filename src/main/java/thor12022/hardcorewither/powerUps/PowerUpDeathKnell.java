@@ -3,7 +3,6 @@ package thor12022.hardcorewither.powerUps;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
 
 @Configurable
@@ -41,7 +40,7 @@ class PowerUpDeathKnell extends AbstractPowerUp
    @Override
    public void witherDied()
    {
-      ownerWither.worldObj.newExplosion(ownerWither, ownerWither.posX, ownerWither.posY + (double)ownerWither.getEyeHeight(), ownerWither.posZ, 7.0F * knellStrengthMultiplier, false, ownerWither.worldObj.getGameRules().getBoolean("mobGriefing"));
+      ownerWither.worldObj.newExplosion(ownerWither, ownerWither.posX, ownerWither.posY + ownerWither.getEyeHeight(), ownerWither.posZ, 7.0F * knellStrengthMultiplier, false, ownerWither.worldObj.getGameRules().getBoolean("mobGriefing"));
    }
 
 	@Override

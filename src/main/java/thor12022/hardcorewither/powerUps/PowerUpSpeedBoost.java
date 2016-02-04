@@ -4,8 +4,6 @@ import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 
 @Configurable
 public class PowerUpSpeedBoost extends AbstractPowerUp

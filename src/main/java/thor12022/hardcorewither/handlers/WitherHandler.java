@@ -16,7 +16,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import thor12022.hardcorewither.HardcoreWither;
-import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;

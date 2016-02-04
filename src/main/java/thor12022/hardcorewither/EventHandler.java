@@ -9,16 +9,12 @@ import java.util.List;
 
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -90,10 +86,11 @@ public class EventHandler
          if (event.entityLiving != null && event.entityLiving.getClass() == EntityWither.class)
          {
             powerUpManager.update((EntityWither) event.entityLiving);
+            
          }
       }
    }
-
+   
    @SubscribeEvent(priority=EventPriority.HIGHEST)
    public void onEntityDieing(LivingDropsEvent event)
    {
@@ -113,11 +110,10 @@ public class EventHandler
             powerUpManager.witherDied((EntityWither)event.entityLiving);
             
             List nearbyPlayers = event.entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, event.entity.getEntityBoundingBox().expand(64.0D, 64.0D, 64.0D));
-            double powerUpSize = 0.0;
             for (int index = 0; index < nearbyPlayers.size(); ++index)
             {
                EntityPlayer player = (EntityPlayer)nearbyPlayers.get(index);
-               powerUpSize += playerHandler.wasAtWitherSpawn(player);
+               playerHandler.wasAtWitherSpawn(player);
                player.addChatMessage(new ChatComponentText(TextHelper.localize("info." + ModInformation.ID + ".chat.wither-experience")));
             }
          }

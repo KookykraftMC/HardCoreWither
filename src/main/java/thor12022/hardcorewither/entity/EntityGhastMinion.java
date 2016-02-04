@@ -2,7 +2,6 @@ package thor12022.hardcorewither.entity;
 
 import thor12022.hardcorewither.ModInformation;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.util.DamageSource;

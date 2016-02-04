@@ -4,10 +4,6 @@ package thor12022.hardcorewither.blocks;
  * General place to do all your block related recipe things'n'stuff.
  */
 
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-
 public class BlockRecipeRegistry
 {
 

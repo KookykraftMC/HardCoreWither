@@ -4,18 +4,12 @@ package thor12022.hardcorewither.config;
  * Creation and usage of the config file.
  */
 
-import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
-import thor12022.hardcorewither.HardcoreWither;
-import thor12022.hardcorewither.ModInformation;
 
 public class ConfigManager
 {
@@ -72,7 +66,7 @@ public class ConfigManager
       processClass(sectionName, target, target.getClass());
    }
    
-   private void processNotificationClass(Object target)
+   private static void processNotificationClass(Object target)
    {
       Configurable targetAnnotation = target.getClass().getAnnotation(Configurable.class);
       

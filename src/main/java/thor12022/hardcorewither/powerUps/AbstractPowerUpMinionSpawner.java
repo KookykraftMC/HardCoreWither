@@ -1,11 +1,7 @@
 package thor12022.hardcorewither.powerUps;
 
-import java.util.Map;
-
 import thor12022.hardcorewither.config.Config;
-import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
-import thor12022.hardcorewither.entity.EntityBlazeMinion;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;

@@ -1,7 +1,6 @@
 package thor12022.hardcorewither.potions;
 
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import com.google.common.collect.Maps;
@@ -12,8 +11,6 @@ import thor12022.hardcorewither.ModInformation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;

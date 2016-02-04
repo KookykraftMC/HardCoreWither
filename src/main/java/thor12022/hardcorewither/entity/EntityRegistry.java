@@ -1,7 +1,6 @@
 package thor12022.hardcorewither.entity;
 
 import thor12022.hardcorewither.HardcoreWither;
-import thor12022.hardcorewither.ModInformation;
 
 public class EntityRegistry
 {

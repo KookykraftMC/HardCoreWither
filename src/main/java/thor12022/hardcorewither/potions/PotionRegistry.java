@@ -1,12 +1,7 @@
 package thor12022.hardcorewither.potions;
 
-import thor12022.hardcorewither.config.Config;
-import thor12022.hardcorewither.config.ConfigManager;
-import thor12022.hardcorewither.config.Configurable;
-import thor12022.hardcorewither.HardcoreWither;
 import net.minecraft.potion.Potion;
 
-@Configurable
 public class PotionRegistry
 {
    

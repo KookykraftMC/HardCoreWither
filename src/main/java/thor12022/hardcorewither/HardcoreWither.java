@@ -1,13 +1,5 @@
 package thor12022.hardcorewither;
 
-/*
- * Check all the classes for (hopefully) detailed descriptions of what it does. There will also be tidbits of comments throughout the codebase.
- * If you wish to add a description to a class, or extend/change an existing one, submit a PR with your changes.
- */
-
-//import biomesoplenty.api.content.BOPCBiomes;
-import java.io.File;
-
 import thor12022.hardcorewither.blocks.BlockRecipeRegistry;
 import thor12022.hardcorewither.blocks.BlockRegistry;
 import thor12022.hardcorewither.client.gui.CreativeTabBaseMod;
@@ -15,7 +7,6 @@ import thor12022.hardcorewither.command.CommandManager;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.entity.EntityRegistry;
 import thor12022.hardcorewither.items.ItemRecipeRegistry;
-import thor12022.hardcorewither.items.ItemRegistry;
 import thor12022.hardcorewither.handlers.PlayerHandler;
 import thor12022.hardcorewither.handlers.TinkersConstructHandler;
 import thor12022.hardcorewither.handlers.WitherHandler;
@@ -25,13 +16,7 @@ import thor12022.hardcorewither.proxies.CommonProxy;
 import thor12022.hardcorewither.EventHandler;
 import thor12022.hardcorewither.util.TextHelper;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -41,11 +26,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import scala.Array;
 
 @Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.DEPEND)
 public class HardcoreWither
@@ -67,6 +49,7 @@ public class HardcoreWither
    private PotionRegistry           potionRegistry =  new PotionRegistry();
    private EntityRegistry           entityRegistry =  new EntityRegistry();
    private TinkersConstructHandler  tiCoRegistry   =  new TinkersConstructHandler();
+   @SuppressWarnings("unused")
    private WitherHandler            witherHandler  =  new WitherHandler();
 
    public HardcoreWither()

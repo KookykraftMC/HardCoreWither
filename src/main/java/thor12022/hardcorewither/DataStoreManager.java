@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
@@ -17,7 +15,6 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.event.world.WorldEvent.Unload;
@@ -97,6 +94,7 @@ public class DataStoreManager
                globalNbt.setTag(storageClasses.get(theClass), classNbt);
             }
             CompressedStreamTools.writeCompressed(globalNbt, fileOutputStream );
+            fileOutputStream.close();
             HardcoreWither.logger.debug("Saved data" );
          }
          catch( Throwable e )
@@ -139,10 +137,9 @@ public class DataStoreManager
       }
       else
       {
-         FileInputStream fileInputStream = null;
          try
          {
-            fileInputStream = new FileInputStream( saveFile );
+            FileInputStream fileInputStream = new FileInputStream( saveFile );
             NBTTagCompound globalNbt = CompressedStreamTools.readCompressed( fileInputStream );
             Iterator iter = storageClasses.keySet().iterator();
             while (iter.hasNext()) 
@@ -151,6 +148,7 @@ public class DataStoreManager
                theClass.readFromNBT(globalNbt.getCompoundTag(storageClasses.get(theClass)));
             }
             HardcoreWither.logger.debug("Data loaded" );
+            fileInputStream.close();
          }
          catch( Throwable e )
          {

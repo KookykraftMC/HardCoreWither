@@ -1,19 +1,13 @@
 package thor12022.hardcorewither.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.HardcoreWither;
-import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.potions.PotionAntiWither;
 import thor12022.hardcorewither.potions.PotionRegistry;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +15,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

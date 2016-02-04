@@ -3,15 +3,9 @@ package thor12022.hardcorewither.client.gui;
 //Creates your creative tab.
 
 import thor12022.hardcorewither.ModInformation;
-import thor12022.hardcorewither.items.ItemRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSilverfish;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemPiston;
-import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
