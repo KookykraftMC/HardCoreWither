@@ -18,6 +18,7 @@ import thor12022.hardcorewither.items.ItemRecipeRegistry;
 import thor12022.hardcorewither.items.ItemRegistry;
 import thor12022.hardcorewither.handlers.PlayerHandler;
 import thor12022.hardcorewither.handlers.TinkersConstructHandler;
+import thor12022.hardcorewither.handlers.WitherHandler;
 import thor12022.hardcorewither.potions.PotionRegistry;
 import thor12022.hardcorewither.powerUps.PowerUpManager;
 import thor12022.hardcorewither.proxies.CommonProxy;
@@ -66,6 +67,7 @@ public class HardcoreWither
    private PotionRegistry           potionRegistry =  new PotionRegistry();
    private EntityRegistry           entityRegistry =  new EntityRegistry();
    private TinkersConstructHandler  tiCoRegistry   =  new TinkersConstructHandler();
+   private WitherHandler            witherHandler  =  new WitherHandler();
 
    public HardcoreWither()
    {
