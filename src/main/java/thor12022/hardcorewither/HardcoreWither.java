@@ -102,7 +102,7 @@ public class HardcoreWither
       ItemRecipeRegistry.registerItemRecipes();
       BlockRecipeRegistry.registerBlockRecipes();
 
-      if(Loader.isModLoaded("tconstruct"))
+      if(Loader.isModLoaded("TConstruct"))
       {
          tiCoRegistry.init(event);
       }

@@ -56,7 +56,7 @@ public class TinkersConstructHandler
       {
          if(heartCanister == null)
          {
-            heartCanister = GameRegistry.findItem("tconstruct", "heartCanister");
+            heartCanister = GameRegistry.findItem("TConstruct", "heartCanister");
          }
          
          if(heartCanister != null)
