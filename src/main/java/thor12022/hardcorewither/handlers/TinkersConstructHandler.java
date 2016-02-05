@@ -40,30 +40,37 @@ public class TinkersConstructHandler
    @Config(minInt = 0, maxInt = 10)
    private static int greenHeartDropRarity = 2;
    
-   private static Item heartCanister = GameRegistry.findItem("TConstruct", "heartCanister");
+   private static Item heartCanister = null;
    
    public TinkersConstructHandler()
    {
      ConfigManager.getInstance().register(this);
-	  
-     if(heartCanister != null)
-	  {
-		  MinecraftForge.EVENT_BUS.register(this);
-	  }
-	  else
-	  {
-	     HardcoreWither.logger.warn("Cannot find TConstruct:heartCanister, disabling Tinkers' Construct support");
-	  }
+	  MinecraftForge.EVENT_BUS.register(this);
    }
    
    public void init(FMLInitializationEvent event)
    {
-      if(enableGreenHeartCanister && heartCanister != null)
+
+      HardcoreWither.logger.info("Tinkers' Constuct Support Initalizing");
+      if(enableGreenHeartCanister)
       {
-         GameRegistry.addShapelessRecipe( new ItemStack(heartCanister, 1, 6), 
-                                          new ItemStack(heartCanister, 1, 4), 
-                                          new ItemStack(heartCanister, 1, 5), 
-                                          new ItemStack(Items.nether_star));
+         if(heartCanister == null)
+         {
+            heartCanister = GameRegistry.findItem("tconstruct", "heartCanister");
+         }
+         
+         if(heartCanister != null)
+         {
+            GameRegistry.addShapelessRecipe( new ItemStack(heartCanister, 1, 6), 
+                                             new ItemStack(heartCanister, 1, 4), 
+                                             new ItemStack(heartCanister, 1, 5), 
+                                             new ItemStack(Items.nether_star));
+         }
+         else
+         {
+            MinecraftForge.EVENT_BUS.unregister(this);
+            HardcoreWither.logger.warn("Cannot find TConstruct:heartCanister, disabling Tinkers' Construct support");
+         }
       }
    }
    
