@@ -11,7 +11,7 @@ int id = 0;
             EntityBlazeMinion.class,
             EntityBlazeMinion.UNLOCALIZED_NAME,
             id++, 
-            HardcoreWither.instance, 
+            HardcoreWither.INSTANCE, 
             64, 
             10, 
             true);
@@ -19,7 +19,7 @@ int id = 0;
             EntityGhastMinion.class,
             EntityGhastMinion.UNLOCALIZED_NAME,
             id++, 
-            HardcoreWither.instance, 
+            HardcoreWither.INSTANCE, 
             64, 
             10, 
             true);
@@ -27,7 +27,7 @@ int id = 0;
             EntitySkeletonMinion.class,
             EntitySkeletonMinion.UNLOCALIZED_NAME,
             id++, 
-            HardcoreWither.instance, 
+            HardcoreWither.INSTANCE, 
             64, 
             10, 
             true);

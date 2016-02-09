@@ -1,7 +1,7 @@
 package thor12022.hardcorewither.powerUps;
 
+import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.config.Config;
-import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.entity.boss.EntityWither;
 
@@ -17,7 +17,7 @@ public class PowerUpSpeedBoost extends AbstractPowerUp
    protected PowerUpSpeedBoost()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
-      ConfigManager.getInstance().register(this);
+      HardcoreWither.config.register(this);
    }
 
    private PowerUpSpeedBoost(EntityWither theOwnerWither)

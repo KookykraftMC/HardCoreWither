@@ -1,7 +1,7 @@
 package thor12022.hardcorewither.powerUps;
 
 import net.minecraft.entity.boss.EntityWither;
-import thor12022.hardcorewither.config.ConfigManager;
+import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.entity.EntityGhastMinion;
 
@@ -14,7 +14,7 @@ class PowerUpGhastMinionSpawner extends AbstractPowerUpMinionSpawner
    protected PowerUpGhastMinionSpawner()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
-      ConfigManager.getInstance().register(this);   
+      HardcoreWither.config.register(this);   
    }
    
    private PowerUpGhastMinionSpawner(EntityWither theOwnerWither)

@@ -18,7 +18,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.handlers.PlayerHandler;
@@ -43,7 +42,7 @@ public class EventHandler
       //! @todo pretty sure this event is invalid if there are multiple config files
       if(eventArgs.modID.equals(ModInformation.ID))
       {
-         ConfigManager.getInstance().syncConfig();
+         HardcoreWither.config.syncConfig();
          HardcoreWither.logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.config.refresh"));
       }
    }

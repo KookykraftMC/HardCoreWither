@@ -12,22 +12,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class ConfigManager
-{
-
-   private static ConfigManager instance = new ConfigManager();
-   
+{   
    private ArrayList<Object> configClasses = new ArrayList<Object>();
    private Configuration configuration;
    
-   public void init(File config)
+   public ConfigManager(File config)
    {
       configuration = new Configuration(config);
-      syncConfig();
-   }
-   
-   public static ConfigManager getInstance()
-   {
-      return instance;
    }
    
    public void register(Object target)
@@ -36,6 +27,8 @@ public class ConfigManager
       if(annotation != null)
       {
          configClasses.add(target);
+         processConfigClass(target);
+         configuration.save();
       }
    }
 

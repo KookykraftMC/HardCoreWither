@@ -4,21 +4,25 @@ import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.potions.PotionRegistry;
 import thor12022.hardcorewither.util.TextHelper;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemStarryApple extends ItemFood
+public class ItemStarryApple extends ItemFood implements IItem
 {
-   public final static String NAME = "starryApple";
+   private final static String NAME = "starryApple";
       
    public ItemStarryApple()
    {
@@ -59,5 +63,34 @@ public class ItemStarryApple extends ItemFood
           player.addPotionEffect(new PotionEffect(Potion.damageBoost.id,            900, 1));
           player.addPotionEffect(new PotionEffect(Potion.heal.id,                   0,    0));
        }
+   }
+
+   @Override
+   public String name()
+   {
+      return NAME;
+   }
+
+   @Override
+   public void registerItem()
+   {
+      GameRegistry.registerItem(this, NAME);
+   }
+
+   @Override
+   public void registerModel()
+   {
+      ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(ModInformation.ID + ":" + NAME));
+   }
+
+   @Override
+   public void registerRecipe()
+   {
+      GameRegistry.addShapedRecipe(new ItemStack(this), new Object[]{
+            " s ", 
+            "sas", 
+            " s ", 
+            'a', Items.apple, 
+            's', Items.nether_star});
    }
 }

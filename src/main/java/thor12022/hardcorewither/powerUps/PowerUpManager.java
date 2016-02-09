@@ -22,7 +22,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import thor12022.hardcorewither.command.AbstractSubCommand;
 import thor12022.hardcorewither.command.CommandManager;
 import thor12022.hardcorewither.config.Config;
-import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
@@ -164,7 +163,7 @@ public class PowerUpManager implements INBTStorageClass
    public PowerUpManager()
    {
       CommandManager.getInstance().registerSubCommand(spawnCommand);
-      ConfigManager.getInstance().register(this);
+      HardcoreWither.config.register(this);
       MinecraftForge.EVENT_BUS.register(this);
    }
    

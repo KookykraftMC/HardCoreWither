@@ -7,10 +7,17 @@ gui.hardcorewither.config.title=Hardcore Wither Configuration
 #BLOCKS
 
 #ITEMS
-item.hardcorewither.starryApple.name=Starry Apple
+item.hardcorewither.starryApple.name=§rStarry Apple
+item.hardcorewither.starryAxe.name=Starry Axe
+item.hardcorewither.starryPickaxe.name=Starry Pickaxe
+item.hardcorewither.starryShovel.name=Starry Shovel
+item.hardcorewither.starrySword.name=Starry Sword
+item.hardcorewither.starryEmerald.name=Starry Emerald
+item.hardcorewither.starryStick.name=Starry Stick
 
 #TOOLTIPS
 tooltip.hardcorewither.starryApple=With fortune this may turn a Wither's heart green with envy.
+tooltip.hardcorewither.unbreaking=Simply Unbreakable™
 
 #POTIONS
 potion.antiWither=Anti-Wither

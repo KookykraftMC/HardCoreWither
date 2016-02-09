@@ -13,11 +13,11 @@ import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.config.Config;
-import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 
 @Configurable
@@ -30,9 +30,15 @@ public class WitherHandler
  
    public WitherHandler()
    {
-     ConfigManager.getInstance().register(this);
-     
-     MinecraftForge.EVENT_BUS.register(this);
+     HardcoreWither.config.register(this);
+     if(!Loader.isModLoaded("witherchargingfix"))
+     {
+        MinecraftForge.EVENT_BUS.register(this);
+     }
+     else
+     {
+        HardcoreWither.logger.info("Wither Charging Fix Mod loaded, disabling internal Wither Charging Fix");
+     }
    }
    
    @SubscribeEvent(priority=EventPriority.LOW)

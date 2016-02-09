@@ -3,7 +3,6 @@ package thor12022.hardcorewither.handlers;
 import java.util.Random;
 
 import thor12022.hardcorewither.config.Config;
-import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.potions.PotionAntiWither;
@@ -17,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -37,11 +35,11 @@ public class TinkersConstructHandler
    
    public TinkersConstructHandler()
    {
-     ConfigManager.getInstance().register(this);
+     HardcoreWither.config.register(this);
 	  MinecraftForge.EVENT_BUS.register(this);
    }
    
-   public void init(FMLInitializationEvent event)
+   public void init()
    {
 
       HardcoreWither.logger.info("Tinkers' Constuct Support Initalizing");

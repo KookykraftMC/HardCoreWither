@@ -2,8 +2,8 @@ package thor12022.hardcorewither.powerUps;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
+import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.config.Config;
-import thor12022.hardcorewither.config.ConfigManager;
 import thor12022.hardcorewither.config.Configurable;
 
 @Configurable
@@ -18,7 +18,7 @@ class PowerUpHealthBoost extends AbstractPowerUp
    protected PowerUpHealthBoost()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
-      ConfigManager.getInstance().register(this);
+      HardcoreWither.config.register(this);
    }
 
    private PowerUpHealthBoost(EntityWither theOwnerWither)
