@@ -1,7 +1,5 @@
 package thor12022.hardcorewither.powerUps;
 
-import java.util.Random;
-
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
@@ -13,7 +11,6 @@ class PowerUpTeleport extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
    private final static int DEFAULT_MIN_LEVEL = 4;
-   private static final Random random = new Random();
    
    @Config(minFloat = 1f, maxFloat = 10f)
    private static float teleportFrequencyMultiplier = 1.1f;
@@ -68,9 +65,9 @@ class PowerUpTeleport extends AbstractPowerUp
                double standardDeviation = 4 * teleportInaccuracy;
                do
                {
-                  teleportXPos = target.lastTickPosX + (meanDistance * (random.nextBoolean() ? 1 : -1)) + (standardDeviation * random.nextGaussian());
-                  teleportYPos = target.lastTickPosY + (meanDistance * (random.nextBoolean() ? 1 : -1)) + (standardDeviation * random.nextGaussian());
-                  teleportZPos = target.lastTickPosZ + (meanDistance * (random.nextBoolean() ? 1 : -1)) + (standardDeviation * random.nextGaussian());
+                  teleportXPos = target.lastTickPosX + (meanDistance * (HardcoreWither.RAND.nextBoolean() ? 1 : -1)) + (standardDeviation * HardcoreWither.RAND.nextGaussian());
+                  teleportYPos = target.lastTickPosY + (meanDistance * (HardcoreWither.RAND.nextBoolean() ? 1 : -1)) + (standardDeviation * HardcoreWither.RAND.nextGaussian());
+                  teleportZPos = target.lastTickPosZ + (meanDistance * (HardcoreWither.RAND.nextBoolean() ? 1 : -1)) + (standardDeviation * HardcoreWither.RAND.nextGaussian());
                   if(teleportYPos < 0)
                   {
                      teleportYPos = 0;
@@ -126,7 +123,7 @@ class PowerUpTeleport extends AbstractPowerUp
    private void setNextRandomTick()
    {
       int strengthBasedTick = (int) (teleportFequencyBase / (super.powerStrength * teleportFrequencyMultiplier));
-      int modifier = (int) ((random.nextGaussian() * teleportRandomness) * strengthBasedTick);
+      int modifier = (int) ((HardcoreWither.RAND.nextGaussian() * teleportRandomness) * strengthBasedTick);
       teleportNextTick =  ownerWither.worldObj.getTotalWorldTime() + strengthBasedTick + modifier;
    }
 

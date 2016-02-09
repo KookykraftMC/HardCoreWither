@@ -1,7 +1,5 @@
 package thor12022.hardcorewither.powerUps;
 
-import java.util.Random;
-
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
@@ -14,7 +12,6 @@ class PowerUpLightning extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
    private final static int DEFAULT_MIN_LEVEL = 1;
-   private final static Random random = new Random();
    
    @Config(minFloat = 1f, maxFloat = 5f)
    private static float lightningFrequencyMultiplier  = 1.1f;
@@ -45,7 +42,7 @@ class PowerUpLightning extends AbstractPowerUp
    private void setNextRandomTick()
    {
       int strengthBasedTick = (int) (lightningFequencyBase / (super.powerStrength * lightningFrequencyMultiplier));
-      int modifier = (int) ((random.nextGaussian() * lightningRandomness) * strengthBasedTick);
+      int modifier = (int) ((HardcoreWither.RAND.nextGaussian() * lightningRandomness) * strengthBasedTick);
       lightningNextTick =  ownerWither.worldObj.getTotalWorldTime() + strengthBasedTick + modifier;
    }
    
@@ -67,9 +64,9 @@ class PowerUpLightning extends AbstractPowerUp
             Entity target = ownerWither.worldObj.getEntityByID(targetId);
             if(target != null)
             {
-               double lightningXPos = target.lastTickPosX + (8 * random.nextGaussian() * lightningInaccuracy);
-               double lightningYPos = target.lastTickPosY + (8 * random.nextGaussian() * lightningInaccuracy);
-               double lightningZPos = target.lastTickPosZ + (8 * random.nextGaussian() * lightningInaccuracy);
+               double lightningXPos = target.lastTickPosX + (8 * HardcoreWither.RAND.nextGaussian() * lightningInaccuracy);
+               double lightningYPos = target.lastTickPosY + (8 * HardcoreWither.RAND.nextGaussian() * lightningInaccuracy);
+               double lightningZPos = target.lastTickPosZ + (8 * HardcoreWither.RAND.nextGaussian() * lightningInaccuracy);
                ownerWither.worldObj.addWeatherEffect(new EntityLightningBolt(ownerWither.worldObj, lightningXPos, lightningYPos, lightningZPos));
                setNextRandomTick();
             }

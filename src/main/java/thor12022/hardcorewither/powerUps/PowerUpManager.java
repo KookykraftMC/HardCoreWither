@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 import net.minecraft.command.ICommandSender;
@@ -30,7 +29,6 @@ import thor12022.hardcorewither.interfaces.INBTStorageClass;
 public class PowerUpManager implements INBTStorageClass
 {
    static final int NBT_FORMAT = 1;
-   private static final Random RANDOM =  new Random();
    
    private class WitherData
    {
@@ -222,7 +220,7 @@ public class PowerUpManager implements INBTStorageClass
          int usedStrength = 0;
          while(usedStrength < sizeOfPowerUp && validPowerUpPrototypes.size() > 0)
          {
-            IPowerUp powerUpPrototpe = (IPowerUp) validPowerUpPrototypes.toArray()[RANDOM.nextInt(validPowerUpPrototypes.size())];
+            IPowerUp powerUpPrototpe = (IPowerUp) validPowerUpPrototypes.toArray()[HardcoreWither.RAND.nextInt(validPowerUpPrototypes.size())];
             if(powerUpPrototpe.minPower() > sizeOfPowerUp)
             {
                validPowerUpPrototypes.remove(powerUpPrototpe);
@@ -308,7 +306,7 @@ public class PowerUpManager implements INBTStorageClass
          {
              int j = 0;
 
-             j += Math.round(Math.abs(this.RANDOM.nextGaussian() * event.lootingLevel * netherStarLootingMultiplier));
+             j += Math.round(Math.abs(HardcoreWither.RAND.nextGaussian() * event.lootingLevel * netherStarLootingMultiplier));
 
              if( j > 0)
              {

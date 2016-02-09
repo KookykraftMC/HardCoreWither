@@ -1,11 +1,5 @@
 package thor12022.hardcorewither.items;
 
-/*
- * Class to register your blocks in.
- * The order that you list them here is the order they are registered.
- * Keep that in mind if you like nicely organized creative tabs.
- */
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 

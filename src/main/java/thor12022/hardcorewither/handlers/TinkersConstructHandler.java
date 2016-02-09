@@ -1,7 +1,5 @@
 package thor12022.hardcorewither.handlers;
 
-import java.util.Random;
-
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.HardcoreWither;
@@ -87,11 +85,10 @@ public class TinkersConstructHandler
                 if(PotionAntiWither.HasEntityBeenWithered(killerPlayer))
                 {
                    //FeedTheCreeperTweaks.logger.debug("They were withered!");
-                   Random rand = new Random();
                    int numberOfHearts = 0;
                    for( int lootingLevel = event.lootingLevel; lootingLevel > 0; --lootingLevel)
                    {
-                      numberOfHearts += rand.nextInt(greenHeartDropRarity) == 0 ? 1 : 0;
+                      numberOfHearts += HardcoreWither.RAND.nextInt(greenHeartDropRarity) == 0 ? 1 : 0;
                    }
                    EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(heartCanister, numberOfHearts, 5));
                    //! @todo check if a replacement for this is needed

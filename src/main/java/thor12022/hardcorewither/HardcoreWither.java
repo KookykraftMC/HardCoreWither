@@ -12,6 +12,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
+import java.util.Random;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,7 +30,9 @@ public class HardcoreWither
    public static CreativeTabs tabBaseMod = new CreativeTabBaseMod(ModInformation.ID + ".creativeTab");
    public static Logger logger = LogManager.getLogger(ModInformation.NAME);
 
-   public static ConfigManager config; 
+   public static ConfigManager config;
+   
+   public static final Random RAND = new Random();
 
    @Mod.EventHandler
    public void preInit(FMLPreInitializationEvent event)
