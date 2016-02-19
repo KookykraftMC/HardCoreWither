@@ -39,7 +39,7 @@ public class PowerUpManager implements INBTStorageClass
    
    private class WitherData
    {
-      ArrayList<IPowerUp>  powerUps             =  new ArrayList();
+      ArrayList<IPowerUp>  powerUps             =  new ArrayList<IPowerUp>();
       int                  strength             =  0;
       boolean              hasDied              =  false;
       boolean              isPendingLootDrops   =  false;
@@ -79,9 +79,9 @@ public class PowerUpManager implements INBTStorageClass
       }
    }
    
-   private Map<String, IPowerUp>       powerUpPrototypes       =  new HashMap();
-   private Map<UUID, WitherData>       activeWitherData        =  new HashMap();
-   private Map<UUID, NBTTagCompound>   savedWitherDataNbt      =  new HashMap();
+   private Map<String, IPowerUp>       powerUpPrototypes       =  new HashMap<String, IPowerUp>();
+   private Map<UUID, WitherData>       activeWitherData        =  new HashMap<UUID, WitherData>();
+   private Map<UUID, NBTTagCompound>   savedWitherDataNbt      =  new HashMap<UUID, NBTTagCompound>();
    private int                         largestPowerUp          =  0;
 
    @Config(comment="Will enable the Looting enchant on weapons to affect the Wither's drops")
@@ -397,6 +397,7 @@ public class PowerUpManager implements INBTStorageClass
       nbt.setInteger("largestPowerUp", largestPowerUp );
    }
 
+   @SuppressWarnings("unchecked")
    @Override
    public void readFromNBT(NBTTagCompound nbt)
    {
@@ -457,6 +458,7 @@ public class PowerUpManager implements INBTStorageClass
     * |  +--UUIDN
     * +--largestPowerUp : n 
     */
+   @SuppressWarnings("unchecked")
    private void loadWitherFromNBT(EntityWither wither, NBTTagCompound nbt)
    {
       WitherData witherData = new WitherData();

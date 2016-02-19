@@ -99,6 +99,7 @@ public class DataStoreManager
             }
             CompressedStreamTools.writeCompressed(globalNbt, fileOutputStream );
             HardcoreWither.logger.debug("Saved data" );
+            fileOutputStream.close();
          }
          catch( Throwable e )
          {
@@ -140,10 +141,9 @@ public class DataStoreManager
       }
       else
       {
-         FileInputStream fileInputStream = null;
          try
          {
-            fileInputStream = new FileInputStream( saveFile );
+            FileInputStream fileInputStream = new FileInputStream( saveFile );
             NBTTagCompound globalNbt = CompressedStreamTools.readCompressed( fileInputStream );
             Iterator iter = storageClasses.keySet().iterator();
             while (iter.hasNext()) 
@@ -152,8 +152,9 @@ public class DataStoreManager
                theClass.readFromNBT(globalNbt.getCompoundTag(storageClasses.get(theClass)));
             }
             HardcoreWither.logger.debug("Data loaded" );
+            fileInputStream.close();
          }
-         catch( Throwable e )
+         catch( IOException e )
          {
             HardcoreWither.logger.warn("Failed to  load data " + e.getLocalizedMessage() + ", hopefully a new world.");
          }

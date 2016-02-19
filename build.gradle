@@ -117,6 +117,7 @@ tasks.build.dependsOn sourceJar
 
 tasks.withType(JavaCompile) { task ->
     task.options.encoding = 'UTF-8'
+    task.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 task("incrementBuildNumber") {

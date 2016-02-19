@@ -33,12 +33,14 @@ public class ItemStarryApple extends ItemFood
       this.setAlwaysEdible();
    }
    
+   @SuppressWarnings("deprecation")
    @SideOnly(Side.CLIENT)
    public boolean hasEffect(ItemStack stack)
    {
        return true;
    }
    
+   @SuppressWarnings("unchecked")
    @Override
    @SideOnly(Side.CLIENT)
    public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4)
