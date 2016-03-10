@@ -1,10 +1,7 @@
 package thor12022.hardcorewither.config;
 
-/*
- * Creation and usage of the config file.
- */
-
 import net.minecraftforge.common.config.Configuration;
+import thor12022.hardcorewither.HardcoreWither;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -13,7 +10,8 @@ import java.util.ArrayList;
 
 public class ConfigManager
 {   
-   private ArrayList<Object> configClasses = new ArrayList<Object>();
+   private ArrayList<Object> configObjects = new ArrayList<Object>();
+   private ArrayList<Class> configClasses = new ArrayList<Class>();
    private Configuration configuration;
    
    public ConfigManager(File config)
@@ -21,14 +19,32 @@ public class ConfigManager
       configuration = new Configuration(config);
    }
    
+   /**
+    * Register a class instance for configuration
+    * @param target the object that contains the configurable fields.
+    *    Must use the @Configurable annotation
+    */
    public void register(Object target)
    {
-      Configurable annotation = target.getClass().getAnnotation(Configurable.class);
-      if(annotation != null)
+      if(target instanceof Class)
       {
-         configClasses.add(target);
-         processConfigClass(target);
-         configuration.save();
+         Configurable annotation = ((Class<?>)target).getAnnotation(Configurable.class);
+         if(annotation != null)
+         {
+            configClasses.add(((Class<?>)target));
+            processConfigClass(((Class<?>)target));
+            configuration.save();
+         }
+      }
+      else
+      {
+         Configurable annotation = target.getClass().getAnnotation(Configurable.class);
+         if(annotation != null)
+         {
+            configObjects.add(target);
+            processConfigObject(target);
+            configuration.save();
+         }
       }
    }
 
@@ -36,27 +52,63 @@ public class ConfigManager
    {
       if(configuration != null)
       {
-         for(Object configClass : configClasses)
+         for(Object configObject : configObjects)
+         {
+            processConfigObject(configObject);
+         }
+         for(Class configClass : configClasses)
          {
             processConfigClass(configClass);
          }
          configuration.save();
-         for(Object configClass : configClasses)
+         for(Object configClass : configObjects)
          {
             processNotificationClass(configClass);
          }
       }
    }
    
-   private void processConfigClass(Object target)
+   public File getConfigFile()
    {
-      Configurable targetAnnotation = target.getClass().getAnnotation(Configurable.class);
-      String sectionName = targetAnnotation.sectionName();
-      if(sectionName.isEmpty())
+      return configuration.getConfigFile();
+   }
+   
+   private void processConfigObject(Object target)
+   {
+      try
       {
-         sectionName = target.getClass().getSimpleName();
+         Configurable targetAnnotation = target.getClass().getAnnotation(Configurable.class);
+         String sectionName = targetAnnotation.sectionName();
+         if(sectionName.isEmpty())
+         {
+            sectionName = target.getClass().getSimpleName();
+         }
+         processClass(sectionName, target, target.getClass());
       }
-      processClass(sectionName, target, target.getClass());
+      catch(Exception e)
+      {
+         HardcoreWither.logger.warn(e);
+         HardcoreWither.logger.warn("Cannot find @Configurable Annotation on " + target.getClass().getName());
+      }
+   }
+   
+   private void processConfigClass(Class<?> target)
+   {
+      try
+      {
+         Configurable targetAnnotation = target.getAnnotation(Configurable.class);
+         String sectionName = targetAnnotation.sectionName();
+         if(sectionName.isEmpty())
+         {
+            sectionName = target.getSimpleName();
+         }
+         processClass(sectionName, null, target);
+      }
+      catch(Exception e)
+      {
+         HardcoreWither.logger.warn(e);
+         HardcoreWither.logger.warn("Cannot find @Configurable Annotation on " + target.getName());
+      }
    }
    
    private static void processNotificationClass(Object target)
@@ -66,14 +118,14 @@ public class ConfigManager
       String callbackName = targetAnnotation.syncNotification();
       if(!callbackName.isEmpty())
       {
-            try
+         try
          {
             Method method = target.getClass().getDeclaredMethod(callbackName);
             method.invoke(target);
          }
          catch(Exception excp)
          {
-            //! @todo error reporting
+            HardcoreWither.logger.warn("Invalid Config callback method: " + target.getClass().getName() + "." + callbackName);
          }
       }
    }
@@ -86,7 +138,7 @@ public class ConfigManager
     **/
    private void processClass(String sectionName, Object classObj, Class<?> currentClass)
    {
-      if(currentClass == Object.class)
+      if(currentClass == null || currentClass == Object.class)
       {
          return;
       }
@@ -129,7 +181,9 @@ public class ConfigManager
             }
             catch(IllegalAccessException excp)
             {
-               //! @todo Error Reporting
+               HardcoreWither.logger.warn(excp);
+               String extraError = classObj == null ? "Possibly nonstatic field used with static Class Registration" : "";
+               HardcoreWither.logger.warn("Problem getting configurable field \"" + currentClass.getName() + "." + field.getName() + "\"." + extraError); 
             }
          }
       }
