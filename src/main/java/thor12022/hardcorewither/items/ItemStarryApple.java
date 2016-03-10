@@ -3,7 +3,6 @@ package thor12022.hardcorewither.items;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.potions.PotionRegistry;
-import thor12022.hardcorewither.util.TextHelper;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -17,8 +16,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class ItemStarryApple extends ItemFood implements IItem
 {
@@ -36,13 +33,6 @@ public class ItemStarryApple extends ItemFood implements IItem
    public boolean hasEffect(ItemStack stack)
    {
        return true;
-   }
-   
-   @Override
-   @SideOnly(Side.CLIENT)
-   public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4)
-   {
-      list.add(TextHelper.GREEN + TextHelper.ITALIC + TextHelper.localize("tooltip." + ModInformation.ID + ".starryApple"));
    }
    
    @Override

@@ -2,9 +2,12 @@ package thor12022.hardcorewither.handlers;
 
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
+import thor12022.hardcorewither.items.ItemStarryApple;
 import thor12022.hardcorewither.HardcoreWither;
+import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.potions.PotionAntiWither;
 import thor12022.hardcorewither.potions.PotionRegistry;
+import thor12022.hardcorewither.util.TextHelper;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -91,8 +95,7 @@ public class TinkersConstructHandler
                       numberOfHearts += HardcoreWither.RAND.nextInt(greenHeartDropRarity) == 0 ? 1 : 0;
                    }
                    EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(heartCanister, numberOfHearts, 5));
-                   //! @todo check if a replacement for this is needed
-                   //entityitem.delayBeforeCanPickup = 10;
+                   entityitem.setPickupDelay(10);
                    event.drops.add(entityitem);
                    HardcoreWither.logger.debug("Withered Anti-Withered Player killed Wither, dropping Miniture" + numberOfHearts + " Green Hearts");
                 }
@@ -101,4 +104,13 @@ public class TinkersConstructHandler
           }
        }
     }
+   
+   @SubscribeEvent
+   public void onItemTooltip(ItemTooltipEvent event)
+   {
+      if(enableGreenHeartWitherDrop && heartCanister != null && event.itemStack.getItem() instanceof ItemStarryApple)
+      {
+         event.toolTip.add(TextHelper.GREEN + TextHelper.ITALIC + TextHelper.localize("tooltip." + ModInformation.ID + ".starryApple"));
+      }
+   }
 }
