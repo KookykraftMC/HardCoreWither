@@ -80,5 +80,11 @@ public class ItemCrafting extends AbstractItem
       GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(this,1,META_STARRY_EMERALD), Items.nether_star, "gemEmerald"));
       GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(this,4,META_STARRY_STICK), Items.nether_star, "stickWood", "stickWood", "stickWood", "stickWood"));
    }
+   
+   @Override
+   public boolean isEnabled()
+   {
+      return true;
+   }
 
 }

@@ -87,10 +87,11 @@ public class ItemStarryAxe extends ItemAxe implements IItem
    
    @Override
    public void registerRecipe()
+   {}
+
+   @Override
+   public boolean isEnabled()
    {
-      if(isEnabled)
-      {
-         
-      }
+      return isEnabled;
    }
 }

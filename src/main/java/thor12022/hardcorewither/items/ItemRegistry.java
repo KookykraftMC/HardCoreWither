@@ -43,7 +43,10 @@ public class ItemRegistry
    {
       for(IItem item : items)
       {
-         item.registerItem();
+         if(item.isEnabled())
+         {
+            item.registerItem();
+         }
       }
    }
    
@@ -52,7 +55,10 @@ public class ItemRegistry
    {
       for(IItem item : items)
       {
-         item.registerModel();
+         if(item.isEnabled())
+         {
+            item.registerModel();
+         }
       }
    }
    
@@ -60,7 +66,10 @@ public class ItemRegistry
    {
       for(IItem item : items)
       {
-         item.registerRecipe();
+         if(item.isEnabled())
+         {
+            item.registerRecipe();
+         }
       }
    }
 }

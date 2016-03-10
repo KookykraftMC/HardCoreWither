@@ -55,6 +55,9 @@ public class ItemStarryApple extends ItemFood implements IItem
    @Config(minInt = 0)
    private static int instaHealLevel = 1;
    
+   @Config
+   private static boolean enableStarryApple = true;
+   
    static
    {
       HardcoreWither.config.register(ItemStarryApple.class);
@@ -118,10 +121,16 @@ public class ItemStarryApple extends ItemFood implements IItem
    public void registerRecipe()
    {
       GameRegistry.addShapedRecipe(new ItemStack(this), new Object[]{
-            " s ", 
-            "sas", 
-            " s ", 
-            'a', Items.apple, 
-            's', Items.nether_star});
+         " s ", 
+         "sas", 
+         " s ", 
+         'a', Items.apple, 
+         's', Items.nether_star});
+   }
+
+   @Override
+   public boolean isEnabled()
+   {
+      return enableStarryApple;
    }
 }

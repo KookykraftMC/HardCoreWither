@@ -62,44 +62,31 @@ public class ItemStarrySword extends ItemSword implements IItem
       return stack.getItem() instanceof ItemStarrySword;
    }
 
-
-
    @Override
    public final String name()
    {
       return NAME;
    }
 
-
-
    @Override
    public void registerItem()
    {
-      if(isEnabled)
-      {
-         GameRegistry.registerItem(this, NAME);
-      }
+      GameRegistry.registerItem(this, NAME);
    }
-
-
 
    @Override
    public void registerModel()
    {
-      if(isEnabled)
-      {
-         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(ModInformation.ID + ":" + NAME));
-      }
+      ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(ModInformation.ID + ":" + NAME));
    }
-
-
 
    @Override
    public void registerRecipe()
+   {}
+   
+   @Override
+   public boolean isEnabled()
    {
-      if(isEnabled)
-      {
-         
-      }
+      return isEnabled;
    }
 }
