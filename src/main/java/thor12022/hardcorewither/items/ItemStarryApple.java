@@ -2,6 +2,8 @@ package thor12022.hardcorewither.items;
 
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
+import thor12022.hardcorewither.config.Config;
+import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.potions.PotionRegistry;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +19,47 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Configurable
 public class ItemStarryApple extends ItemFood implements IItem
 {
+   @Config(minInt = 0)
+   private static int antiWitherDurationTicks = 2400;
+   
+   @Config(minInt = 0)
+   private static int absorptionDurationTicks = 1200;
+   
+   @Config(minInt = 0)
+   private static int regenDurationTicks = 900;
+   
+   @Config(minInt = 0)
+   private static int resistanceDurationTicks = 900;
+   
+   @Config(minInt = 0)
+   private static int strengthDurationTicks = 900;
+   
+   @Config(minInt = 0)
+   private static int antiWitherLevel = 1;
+   
+   @Config(minInt = 0)
+   private static int absorptionLevel = 1;
+   
+   @Config(minInt = 0)
+   private static int regenLevel = 2;
+   
+   @Config(minInt = 0)
+   private static int resistanceLevel = 2;
+   
+   @Config(minInt = 0)
+   private static int strengthLevel = 2;
+   
+   @Config(minInt = 0)
+   private static int instaHealLevel = 1;
+   
+   static
+   {
+      HardcoreWither.config.register(ItemStarryApple.class);
+   }
+   
    private final static String NAME = "starryApple";
       
    public ItemStarryApple()
@@ -46,12 +87,12 @@ public class ItemStarryApple extends ItemFood implements IItem
    {
        if (!world.isRemote)
        {
-          player.addPotionEffect(new PotionEffect(PotionRegistry.potionAntiWither.id, 2400, 0));
-          player.addPotionEffect(new PotionEffect(Potion.absorption.id,             1200, 0));
-          player.addPotionEffect(new PotionEffect(Potion.regeneration.id,           900, 1));
-          player.addPotionEffect(new PotionEffect(Potion.resistance.id,             900, 1));
-          player.addPotionEffect(new PotionEffect(Potion.damageBoost.id,            900, 1));
-          player.addPotionEffect(new PotionEffect(Potion.heal.id,                   0,    0));
+          player.addPotionEffect(new PotionEffect(PotionRegistry.potionAntiWither.id,  antiWitherDurationTicks,   antiWitherLevel - 1));
+          player.addPotionEffect(new PotionEffect(Potion.absorption.id,                absorptionDurationTicks,   absorptionLevel - 1));
+          player.addPotionEffect(new PotionEffect(Potion.regeneration.id,              regenDurationTicks,        regenLevel - 1));
+          player.addPotionEffect(new PotionEffect(Potion.resistance.id,                resistanceDurationTicks,   resistanceLevel - 1));
+          player.addPotionEffect(new PotionEffect(Potion.damageBoost.id,               strengthDurationTicks,     strengthLevel - 1));
+          player.addPotionEffect(new PotionEffect(Potion.heal.id,                      0,                         instaHealLevel - 1));
        }
    }
 
