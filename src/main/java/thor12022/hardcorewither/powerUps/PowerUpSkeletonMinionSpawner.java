@@ -15,7 +15,7 @@ class PowerUpSkeletonMinionSpawner extends AbstractPowerUpMinionSpawner
    protected PowerUpSkeletonMinionSpawner()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH, EntitySkeletonMinion.LOCALIZED_NAME);
-      HardcoreWither.config.register(this);   
+      HardcoreWither.CONFIG.register(this);   
    }
 
    @Override

@@ -54,7 +54,7 @@ class PowerUpLightning extends AbstractPowerUp
    protected PowerUpLightning()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
-      HardcoreWither.config.register(this);
+      HardcoreWither.CONFIG.register(this);
    }
 
    private static long setNextRandomTick(long currentTick, int strength)

@@ -51,7 +51,7 @@ public class CommonProxy
    
    protected void construct()
    {
-      assert(HardcoreWither.config != null);
+      assert(HardcoreWither.CONFIG != null);
       
       itemRegistry            =  new ItemRegistry();
       blockRegistry           =  new BlockRegistry();

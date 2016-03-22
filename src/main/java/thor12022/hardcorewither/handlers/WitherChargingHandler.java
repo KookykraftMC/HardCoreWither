@@ -30,7 +30,7 @@ public class WitherChargingHandler
  
    public WitherChargingHandler()
    {
-     HardcoreWither.config.register(this);
+     HardcoreWither.CONFIG.register(this);
      if(!Loader.isModLoaded("witherchargingfix"))
      {
         MinecraftForge.EVENT_BUS.register(this);

@@ -30,7 +30,7 @@ public class MaterialHelper
                                                                          
    private MaterialHelper()
    {
-      HardcoreWither.config.register(this);
+      HardcoreWither.CONFIG.register(this);
       witherEmerald = EnumHelper.addToolMaterial("WitheredEmerald", 
                                                  witheredEmeraldHarvestLevel, 
                                                  witheredEmeraldMaxUses, 

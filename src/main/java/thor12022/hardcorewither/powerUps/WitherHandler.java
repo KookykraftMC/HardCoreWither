@@ -52,7 +52,7 @@ public class WitherHandler implements INBTStorageClass
    {
       HardcoreWither.DATA_STORE.addStorageClass(this, "witherData");
       
-      HardcoreWither.config.register(this);
+      HardcoreWither.CONFIG.register(this);
       MinecraftForge.EVENT_BUS.register(this);
    }
    

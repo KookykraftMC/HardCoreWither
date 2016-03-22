@@ -60,7 +60,7 @@ public class ItemStarryApple extends ItemFood implements IItem
    
    static
    {
-      HardcoreWither.config.register(ItemStarryApple.class);
+      HardcoreWither.CONFIG.register(ItemStarryApple.class);
    }
    
    private final static String NAME = "starryApple";

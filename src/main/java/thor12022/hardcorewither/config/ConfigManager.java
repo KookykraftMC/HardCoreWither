@@ -11,11 +11,14 @@ import java.util.ArrayList;
 public class ConfigManager
 {   
    private ArrayList<Object> configObjects = new ArrayList<Object>();
-   private ArrayList<Class> configClasses = new ArrayList<Class>();
+   private ArrayList<Class<?>> configClasses = new ArrayList<Class<?>>();
    private Configuration configuration;
    
-   public ConfigManager(File config)
+   public ConfigManager(String modName)
    {
+      File config = new File(System.getProperty("user.dir") + File.pathSeparator + 
+                             "CONFIG" + File.pathSeparator + 
+                             modName + ".cfg");
       configuration = new Configuration(config);
    }
    
@@ -56,7 +59,7 @@ public class ConfigManager
          {
             processConfigObject(configObject);
          }
-         for(Class configClass : configClasses)
+         for(Class<?> configClass : configClasses)
          {
             processConfigClass(configClass);
          }
@@ -132,7 +135,7 @@ public class ConfigManager
    
    /**
     * Recurses over the class hierarchy of an object
-    * @param sectionName name of the config section to write to
+    * @param sectionName name of the CONFIG section to write to
     * @param classObj object currently being processed 
     * @param currentClass the level in the classObj 's hierarchy being processed
     **/

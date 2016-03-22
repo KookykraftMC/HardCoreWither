@@ -15,7 +15,7 @@ class PowerUpGhastMinionSpawner extends AbstractPowerUpMinionSpawner
    protected PowerUpGhastMinionSpawner()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH, EntityGhastMinion.LOCALIZED_NAME);
-      HardcoreWither.config.register(this);   
+      HardcoreWither.CONFIG.register(this);   
    }
    
    @Override

@@ -37,7 +37,7 @@ public class TinkersConstructHandler
    
    public TinkersConstructHandler()
    {
-     HardcoreWither.config.register(this);
+     HardcoreWither.CONFIG.register(this);
 	  MinecraftForge.EVENT_BUS.register(this);
    }
    

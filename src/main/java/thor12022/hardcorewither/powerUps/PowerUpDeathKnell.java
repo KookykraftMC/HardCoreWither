@@ -18,7 +18,7 @@ class PowerUpDeathKnell extends AbstractPowerUp
    protected PowerUpDeathKnell()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
-      HardcoreWither.config.register(this);   
+      HardcoreWither.CONFIG.register(this);   
    }
 
    @Override

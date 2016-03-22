@@ -30,16 +30,12 @@ public class HardcoreWither
    public static final Random             RAND           = new Random();
    public static final Logger             LOGGER         = LogManager.getLogger(ModInformation.NAME);
    public static final DataStoreManager   DATA_STORE     = new DataStoreManager(ModInformation.CHANNEL);
-
-   public static ConfigManager config;
+   public static final ConfigManager      CONFIG         = new ConfigManager(ModInformation.CHANNEL);
    
    @Mod.EventHandler
-   public void preInit(FMLPreInitializationEvent event)
+   public void preInit(@SuppressWarnings("unused") FMLPreInitializationEvent event)
    {
       LOGGER.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.preInit"));
-
-      config = new ConfigManager(event.getSuggestedConfigurationFile());
-
       proxy.preInit();
    }
 
