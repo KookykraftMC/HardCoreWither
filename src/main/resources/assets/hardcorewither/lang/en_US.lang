@@ -18,6 +18,7 @@ item.hardcorewither.starryStick.name=Starry Stick
 #TOOLTIPS
 tooltip.hardcorewither.starryApple=With fortune this may turn a Wither's heart green with envy.
 tooltip.hardcorewither.unbreaking=Simply Unbreakable™
+tooltip.hardcorewither.witherAffinity=Wither XP
 
 #POTIONS
 potion.antiWither=Anti-Wither
@@ -40,3 +41,6 @@ entity.hardcorewither.SkeletonMinion.name=Wither Skeleton Minion
 
 commands.hardcorewither.usage=/HardCoreWither <subCommand>
 commands.spawn.usage=/HardCoreWither spawn (<className>,<strength>)+
+
+# ENCHANTMENTS
+enchantment.hardcorewither.witherAffinity=Wither Affinity
