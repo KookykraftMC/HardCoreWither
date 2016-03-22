@@ -16,8 +16,8 @@ public class ConfigManager
    
    public ConfigManager(String modName)
    {
-      File config = new File(System.getProperty("user.dir") + File.pathSeparator + 
-                             "CONFIG" + File.pathSeparator + 
+      File config = new File(System.getProperty("user.dir") + File.separatorChar + 
+                             "CONFIG" + File.separatorChar + 
                              modName + ".cfg");
       configuration = new Configuration(config);
    }
