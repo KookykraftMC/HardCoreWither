@@ -38,7 +38,7 @@ public class PowerUpDamageResistance extends AbstractPowerUp
          }
          catch(Exception excp)
          {
-            HardcoreWither.logger.warn(excp.getMessage());
+            HardcoreWither.LOGGER.warn(excp.getMessage());
          }
       }
       try
@@ -55,7 +55,7 @@ public class PowerUpDamageResistance extends AbstractPowerUp
          }
          catch(Exception excp)
          {
-            HardcoreWither.logger.warn(excp.getMessage());
+            HardcoreWither.LOGGER.warn(excp.getMessage());
          }
       }
    }
@@ -91,7 +91,7 @@ public class PowerUpDamageResistance extends AbstractPowerUp
       }
       catch(Exception e)
       {
-         HardcoreWither.logger.warn(e.getMessage());
+         HardcoreWither.LOGGER.warn(e.getMessage());
       }
       return null;
    }

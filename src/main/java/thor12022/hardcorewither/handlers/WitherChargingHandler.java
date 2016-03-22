@@ -37,7 +37,7 @@ public class WitherChargingHandler
      }
      else
      {
-        HardcoreWither.logger.info("Wither Charging Fix Mod loaded, disabling internal Wither Charging Fix");
+        HardcoreWither.LOGGER.info("Wither Charging Fix Mod loaded, disabling internal Wither Charging Fix");
      }
    }
    
@@ -74,7 +74,7 @@ public class WitherChargingHandler
                   catch(Exception excp)
                   {
                      vanillaBugFix = false;
-                     HardcoreWither.logger.warn("Cannot get Wither Attack Selector Field, disabling Vanilla Wither Bug Fix");
+                     HardcoreWither.LOGGER.warn("Cannot get Wither Attack Selector Field, disabling Vanilla Wither Bug Fix");
                   }
                }
             }

@@ -87,8 +87,8 @@ public class ConfigManager
       }
       catch(Exception e)
       {
-         HardcoreWither.logger.warn(e);
-         HardcoreWither.logger.warn("Cannot find @Configurable Annotation on " + target.getClass().getName());
+         HardcoreWither.LOGGER.warn(e);
+         HardcoreWither.LOGGER.warn("Cannot find @Configurable Annotation on " + target.getClass().getName());
       }
    }
    
@@ -106,8 +106,8 @@ public class ConfigManager
       }
       catch(Exception e)
       {
-         HardcoreWither.logger.warn(e);
-         HardcoreWither.logger.warn("Cannot find @Configurable Annotation on " + target.getName());
+         HardcoreWither.LOGGER.warn(e);
+         HardcoreWither.LOGGER.warn("Cannot find @Configurable Annotation on " + target.getName());
       }
    }
    
@@ -125,7 +125,7 @@ public class ConfigManager
          }
          catch(Exception excp)
          {
-            HardcoreWither.logger.warn("Invalid Config callback method: " + target.getClass().getName() + "." + callbackName);
+            HardcoreWither.LOGGER.warn("Invalid Config callback method: " + target.getClass().getName() + "." + callbackName);
          }
       }
    }
@@ -181,9 +181,9 @@ public class ConfigManager
             }
             catch(IllegalAccessException excp)
             {
-               HardcoreWither.logger.warn(excp);
+               HardcoreWither.LOGGER.warn(excp);
                String extraError = classObj == null ? "Possibly nonstatic field used with static Class Registration" : "";
-               HardcoreWither.logger.warn("Problem getting configurable field \"" + currentClass.getName() + "." + field.getName() + "\"." + extraError); 
+               HardcoreWither.LOGGER.warn("Problem getting configurable field \"" + currentClass.getName() + "." + field.getName() + "\"." + extraError); 
             }
          }
       }

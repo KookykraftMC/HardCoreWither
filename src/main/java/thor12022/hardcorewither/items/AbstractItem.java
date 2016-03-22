@@ -17,7 +17,7 @@ public abstract class AbstractItem extends Item implements IItem
       super();
 
       setUnlocalizedName(ModInformation.ID + "." + name());
-      setCreativeTab(HardcoreWither.tabBaseMod);
+      setCreativeTab(HardcoreWither.CREATIVE_TAB);
    }
    
    @Override

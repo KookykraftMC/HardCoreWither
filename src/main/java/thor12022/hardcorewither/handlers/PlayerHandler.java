@@ -15,7 +15,7 @@ public class PlayerHandler implements INBTStorageClass
 
    public PlayerHandler()
    {
-      HardcoreWither.dataStore.addStorageClass(this, "PlayerHandler");
+      HardcoreWither.DATA_STORE.addStorageClass(this, "PlayerHandler");
    }
    
    public double wasAtWitherSpawn(EntityPlayer player)

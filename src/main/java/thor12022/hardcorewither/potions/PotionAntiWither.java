@@ -86,7 +86,7 @@ public class PotionAntiWither extends Potion
             if( witherEffect.getDuration() > affectedEntities.get(event.entityLiving) )
             {
                int newDuration = ( witherEffect.getDuration() - affectedEntities.get(event.entityLiving) ) / ( 2 * (antiWitherEffect.getAmplifier() + 1));
-               HardcoreWither.logger.debug("Anti-Wither reducing Wither effect to " + newDuration/20 + " seconds for " + event.entityLiving.getDisplayName());
+               HardcoreWither.LOGGER.debug("Anti-Wither reducing Wither effect to " + newDuration/20 + " seconds for " + event.entityLiving.getDisplayName());
                int amplifier = witherEffect.getAmplifier();
                event.entityLiving.removePotionEffect(Potion.wither.id);
                event.entityLiving.addPotionEffect(new PotionEffect(Potion.wither.id, newDuration, amplifier));

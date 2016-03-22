@@ -18,35 +18,35 @@ public class PowerUpHelper
    {
       if(!PowerUpRegistry.register(new PowerUpBlazeMinionSpawner()))
       {
-         HardcoreWither.logger.warn("Cannot register " + PowerUpBlazeMinionSpawner.class.getName());
+         HardcoreWither.LOGGER.warn("Cannot register " + PowerUpBlazeMinionSpawner.class.getName());
       }
       if(!PowerUpRegistry.register(new PowerUpDeathKnell()))
       {
-         HardcoreWither.logger.warn("Cannot register " + PowerUpDeathKnell.class.getName());
+         HardcoreWither.LOGGER.warn("Cannot register " + PowerUpDeathKnell.class.getName());
       }
       if(!PowerUpRegistry.register(new PowerUpGhastMinionSpawner()))
       {
-         HardcoreWither.logger.warn("Cannot register " + PowerUpGhastMinionSpawner.class.getName());
+         HardcoreWither.LOGGER.warn("Cannot register " + PowerUpGhastMinionSpawner.class.getName());
       }
       if(!PowerUpRegistry.register(new PowerUpHealthBoost()))
       {
-         HardcoreWither.logger.warn("Cannot register " + PowerUpHealthBoost.class.getName());
+         HardcoreWither.LOGGER.warn("Cannot register " + PowerUpHealthBoost.class.getName());
       }
       if(!PowerUpRegistry.register(new PowerUpSkeletonMinionSpawner()))
       {
-         HardcoreWither.logger.warn("Cannot register " + PowerUpSkeletonMinionSpawner.class.getName());
+         HardcoreWither.LOGGER.warn("Cannot register " + PowerUpSkeletonMinionSpawner.class.getName());
       }
       if(!PowerUpRegistry.register(new PowerUpLightning()))
       {
-         HardcoreWither.logger.warn("Cannot register " + PowerUpLightning.class.getName());
+         HardcoreWither.LOGGER.warn("Cannot register " + PowerUpLightning.class.getName());
       }
       if(!PowerUpRegistry.register(new PowerUpTeleport()))
       {
-         HardcoreWither.logger.warn("Cannot register " + PowerUpTeleport.class.getName());
+         HardcoreWither.LOGGER.warn("Cannot register " + PowerUpTeleport.class.getName());
       }
       if(!PowerUpRegistry.register(new PowerUpDamageResistance()))
       {
-         HardcoreWither.logger.warn("Cannot register " + PowerUpDamageResistance.class.getName());
+         HardcoreWither.LOGGER.warn("Cannot register " + PowerUpDamageResistance.class.getName());
       }
    }
    
@@ -100,7 +100,7 @@ public class PowerUpHelper
          {
             spawnedWither.worldObj.removeEntity(spawnedWither);
             // ok, so this is kinda the Lazy Man's way of making sure nothing really goes wrong
-            HardcoreWither.logger.debug("PowerUp Command Formatting Error (probably) not accounted for " + excp);
+            HardcoreWither.LOGGER.debug("PowerUp Command Formatting Error (probably) not accounted for " + excp);
             throw new WrongUsageException(getCommandUsage(sender));
          }
       }
@@ -139,7 +139,7 @@ public class PowerUpHelper
                if( powerUpEffect.adjustEffect(currentStength + 1) == currentStength)
                {
                   ++usedStrength;
-                  HardcoreWither.logger.debug("Increasing power of " + powerUp.getClass());
+                  HardcoreWither.LOGGER.debug("Increasing power of " + powerUp.getClass());
                }
                else
                {
@@ -152,14 +152,14 @@ public class PowerUpHelper
                witherData.addPowerUpEffect(powerUp.getName(), 1);
                //! @todo this line should probably be different
                usedStrength += powerUp.minWitherLevel() > 0 ? powerUp.minWitherLevel() : 1;
-               HardcoreWither.logger.debug("Adding " + powerUp.getName());
+               HardcoreWither.LOGGER.debug("Adding " + powerUp.getName());
             }
          }
          witherData.setPoweredUp(true);
       }
       else
       {
-         HardcoreWither.logger.debug("Attempting to re-powerup Wither");
+         HardcoreWither.LOGGER.debug("Attempting to re-powerup Wither");
       }
    }
 }

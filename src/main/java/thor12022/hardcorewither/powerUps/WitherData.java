@@ -143,8 +143,8 @@ class WitherData implements IExtendedEntityProperties
          // If any exception occurred, assume it's this powerup's fault
          catch(Exception e)
          {            
-            HardcoreWither.logger.error(e);
-            HardcoreWither.logger.error("Error Occured while updating PowerUp " + powerUp.getName() + ", removing.");
+            HardcoreWither.LOGGER.error(e);
+            HardcoreWither.LOGGER.error("Error Occured while updating PowerUp " + powerUp.getName() + ", removing.");
             activePowerUps.remove(powerUp);
          }
       }
@@ -192,8 +192,8 @@ class WitherData implements IExtendedEntityProperties
          }
          catch(InvalidPowerUpException e)
          {
-            HardcoreWither.logger.warn(e);
-            HardcoreWither.logger.warn("Problem loading " + powerUpEffectsTagList.getCompoundTagAt(i).getId() + " NBT for EntityWither, " + ownerWither.getUniqueID());
+            HardcoreWither.LOGGER.warn(e);
+            HardcoreWither.LOGGER.warn("Problem loading " + powerUpEffectsTagList.getCompoundTagAt(i).getId() + " NBT for EntityWither, " + ownerWither.getUniqueID());
          }
       }
    }

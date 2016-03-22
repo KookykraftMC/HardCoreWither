@@ -28,7 +28,7 @@ public class ItemStarryAxe extends ItemAxe implements IItem
    {
       super(MaterialHelper.witherEmerald);
       setUnlocalizedName(ModInformation.ID + "." + NAME);
-      this.setCreativeTab(HardcoreWither.tabBaseMod);
+      this.setCreativeTab(HardcoreWither.CREATIVE_TAB);
    }
    
    @Override

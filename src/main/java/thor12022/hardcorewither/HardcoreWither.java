@@ -20,25 +20,23 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.DEPEND)
 public class HardcoreWither
 {
-
    @Mod.Instance
    public static HardcoreWither INSTANCE;
    
    @SidedProxy(clientSide = ModInformation.CLIENTPROXY, serverSide = ModInformation.COMMONPROXY)
    public static CommonProxy proxy;
 
-   public static CreativeTabs tabBaseMod = new CreativeTabBaseMod(ModInformation.ID + ".creativeTab");
-   public static Logger logger = LogManager.getLogger(ModInformation.NAME);
+   public static final CreativeTabs       CREATIVE_TAB   = new CreativeTabBaseMod(ModInformation.ID + ".creativeTab");
+   public static final Random             RAND           = new Random();
+   public static final Logger             LOGGER         = LogManager.getLogger(ModInformation.NAME);
+   public static final DataStoreManager   DATA_STORE     = new DataStoreManager(ModInformation.CHANNEL);
 
-   public static ConfigManager      config;
-   public static DataStoreManager   dataStore = new DataStoreManager(ModInformation.CHANNEL);
+   public static ConfigManager config;
    
-   public static final Random RAND = new Random();
-
    @Mod.EventHandler
    public void preInit(FMLPreInitializationEvent event)
    {
-      logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.preInit"));
+      LOGGER.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.preInit"));
 
       config = new ConfigManager(event.getSuggestedConfigurationFile());
 
@@ -48,14 +46,14 @@ public class HardcoreWither
    @Mod.EventHandler
    public void init(@SuppressWarnings("unused") FMLInitializationEvent event)
    {
-      logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.init"));
+      LOGGER.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.init"));
       proxy.init();
    }
 
    @Mod.EventHandler
    public void serverStarting(FMLServerStartingEvent event)
    {
-      logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.serverStarting"));
+      LOGGER.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.serverStarting"));
       CommandManager.serverStarting(event);
    }
 }

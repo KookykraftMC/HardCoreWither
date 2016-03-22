@@ -44,7 +44,7 @@ public class TinkersConstructHandler
    public void init()
    {
 
-      HardcoreWither.logger.info("Tinkers' Constuct Support Initalizing");
+      HardcoreWither.LOGGER.info("Tinkers' Constuct Support Initalizing");
       if(enableGreenHeartCanister)
       {
          if(heartCanister == null)
@@ -62,7 +62,7 @@ public class TinkersConstructHandler
          else
          {
             MinecraftForge.EVENT_BUS.unregister(this);
-            HardcoreWither.logger.warn("Cannot find TConstruct:heartCanister, disabling Tinkers' Construct support");
+            HardcoreWither.LOGGER.warn("Cannot find TConstruct:heartCanister, disabling Tinkers' Construct support");
          }
       }
    }
@@ -97,7 +97,7 @@ public class TinkersConstructHandler
                    EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, new ItemStack(heartCanister, numberOfHearts, 5));
                    entityitem.setPickupDelay(10);
                    event.drops.add(entityitem);
-                   HardcoreWither.logger.debug("Withered Anti-Withered Player killed Wither, dropping Miniture" + numberOfHearts + " Green Hearts");
+                   HardcoreWither.LOGGER.debug("Withered Anti-Withered Player killed Wither, dropping Miniture" + numberOfHearts + " Green Hearts");
                 }
              }
              

@@ -69,7 +69,7 @@ public class ItemStarryApple extends ItemFood implements IItem
    {
       super(4, 1.2F, false);
       setUnlocalizedName(ModInformation.ID + "." + NAME);
-      setCreativeTab(HardcoreWither.tabBaseMod);
+      setCreativeTab(HardcoreWither.CREATIVE_TAB);
       this.setAlwaysEdible();
    }
    

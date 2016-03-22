@@ -33,7 +33,7 @@ public class ItemRegistry
             }
             catch(Exception e)
             {
-               HardcoreWither.logger.debug("Item not properly defined in registry: " + field.getName());
+               HardcoreWither.LOGGER.debug("Item not properly defined in registry: " + field.getName());
             }
          }
       }

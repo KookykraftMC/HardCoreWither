@@ -50,7 +50,7 @@ public class WitherHandler implements INBTStorageClass
    
    public WitherHandler()
    {
-      HardcoreWither.dataStore.addStorageClass(this, "witherData");
+      HardcoreWither.DATA_STORE.addStorageClass(this, "witherData");
       
       HardcoreWither.config.register(this);
       MinecraftForge.EVENT_BUS.register(this);
@@ -207,7 +207,7 @@ public class WitherHandler implements INBTStorageClass
       int formatVersion = nbt.getInteger("formatVersion");
       if(formatVersion < NBT_FORMAT)
       {
-         HardcoreWither.logger.warn("Detected old version of saved data. Withers' abilities will not convert to ", ModInformation.VERSION, " from older versions");
+         HardcoreWither.LOGGER.warn("Detected old version of saved data. Withers' abilities will not convert to ", ModInformation.VERSION, " from older versions");
       }
       largestPowerUp = nbt.getInteger("largestPowerUp");      
    }  

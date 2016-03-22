@@ -20,7 +20,7 @@ public class EventHandler
       if(eventArgs.modID.equals(ModInformation.ID))
       {
          HardcoreWither.config.syncConfig();
-         HardcoreWither.logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.config.refresh"));
+         HardcoreWither.LOGGER.info(TextHelper.localize("info." + ModInformation.ID + ".console.config.refresh"));
       }
    }
 }

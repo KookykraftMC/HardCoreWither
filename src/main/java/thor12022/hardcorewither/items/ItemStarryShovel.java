@@ -26,7 +26,7 @@ public class ItemStarryShovel extends ItemSpade implements IItem
    {
       super(MaterialHelper.witherEmerald);
       this.setUnlocalizedName(ModInformation.ID + "." + NAME);
-      this.setCreativeTab(HardcoreWither.tabBaseMod);
+      this.setCreativeTab(HardcoreWither.CREATIVE_TAB);
    }
    
    @Override

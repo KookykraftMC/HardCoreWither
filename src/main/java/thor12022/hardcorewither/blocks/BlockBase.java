@@ -19,7 +19,7 @@ public class BlockBase extends Block
 
       setUnlocalizedName(unlocName);
       setRegistryName(ModInformation.ID + ":" + unlocName);
-      setCreativeTab(HardcoreWither.tabBaseMod);
+      setCreativeTab(HardcoreWither.CREATIVE_TAB);
       setStepSound(soundType);
       setHardness(hardness);
    }

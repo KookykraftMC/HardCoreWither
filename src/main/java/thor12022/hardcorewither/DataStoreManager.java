@@ -43,7 +43,7 @@ public class DataStoreManager
       File hardcoreWitherFolder = new File( worldConfig.getPath(), ModInformation.CHANNEL );
       if( !hardcoreWitherFolder.isDirectory() && !hardcoreWitherFolder.mkdir() )
       {
-         HardcoreWither.logger.error("Failed to create " + hardcoreWitherFolder.getAbsolutePath() + " data will not save" );
+         HardcoreWither.LOGGER.error("Failed to create " + hardcoreWitherFolder.getAbsolutePath() + " data will not save" );
       }
       else
       {
@@ -52,16 +52,16 @@ public class DataStoreManager
          {
             if( !saveFile.exists() && !saveFile.createNewFile() )
             {
-               HardcoreWither.logger.error("Failed to create " + saveFile.getAbsolutePath() + " data will not save" );
+               HardcoreWither.LOGGER.error("Failed to create " + saveFile.getAbsolutePath() + " data will not save" );
                saveFile = null;
             }
             else
             {
-               HardcoreWither.logger.debug("Data file: " + saveFile.getAbsolutePath() + " found/created" );
+               HardcoreWither.LOGGER.debug("Data file: " + saveFile.getAbsolutePath() + " found/created" );
             }
          } catch (IOException e)
          {
-            HardcoreWither.logger.error("Failed to create " + saveFile.getAbsolutePath() + " data will not save" );
+            HardcoreWither.LOGGER.error("Failed to create " + saveFile.getAbsolutePath() + " data will not save" );
             saveFile = null;
          }
       }
@@ -77,7 +77,7 @@ public class DataStoreManager
       }
       if( saveFile == null )
       {
-         HardcoreWither.logger.error("Cannot save data" );
+         HardcoreWither.LOGGER.error("Cannot save data" );
       }
       else
       {
@@ -95,11 +95,11 @@ public class DataStoreManager
             }
             CompressedStreamTools.writeCompressed(globalNbt, fileOutputStream );
             fileOutputStream.close();
-            HardcoreWither.logger.debug("Saved data" );
+            HardcoreWither.LOGGER.debug("Saved data" );
          }
          catch( Throwable e )
          {
-            HardcoreWither.logger.error("Error saving data: " + e.getLocalizedMessage());
+            HardcoreWither.LOGGER.error("Error saving data: " + e.getLocalizedMessage());
          }
       }
    }
@@ -133,7 +133,7 @@ public class DataStoreManager
       getDataFile();
       if( saveFile == null )
       {
-         HardcoreWither.logger.error("Cannot load data" );
+         HardcoreWither.LOGGER.error("Cannot load data" );
       }
       else
       {
@@ -147,12 +147,12 @@ public class DataStoreManager
                INBTStorageClass theClass = (INBTStorageClass)iter.next();
                theClass.readFromNBT(globalNbt.getCompoundTag(storageClasses.get(theClass)));
             }
-            HardcoreWither.logger.debug("Data loaded" );
+            HardcoreWither.LOGGER.debug("Data loaded" );
             fileInputStream.close();
          }
          catch( Throwable e )
          {
-            HardcoreWither.logger.warn("Failed to  load data " + e.getLocalizedMessage() + ", hopefully a new world.");
+            HardcoreWither.LOGGER.warn("Failed to  load data " + e.getLocalizedMessage() + ", hopefully a new world.");
          }
       }
    }

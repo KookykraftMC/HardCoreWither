@@ -62,7 +62,7 @@ class PowerUpEffect
          }
          catch(InvalidPowerUpException e)
          {
-            HardcoreWither.logger.error("PowerUpRegistry has been modified after initialization! " + powerUpName + " no longer valid");
+            HardcoreWither.LOGGER.error("PowerUpRegistry has been modified after initialization! " + powerUpName + " no longer valid");
             powerUpData = null;
             strength = 0;
          }
@@ -78,7 +78,7 @@ class PowerUpEffect
       }
       catch(InvalidPowerUpException e)
       {
-         HardcoreWither.logger.error("PowerUpRegistry has been modified after initialization! " + powerUpName + " no longer valid");
+         HardcoreWither.LOGGER.error("PowerUpRegistry has been modified after initialization! " + powerUpName + " no longer valid");
          powerUpData = null;
          strength = 0;
       }
@@ -92,7 +92,7 @@ class PowerUpEffect
       }
       catch(InvalidPowerUpException e)
       {
-         HardcoreWither.logger.error("PowerUpRegistry has been modified after initialization! " + powerUpName + " no longer valid");
+         HardcoreWither.LOGGER.error("PowerUpRegistry has been modified after initialization! " + powerUpName + " no longer valid");
          powerUpData = null;
          strength = 0;
       }
