@@ -43,6 +43,7 @@ public class ItemCrafting extends AbstractItem
       return null;
    }
    
+   @Override
    @SideOnly(Side.CLIENT)
    public void getSubItems(Item item, CreativeTabs creativeTab, List itemStacks)
    {
@@ -53,6 +54,7 @@ public class ItemCrafting extends AbstractItem
    }
    
    
+   @Override
    @SideOnly(Side.CLIENT)
    public boolean hasEffect(ItemStack stack)
    {

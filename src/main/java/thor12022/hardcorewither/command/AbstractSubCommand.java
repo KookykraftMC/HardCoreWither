@@ -17,5 +17,5 @@ public abstract class AbstractSubCommand extends CommandBase implements ISubComm
       //Clumsy, yes, but making the method private isn't a possibility in Java
       // I'll get used to this Java thing eventually
       assert(false);
-   };
+   }
 }

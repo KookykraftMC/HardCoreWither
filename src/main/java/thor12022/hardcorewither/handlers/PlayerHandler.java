@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-
+import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,6 +13,11 @@ public class PlayerHandler implements INBTStorageClass
 {
    private Map<UUID, Double> playerXp  = new HashMap<UUID, Double>();
 
+   public PlayerHandler()
+   {
+      HardcoreWither.dataStore.addStorageClass(this, "PlayerHandler");
+   }
+   
    public double wasAtWitherSpawn(EntityPlayer player)
    {
       return addWitherExperience(player, 1.0 );
@@ -29,6 +34,7 @@ public class PlayerHandler implements INBTStorageClass
       return prevXp + wxp;
    }
    
+   @Override
    public void writeToNBT(NBTTagCompound nbt)
    {
       for(UUID uuid : playerXp.keySet())
@@ -37,6 +43,7 @@ public class PlayerHandler implements INBTStorageClass
       }
    }
    
+   @Override
    public void readFromNBT(NBTTagCompound nbt)
    {
       for(String tag : nbt.getKeySet()) 

@@ -27,6 +27,7 @@ info.hardcorewither.console.config.refresh=Refreshing configuration file.
 info.hardcorewither.console.load.preInit=Begin Pre-initialization
 info.hardcorewither.console.load.init=Begin Initialization
 info.hardcorewither.console.load.postInit=Begin Post-initialization
+info.hardcorewither.console.load.serverStarting=Begin Server Starting
 
 #CHAT
 info.hardcorewither.chat.never-withered=No Pain. No Gain. No Green Heart.

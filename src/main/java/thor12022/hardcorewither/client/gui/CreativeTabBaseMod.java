@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class CreativeTabBaseMod extends CreativeTabs
 {
 
-   private ItemStack icon = new ItemStack( Items.skull, 1, 1);;
+   private ItemStack icon = new ItemStack( Items.skull, 1, 1);
    
    public CreativeTabBaseMod(String tabLabel)
    {
@@ -21,6 +21,7 @@ public class CreativeTabBaseMod extends CreativeTabs
       setBackgroundImageName(ModInformation.ID + ".png");
    }
 
+   @Override
    public boolean hasSearchBar()
    {
       return false;

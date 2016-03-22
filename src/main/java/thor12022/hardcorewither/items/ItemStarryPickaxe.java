@@ -31,6 +31,7 @@ public class ItemStarryPickaxe extends ItemPickaxe implements IItem
       this.setCreativeTab(HardcoreWither.tabBaseMod);
    }
    
+   @Override
    @SideOnly(Side.CLIENT)
    public boolean hasEffect(ItemStack stack)
    {

@@ -2,6 +2,7 @@ package thor12022.hardcorewither.powerUps;
 
 import net.minecraft.entity.boss.EntityWither;
 import thor12022.hardcorewither.HardcoreWither;
+import thor12022.hardcorewither.api.IPowerUpStateData;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.entity.EntityGhastMinion;
 
@@ -13,34 +14,16 @@ class PowerUpGhastMinionSpawner extends AbstractPowerUpMinionSpawner
    
    protected PowerUpGhastMinionSpawner()
    {
-      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH, EntityGhastMinion.LOCALIZED_NAME);
       HardcoreWither.config.register(this);   
    }
    
-   private PowerUpGhastMinionSpawner(EntityWither theOwnerWither)
-   {
-      super(theOwnerWither, EntityGhastMinion.LOCALIZED_NAME);
-      super.spawnRange = 16;
-      super.ResetSpawnerToData();
-   }
-
    @Override
-   public IPowerUp createPowerUp(EntityWither theOwnerWither)
+   public void updateWither(EntityWither wither, int strength, IPowerUpStateData data)
    {
-      PowerUpGhastMinionSpawner powerUpGhastMinionSpawner = new PowerUpGhastMinionSpawner(theOwnerWither);
-      return powerUpGhastMinionSpawner;
-   }
-
-   @Override
-   public void updateWither()
-   {
-      if(ownerWither.getInvulTime() <= 0 && !ownerWither.isArmored())
+      if(wither.getInvulTime() <= 0 && !wither.isArmored())
       {
-         super.updateWither();
+         super.updateWither(wither, strength, data);
       }
    }
-
-   @Override
-   public void witherDied()
-   {}
-};
+}

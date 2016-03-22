@@ -2,45 +2,33 @@ package thor12022.hardcorewither.proxies;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
-import thor12022.hardcorewither.DataStoreManager;
 import thor12022.hardcorewither.EventHandler;
 import thor12022.hardcorewither.HardcoreWither;
-import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.blocks.BlockRecipeRegistry;
 import thor12022.hardcorewither.blocks.BlockRegistry;
 import thor12022.hardcorewither.entity.EntityRegistry;
-import thor12022.hardcorewither.handlers.PlayerHandler;
 import thor12022.hardcorewither.handlers.TinkersConstructHandler;
-import thor12022.hardcorewither.handlers.WitherHandler;
+import thor12022.hardcorewither.handlers.WitherChargingHandler;
 import thor12022.hardcorewither.items.ItemRegistry;
 import thor12022.hardcorewither.items.MaterialHelper;
 import thor12022.hardcorewither.potions.PotionRegistry;
-import thor12022.hardcorewither.powerUps.PowerUpManager;
+import thor12022.hardcorewither.powerUps.WitherHandler;
 
 public class CommonProxy
 {
    protected ItemRegistry              itemRegistry;
-   protected PowerUpManager            powerUpManager;
    protected BlockRegistry             blockRegistry;
    protected PotionRegistry            potionRegistry;
    protected EntityRegistry            entityRegistry;
    protected TinkersConstructHandler   tiCoRegistry;
+   protected WitherChargingHandler     witherChargingHandler;
    protected WitherHandler             witherHandler;
-   protected EventHandler              eventHandler;
-   protected PlayerHandler             playerHandler;
-   protected DataStoreManager          dataStore;
-   
-   
+   protected EventHandler              eventHandler;   
     
    public void preInit()
    {
       construct();
-      
-      dataStore.addStorageClass(playerHandler, "PlayerHandler");
-      dataStore.addStorageClass(powerUpManager, "witherData");
-      
-      powerUpManager.init();
-      
+                  
       itemRegistry.registerItems();
       blockRegistry.registerBlocks();
       potionRegistry.registerPotions();
@@ -65,16 +53,14 @@ public class CommonProxy
    {
       assert(HardcoreWither.config != null);
       
-      itemRegistry   =  new ItemRegistry();
-      powerUpManager =  new PowerUpManager();
-      blockRegistry  =  new BlockRegistry();
-      potionRegistry =  new PotionRegistry();
-      entityRegistry =  new EntityRegistry();
-      tiCoRegistry   =  new TinkersConstructHandler();
-      witherHandler  =  new WitherHandler();
-      eventHandler   =  new EventHandler(playerHandler, powerUpManager);
-      playerHandler  =  new PlayerHandler();
-      dataStore      =  new DataStoreManager(ModInformation.CHANNEL);
+      itemRegistry            =  new ItemRegistry();
+      blockRegistry           =  new BlockRegistry();
+      potionRegistry          =  new PotionRegistry();
+      entityRegistry          =  new EntityRegistry();
+      tiCoRegistry            =  new TinkersConstructHandler();
+      witherChargingHandler   =  new WitherChargingHandler();
+      witherHandler           =  new WitherHandler();
+      eventHandler            =  new EventHandler();
       
       MaterialHelper.getInstance();
    }

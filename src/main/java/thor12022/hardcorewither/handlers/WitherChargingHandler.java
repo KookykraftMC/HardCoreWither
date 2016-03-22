@@ -21,14 +21,14 @@ import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 
 @Configurable
-public class WitherHandler
+public class WitherChargingHandler
 {
    @Config(comment="MC-57569 Wither Moves During Shield Generation / Wither attacking before initial explosion")
    private static boolean vanillaBugFix = true;
    
    private static Predicate<Entity> attackEntitySelector = null;
  
-   public WitherHandler()
+   public WitherChargingHandler()
    {
      HardcoreWither.config.register(this);
      if(!Loader.isModLoaded("witherchargingfix"))

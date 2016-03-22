@@ -23,6 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PotionAntiWither extends Potion
 {
    public static final String UNLOCALIZED_NAME = "antiWither";
+   @SuppressWarnings("hiding")
    public static int id;
    private static final Map<EntityLivingBase,Integer> affectedEntities = Maps.newHashMap();
    private static final Set<EntityLivingBase> affectedWitheredEntities = Sets.newHashSet();

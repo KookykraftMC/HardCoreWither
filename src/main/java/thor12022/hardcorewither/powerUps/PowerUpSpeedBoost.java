@@ -1,11 +1,12 @@
 package thor12022.hardcorewither.powerUps;
 
 import thor12022.hardcorewither.HardcoreWither;
+import thor12022.hardcorewither.api.IPowerUpStateData;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.entity.boss.EntityWither;
 
-@Configurable
+@Configurable // This has no @Config member, but it's parent class does
 public class PowerUpSpeedBoost extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 6;
@@ -20,34 +21,17 @@ public class PowerUpSpeedBoost extends AbstractPowerUp
       HardcoreWither.config.register(this);
    }
 
-   private PowerUpSpeedBoost(EntityWither theOwnerWither)
-   {
-      super(theOwnerWither);
-      increasePower();
-   }
-
-  @Override
-   public void updateWither()
+   @Override
+   public void updateWither(EntityWither wither, int strength, IPowerUpStateData data)
    {}
-
-    @Override
-   public void witherDied()
-   {}
-
-  @Override
-   public IPowerUp createPowerUp(EntityWither theOwnerWither)
-   {
-      return new PowerUpSpeedBoost(theOwnerWither);
-   }
 
    @Override
-   public boolean increasePower()
+   public void witherDied(EntityWither wither, int strength, IPowerUpStateData data)
+   {}
+
+   @Override
+   public IPowerUpStateData applyPowerUp(EntityWither wither, int strength)
    {
-      if(super.increasePower())
-      {
-         // @todo Increase Wither's speed
-         return true;
-      }
-      return false;
+      return null;
    }
 }

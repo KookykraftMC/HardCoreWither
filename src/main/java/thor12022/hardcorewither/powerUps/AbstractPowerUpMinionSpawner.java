@@ -1,5 +1,6 @@
 package thor12022.hardcorewither.powerUps;
 
+import thor12022.hardcorewither.api.IPowerUpStateData;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.entity.boss.EntityWither;
@@ -11,75 +12,101 @@ import net.minecraft.world.World;
 @Configurable
 public abstract class AbstractPowerUpMinionSpawner extends AbstractPowerUp
 {
-   protected class WitherMinionSpawner extends MobSpawnerBaseLogic
+   protected static class Data extends IPowerUpStateData
    {
+      EntityWither theOwnerWither;
       
-      final private EntityWither ownerWither;
+      private String entityLocalizedName;
+      private int    delay;
+      private int    playerRange;
+      private int    maxEntities;
+      private int    minDelay;
+      private int    maxDelay;
+      private int    spawnCount;
+      private int    spawnRange;
       
-      public WitherMinionSpawner(EntityWither theOwnerWither)
+      MobSpawnerBaseLogic spawner = new MobSpawnerBaseLogic()
+      {          
+         @Override
+         public void func_98267_a(int p_98267_1_)
+         {
+            // This would usually register a block update event with the world
+         }
+
+         @Override
+         public World getSpawnerWorld()
+         {
+            return theOwnerWither.worldObj;
+         }
+
+         @Override
+         public BlockPos getSpawnerPosition()
+         {
+            return theOwnerWither.getPosition();
+         }
+      };
+      
+      Data(EntityWither wither)
       {
-         ownerWither = theOwnerWither;
+         theOwnerWither = wither;
       }
       
-      public void func_98267_a(int p_98267_1_)
+      protected void resetSpawnerToData()
       {
-         // This would usually register a block update event with the world
+         NBTTagCompound nbt = new NBTTagCompound();
+         nbt.setString("EntityId", entityLocalizedName);
+         nbt.setShort("Delay", (short)delay);
+         nbt.setShort("RequiredPlayerRange", (short)playerRange);
+         nbt.setShort("MaxNearbyEntities", (short)maxEntities);
+         nbt.setShort("MinSpawnDelay", (short)minDelay);
+         nbt.setShort("MaxSpawnDelay", (short)maxDelay);
+         nbt.setShort("SpawnCount", (short)spawnCount);
+         nbt.setShort("SpawnRange", (short)spawnRange);
+         spawner.readFromNBT(nbt);
       }
 
-      public World getSpawnerWorld()
+      @Override
+      public NBTTagCompound serializeNBT()
       {
-         return ownerWither.worldObj;
+         NBTTagCompound nbt = new NBTTagCompound();
+         NBTTagCompound spawnerNbt = new NBTTagCompound();
+         spawner.writeToNBT(spawnerNbt);
+         nbt.setTag("spawnerLogic", spawnerNbt);
+         return nbt;
       }
 
-      public int getSpawnerX()
+      @Override
+      public void deserializeNBT(NBTTagCompound nbt)
       {
-         return (int) Math.round(ownerWither.lastTickPosX);
+         NBTTagCompound spawnerNbt = nbt.getCompoundTag("spawnerLogic");
+         spawner.readFromNBT(spawnerNbt);
       }
-
-      public int getSpawnerY()
-      {
-         return (int) Math.round(ownerWither.lastTickPosY) + 1;
-      }
-
-      public int getSpawnerZ()
-      {
-         return (int) Math.round(ownerWither.lastTickPosZ);
-      }
-
-	@Override
-	public BlockPos getSpawnerPosition() {
-		// TODO Auto-generated method stub
-		return new BlockPos(ownerWither);
-	}
    }
-
-   @Config
-   public String  entityLocalizedName = "Pig";
+   
+   final protected String ENTITY_LOCALIZED_NAME;
    
    @Config(maxInt = 65535)
-   public int delay = 20;
+   protected int defaultDelay = 20;
    
    @Config(maxInt = 65535)
-   public int playerRange = 48;
+   protected int defaultPlayerRange = 48;
    
    @Config(maxInt = 65535)
-   public int maxEntities = 6;
+   protected int defaultMaxEntities = 6;
    
    @Config(maxInt = 65535)
-   public int minDelay = 600;
+   protected int defaultMinDelay = 600;
    
    @Config(maxInt = 65535)
-   public int maxDelay = 800;
-
-   @Config(maxInt = 65535)
-   public int spawnCount = 4;
+   protected int defaultMaxDelay = 800;
 
    @Config(maxInt = 65535)
-   public int spawnRange = 4;
+   protected int defaultSpawnCount = 4;
 
-   private final WitherMinionSpawner spawner;
+   @Config(maxInt = 65535)
+   protected int defaultSpawnRange = 4;
     
-   @Config(minFloat = 0f, maxFloat = 10f, comment = "Amount to increase Spawn Count by. 1.0 to never increase")
+   @Config(minFloat = 1f, maxFloat = 10f, comment = "Amount to increase Spawn Count by. 1.0 to never increase")
    static protected float spawnCountModifier = 1.1f;
    
    @Config(minFloat = 0f, maxFloat = 1f, comment = "The smaller it is, the faster the delay decrease. 1.0 to never decrease")
@@ -88,65 +115,36 @@ public abstract class AbstractPowerUpMinionSpawner extends AbstractPowerUp
    @Config(minFloat = 1f, maxFloat = 10f, comment = "Amount to increase Max Entities by. 1.0 to never increase")
    static protected float maxEntitiesModifier = 1.1f;
    
-   public AbstractPowerUpMinionSpawner(int minLevel, int maxStrength)
+   public AbstractPowerUpMinionSpawner(int minLevel, int maxStrength, String entityLocalizedName)
    {
       super(minLevel, maxStrength);
-      spawner = null;
-   }
-   
-   protected AbstractPowerUpMinionSpawner(EntityWither theOwnerWither, String entityLocalizedName)
-   {
-      super(theOwnerWither);
-      spawner = new WitherMinionSpawner(ownerWither);
-      this.entityLocalizedName = entityLocalizedName;
-      ResetSpawnerToData();
-   }
-
-   protected void ResetSpawnerToData()
-   {
-      NBTTagCompound nbt = new NBTTagCompound();
-      nbt.setString("EntityId", entityLocalizedName);
-      nbt.setShort("Delay", (short)delay);
-      nbt.setShort("RequiredPlayerRange", (short)playerRange);
-      nbt.setShort("MaxNearbyEntities", (short)maxEntities);
-      nbt.setShort("MinSpawnDelay", (short)minDelay);
-      nbt.setShort("MaxSpawnDelay", (short)maxDelay);
-      nbt.setShort("SpawnCount", (short)spawnCount);
-      nbt.setShort("SpawnRange", (short)spawnRange);
-      spawner.readFromNBT(nbt);
+      this.ENTITY_LOCALIZED_NAME = entityLocalizedName;
    }
    
    @Override
-   public void updateWither()
+   public void updateWither(EntityWither wither, int strength, IPowerUpStateData data)
    {
-      spawner.updateSpawner();
+      ((Data)data).spawner.updateSpawner();
    }
 
    @Override
-   public boolean increasePower()
-   {
-      if(super.increasePower())
-      {
-         spawnCount *= spawnCountModifier;
-         delay *= spawnDelayModifier;
-         minDelay *=  spawnDelayModifier;
-         maxDelay *=  spawnDelayModifier;
-         maxEntities *=  maxEntitiesModifier;
-         ResetSpawnerToData();
-         return true;
-      }
-      return false;
-   };
-   
+   public void witherDied(EntityWither wither, int strength, IPowerUpStateData data)
+   {}
+
    @Override
-   public void readFromNBT(NBTTagCompound nbt)
+   public IPowerUpStateData applyPowerUp(EntityWither wither, int strength)
    {
-      super.readFromNBT(nbt);
-      spawnCount *= (spawnCountModifier * super.powerStrength);
-      delay *= (spawnDelayModifier * super.powerStrength);
-      minDelay *=  (spawnDelayModifier * super.powerStrength);
-      maxDelay *=  (spawnDelayModifier * super.powerStrength);
-      maxEntities *=  (maxEntitiesModifier * super.powerStrength);
-      ResetSpawnerToData();
+      Data data = new Data(wither);
+      data.entityLocalizedName = ENTITY_LOCALIZED_NAME;
+      data.spawnCount = Math.round(defaultSpawnCount * spawnCountModifier);
+      data.delay = Math.round(defaultDelay * spawnDelayModifier);
+      data.minDelay = Math.round(defaultMinDelay * spawnDelayModifier);
+      data.maxDelay = Math.round(defaultMaxDelay * spawnDelayModifier);
+      data.maxEntities = Math.round(defaultMaxEntities * maxEntitiesModifier);
+      data.playerRange = defaultPlayerRange;
+      data.spawnRange = defaultSpawnRange;
+      data.resetSpawnerToData();
+      return null;
    }
+
 }

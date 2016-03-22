@@ -30,7 +30,8 @@ public class HardcoreWither
    public static CreativeTabs tabBaseMod = new CreativeTabBaseMod(ModInformation.ID + ".creativeTab");
    public static Logger logger = LogManager.getLogger(ModInformation.NAME);
 
-   public static ConfigManager config;
+   public static ConfigManager      config;
+   public static DataStoreManager   dataStore = new DataStoreManager(ModInformation.CHANNEL);
    
    public static final Random RAND = new Random();
 
@@ -45,17 +46,16 @@ public class HardcoreWither
    }
 
    @Mod.EventHandler
-   public void init(FMLInitializationEvent event)
+   public void init(@SuppressWarnings("unused") FMLInitializationEvent event)
    {
       logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.init"));
-
       proxy.init();
    }
 
    @Mod.EventHandler
    public void serverStarting(FMLServerStartingEvent event)
    {
+      logger.info(TextHelper.localize("info." + ModInformation.ID + ".console.load.serverStarting"));
       CommandManager.serverStarting(event);
    }
-
 }

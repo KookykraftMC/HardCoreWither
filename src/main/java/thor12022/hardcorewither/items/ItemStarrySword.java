@@ -31,6 +31,7 @@ public class ItemStarrySword extends ItemSword implements IItem
       this.setCreativeTab(HardcoreWither.tabBaseMod);
    }
    
+   @Override
    @SideOnly(Side.CLIENT)
    public boolean hasEffect(ItemStack stack)
    {

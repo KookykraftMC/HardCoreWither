@@ -37,6 +37,7 @@ public class EntityBlazeMinion extends EntityBlaze
    protected void dropFewItems(boolean p_70628_1_, int p_70628_2_)
    {}
    
+   @Override
    protected boolean isValidLightLevel()
    {
        return true;

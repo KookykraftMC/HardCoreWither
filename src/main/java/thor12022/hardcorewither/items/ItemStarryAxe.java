@@ -31,6 +31,7 @@ public class ItemStarryAxe extends ItemAxe implements IItem
       this.setCreativeTab(HardcoreWither.tabBaseMod);
    }
    
+   @Override
    @SideOnly(Side.CLIENT)
    public boolean hasEffect(ItemStack stack)
    {

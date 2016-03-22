@@ -1,22 +1,14 @@
 package thor12022.hardcorewither.powerUps;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import thor12022.hardcorewither.HardcoreWither;
+import thor12022.hardcorewither.api.IPowerUp;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.util.MultiRange;
 import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.nbt.NBTTagCompound;
 
 @Configurable (syncNotification = "configChangeNotification")
 abstract class AbstractPowerUp implements IPowerUp
-{
-   final protected EntityWither ownerWither;
-   final protected String className = getClass().getSimpleName();
-   protected int powerStrength;
-   
+{   
    @Config
    protected boolean powerUpEnabled = true;
    
@@ -30,33 +22,18 @@ abstract class AbstractPowerUp implements IPowerUp
    private String blacklistDims = "";
    private MultiRange blacklistDimsRanges;
    
-   static private Set<String> constructedPrototypeClasses = new HashSet<String>();
-      
-   AbstractPowerUp( int minLevel, int maxStrength)
+   protected AbstractPowerUp(int minLevel, int maxStrength)
    {
-      ownerWither = null;
-      powerStrength = 0;
       this.maxStrength = maxStrength;
       this.minLevel = minLevel;
-      if(constructedPrototypeClasses.contains(className))
-      {
-         HardcoreWither.logger.debug("Duplicate Prototype constructed for " + className);
-      }
-      else
-      {
-         constructedPrototypeClasses.add(className);
-      }
    }
    
-   protected AbstractPowerUp(EntityWither theOwnerWither)
+   @Override
+   public boolean canApply(EntityWither theOwnerWither)
    {
-      powerStrength = 1;
-      ownerWither = theOwnerWither;
-   }
-   
-   protected boolean isValidApplication(EntityWither theOwnerWither)
-   {
-      return ((blacklistDimsRanges != null) && !blacklistDimsRanges.contains(theOwnerWither.dimension));
+      return powerUpEnabled && 
+             ( (blacklistDimsRanges != null) && 
+               !blacklistDimsRanges.contains(theOwnerWither.dimension));
    }
    
    @SuppressWarnings("unused")
@@ -64,47 +41,22 @@ abstract class AbstractPowerUp implements IPowerUp
    {
       blacklistDimsRanges = new MultiRange(blacklistDims);
    }
-   
-   @Override
-   public void writeToNBT(NBTTagCompound nbt)
-   {
-      nbt.setInteger("powerStrength", powerStrength);
-   }
 
    @Override
-   public void readFromNBT(NBTTagCompound nbt)
+   public int maxStrength()
    {
-      powerStrength = nbt.getInteger("powerStrength");
-      powerStrength = powerStrength <= 0 ? 1 : powerStrength;
-   }
-   
-   @Override
-   public boolean increasePower()
-   {
-      if(powerStrength < maxStrength)
-      {
-         ++powerStrength;
-         return true;
-      }
-      return false;
+      return maxStrength;
    }
    
    @Override
    public String getName()
    {
-      return className;
+      return getClass().getSimpleName();
    }
    
    @Override
-   public int minPower()
+   public int minWitherLevel()
    {
       return powerUpEnabled ? minLevel : Integer.MAX_VALUE;
    }
-
-   /**
-    * Most (all?) powerups will not persist when the world is unloaded anyway
-    */
-   @Override
-   public void resetNBT()
-   {}
 }

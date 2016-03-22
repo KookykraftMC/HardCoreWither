@@ -1,10 +1,12 @@
 package thor12022.hardcorewither.powerUps;
 
 import thor12022.hardcorewither.HardcoreWither;
+import thor12022.hardcorewither.api.IPowerUpStateData;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.nbt.NBTTagCompound;
 
 @Configurable
 class PowerUpTeleport extends AbstractPowerUp
@@ -24,7 +26,29 @@ class PowerUpTeleport extends AbstractPowerUp
    @Config(minFloat = 0f, maxFloat = 10f, comment = "0 is prefect")
    private static float teleportInaccuracy = 0.25f;
    
-   private long   teleportNextTick;
+   static class Data extends IPowerUpStateData
+   {
+      long nextTick;
+
+      Data(long nextTick)
+      {
+         this.nextTick = nextTick;
+      }
+      
+      @Override
+      public NBTTagCompound serializeNBT()
+      {
+         NBTTagCompound nbt = new NBTTagCompound();
+         nbt.setLong("powerStrength", nextTick);
+         return nbt;
+      }
+
+      @Override
+      public void deserializeNBT(NBTTagCompound nbt)
+      {
+         nextTick = nbt.getLong("powerStrength");
+      }
+   }
    
    
    protected PowerUpTeleport()
@@ -32,36 +56,54 @@ class PowerUpTeleport extends AbstractPowerUp
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
       HardcoreWither.config.register(this);   
    }
-   
-   private PowerUpTeleport(EntityWither theOwnerWither)
+      
+   private static boolean teleportTo(EntityWither wither, double x, double y, double z)
    {
-      super(theOwnerWither);
-      increasePower();
+       double oldX = wither.posX;
+       double oldY = wither.posY;
+       double oldZ = wither.posZ;
+       
+       wither.setPosition(x, y, z);
+       
+       if (!wither.worldObj.getCollidingBoundingBoxes(wither, wither.getEntityBoundingBox()).isEmpty())
+       {
+          wither.setPosition(oldX, oldY, oldZ);
+          return false;
+       }
+       else
+       {
+          wither.setPosition(wither.posX, wither.posY, wither.posZ);
+          wither.worldObj.playSoundEffect(oldX, oldY, oldZ, "mob.endermen.portal", 1.0F, 1.0F);
+          //! @todo ensure this plays the sound on the client, I suspect not
+          wither.playSound("mob.endermen.portal", 1.0F, 1.0F);
+          return true;
+       }
+   }
+
+   private static long setNextRandomTick(long currentTick, int strength)
+   {
+      int strengthBasedTick = (int) (teleportFequencyBase / (strength * teleportFrequencyMultiplier));
+      int modifier = (int) ((HardcoreWither.RAND.nextGaussian() * teleportRandomness) * strengthBasedTick);
+      return currentTick + strengthBasedTick + modifier;
    }
 
    @Override
-   public IPowerUp createPowerUp(EntityWither theOwnerWither)
+   public void updateWither(EntityWither wither, int strength, IPowerUpStateData data)
    {
-      PowerUpTeleport powerUp = new PowerUpTeleport(theOwnerWither);
-      return powerUp;
-   }
-   
-   @Override
-   public void updateWither()
-   {
-      if( ownerWither.getInvulTime() <= 0 &&  ownerWither.worldObj.getTotalWorldTime() > teleportNextTick )
+      Data stateData = (Data)data;
+      if( wither.getInvulTime() <= 0 &&  wither.worldObj.getTotalWorldTime() > stateData.nextTick )
       {
-         int targetId = ownerWither.getWatchedTargetId(0);
+         int targetId = wither.getWatchedTargetId(0);
          if( targetId != -1)
          {
-            Entity target = ownerWither.worldObj.getEntityByID(targetId);
+            Entity target = wither.worldObj.getEntityByID(targetId);
             if(target != null)
             {
                int retryCount = 0;
                double teleportXPos = 0.0;
                double teleportYPos = 0.0;
                double teleportZPos = 0.0;
-               int meanDistance = ownerWither.getDistanceSqToEntity(target) >= 256D ? 16 : 8;
+               int meanDistance = wither.getDistanceSqToEntity(target) >= 256D ? 16 : 8;
                double standardDeviation = 4 * teleportInaccuracy;
                do
                {
@@ -73,58 +115,21 @@ class PowerUpTeleport extends AbstractPowerUp
                      teleportYPos = 0;
                   }
                   ++retryCount;
-               } while(!teleportTo(teleportXPos,teleportYPos, teleportZPos) && retryCount < 4);
-               setNextRandomTick(); 
+               } while(!teleportTo(wither, teleportXPos,teleportYPos, teleportZPos) && retryCount < 4);
+               stateData.nextTick = setNextRandomTick(wither.worldObj.getTotalWorldTime(), strength); 
             }
          }
       }
    }
-   
-   protected boolean teleportTo(double x, double y, double z)
-   {
-       double oldX = ownerWither.posX;
-       double oldY = ownerWither.posY;
-       double oldZ = ownerWither.posZ;
-       
-       ownerWither.setPosition(x, y, z);
-       
-       if (!ownerWither.worldObj.getCollidingBoundingBoxes(ownerWither, ownerWither.getEntityBoundingBox()).isEmpty())
-       {
-           ownerWither.setPosition(oldX, oldY, oldZ);
-           return false;
-       }
-       else
-       {
-           ownerWither.setPosition(ownerWither.posX, ownerWither.posY, ownerWither.posZ);
-           ownerWither.worldObj.playSoundEffect(oldX, oldY, oldZ, "mob.endermen.portal", 1.0F, 1.0F);
-           ownerWither.playSound("mob.endermen.portal", 1.0F, 1.0F);
-           return true;
-       }
-   }
 
    @Override
-   public void witherDied()
+   public void witherDied(EntityWither wither, int strength, IPowerUpStateData data)
    {}
 
    @Override
-   public boolean increasePower() 
+   public IPowerUpStateData applyPowerUp(EntityWither wither, int strength)
    {
-      if(super.increasePower())
-      {
-         setNextRandomTick();
-         return true;
-      }
-      else
-      {
-         return false;
-      }
-   }   
-   
-   private void setNextRandomTick()
-   {
-      int strengthBasedTick = (int) (teleportFequencyBase / (super.powerStrength * teleportFrequencyMultiplier));
-      int modifier = (int) ((HardcoreWither.RAND.nextGaussian() * teleportRandomness) * strengthBasedTick);
-      teleportNextTick =  ownerWither.worldObj.getTotalWorldTime() + strengthBasedTick + modifier;
+      return new Data(setNextRandomTick(wither.worldObj.getTotalWorldTime(), strength));
    }
 
-};
+}

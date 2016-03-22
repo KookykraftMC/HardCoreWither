@@ -73,6 +73,7 @@ public class ItemStarryApple extends ItemFood implements IItem
       this.setAlwaysEdible();
    }
    
+   @Override
    @SideOnly(Side.CLIENT)
    public boolean hasEffect(ItemStack stack)
    {

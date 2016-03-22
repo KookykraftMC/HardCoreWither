@@ -9,7 +9,10 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import thor12022.hardcorewither.HardcoreWither;
+import thor12022.hardcorewither.api.IPowerUpStateData;
+import thor12022.hardcorewither.config.Configurable;
 
+@Configurable // This class has no @Config members, but it parent class does
 public class PowerUpDamageResistance extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 3;   
@@ -60,53 +63,36 @@ public class PowerUpDamageResistance extends AbstractPowerUp
    protected PowerUpDamageResistance()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
-   }
-   
-   private PowerUpDamageResistance(EntityWither theOwnerWither)
-   {
-      super(theOwnerWither);
-      increasePower();
+      HardcoreWither.config.register(this);   
    }
 
    @Override
-   public void updateWither()
+   public void updateWither(EntityWither wither, int strength, IPowerUpStateData data)
    {}
 
    @Override
-   public void witherDied()
+   public void witherDied(EntityWither wither, int strength, IPowerUpStateData data)
    {}
 
    @Override
-   public IPowerUp createPowerUp(EntityWither theOwnerWither)
+   public IPowerUpStateData applyPowerUp(EntityWither wither, int strength)
    {
-      return new PowerUpDamageResistance(theOwnerWither);
-   }
-
-   @Override
-   public boolean increasePower() 
-   {
-      if(super.increasePower())
+      PotionEffect resistanceEffect = new PotionEffect(Potion.resistance.id, Integer.MAX_VALUE, strength);
+      try
       {
-
-         PotionEffect resistanceEffect = new PotionEffect(Potion.resistance.id, Integer.MAX_VALUE, powerStrength);
-         try
+         Map<Integer, PotionEffect> activePotionsMap = (Map<Integer, PotionEffect>) activePotionMapField.get(wither); 
+         if (activePotionsMap.containsKey(Integer.valueOf(resistanceEffect.getPotionID())))
          {
-            Map<Integer, PotionEffect> activePotionsMap = (Map<Integer, PotionEffect>) activePotionMapField.get(ownerWither); 
-            if (activePotionsMap.containsKey(Integer.valueOf(resistanceEffect.getPotionID())))
-            {
-               activePotionsMap.remove(Integer.valueOf(resistanceEffect.getPotionID()));
-            }
-            activePotionsMap.put(Integer.valueOf(resistanceEffect.getPotionID()), resistanceEffect);
-             
-            onNewPotionEffectMethod.invoke(ownerWither, resistanceEffect);
+            activePotionsMap.remove(Integer.valueOf(resistanceEffect.getPotionID()));
          }
-         catch(Exception e)
-         {
-            HardcoreWither.logger.warn(e.getMessage());
-            return false;
-         }
-         return true;
+         activePotionsMap.put(Integer.valueOf(resistanceEffect.getPotionID()), resistanceEffect);
+          
+         onNewPotionEffectMethod.invoke(wither, resistanceEffect);
       }
-      return false;
+      catch(Exception e)
+      {
+         HardcoreWither.logger.warn(e.getMessage());
+      }
+      return null;
    }
 }

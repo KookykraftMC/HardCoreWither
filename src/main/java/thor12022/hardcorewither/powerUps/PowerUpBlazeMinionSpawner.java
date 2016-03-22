@@ -2,6 +2,7 @@ package thor12022.hardcorewither.powerUps;
 
 import net.minecraft.entity.boss.EntityWither;
 import thor12022.hardcorewither.HardcoreWither;
+import thor12022.hardcorewither.api.IPowerUpStateData;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.entity.EntityBlazeMinion;
 
@@ -13,32 +14,16 @@ class PowerUpBlazeMinionSpawner extends AbstractPowerUpMinionSpawner
    
    protected PowerUpBlazeMinionSpawner()
    {
-      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
+      super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH, EntityBlazeMinion.LOCALIZED_NAME);
       HardcoreWither.config.register(this);
    }
    
-   private PowerUpBlazeMinionSpawner(EntityWither theOwnerWither)
-   {
-      super(theOwnerWither, EntityBlazeMinion.LOCALIZED_NAME);
-   }
-
    @Override
-   public IPowerUp createPowerUp(EntityWither theOwnerWither)
+   public void updateWither(EntityWither wither, int strength, IPowerUpStateData data)
    {
-      PowerUpBlazeMinionSpawner powerUpBlazeMinionSpawner = new PowerUpBlazeMinionSpawner(theOwnerWither);
-      return powerUpBlazeMinionSpawner;
-   }
-   
-   @Override
-   public void updateWither()
-   {
-      if(ownerWither.getInvulTime() > 0)
+      if(wither.getInvulTime() > 0)
       {
-         super.updateWither();
+         super.updateWither(wither, strength, data);
       }
    }
-
-   @Override
-   public void witherDied()
-   {}
-};
+}
