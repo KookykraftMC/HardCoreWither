@@ -60,6 +60,8 @@ public class WitherHandler implements INBTStorageClass
       HardcoreWither.CONFIG.register(this);
       HardcoreWither.CONFIG.register(WitherAffinityHelper.class);
       MinecraftForge.EVENT_BUS.register(this);
+      
+      PowerUpHelper.initialize();
    }
    
    @SubscribeEvent

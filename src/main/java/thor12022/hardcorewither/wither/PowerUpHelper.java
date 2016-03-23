@@ -21,9 +21,9 @@ import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.api.IPowerUp;
 import thor12022.hardcorewither.api.PowerUpRegistry;
 
-public class PowerUpHelper
+class PowerUpHelper
 {   
-   static void register()
+   static void initialize()
    {
       if(!PowerUpRegistry.register(new PowerUpBlazeMinionSpawner()))
       {
@@ -169,7 +169,7 @@ public class PowerUpHelper
    
    /**
     * Randomly removes one level from a random PowerUp the Wither has
-    * @param witherData apply power ups to this
+    * @param witherData apply power ups to this @todo change to WitherData
     * @pre wither should have had Power Ups applied to it already
     */
    static public void reduceWitherPowerUp(EntityWither wither)
