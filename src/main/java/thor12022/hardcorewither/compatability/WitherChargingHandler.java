@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.handlers;
+package thor12022.hardcorewither.compatability;
 
 import java.lang.reflect.Field;
 

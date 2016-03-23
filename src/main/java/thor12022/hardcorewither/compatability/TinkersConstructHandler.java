@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.handlers;
+package thor12022.hardcorewither.compatability;
 
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
