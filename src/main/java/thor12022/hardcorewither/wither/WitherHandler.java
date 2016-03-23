@@ -158,7 +158,11 @@ public class WitherHandler implements INBTStorageClass
                // Roll under the target for 2nd Ed flashbacks
                if(HardcoreWither.RAND.nextFloat() < WitherAffinityHelper.chanceCalc(witherAffinityLevel))
                {
-                  PowerUpHelper.reduceWitherPowerUp((EntityWither) event.entity);
+                  WitherData witherData = WitherData.getWitherData((EntityWither) event.entity);
+                  if(witherData != null)
+                  {
+                     PowerUpHelper.reduceWitherPowerUp(witherData);
+                  }
                }
             }
          }

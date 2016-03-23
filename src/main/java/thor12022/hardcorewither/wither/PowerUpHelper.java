@@ -169,12 +169,11 @@ class PowerUpHelper
    
    /**
     * Randomly removes one level from a random PowerUp the Wither has
-    * @param witherData apply power ups to this @todo change to WitherData
+    * @param witherData apply power ups to this
     * @pre wither should have had Power Ups applied to it already
     */
-   static public void reduceWitherPowerUp(EntityWither wither)
+   static public void reduceWitherPowerUp(WitherData witherData)
    {
-      WitherData witherData = WitherData.getWitherData(wither);
       int effectPosition = HardcoreWither.RAND.nextInt(witherData.getActivePowerUpEffects().size());
       int currIndex = 0;
       for(PowerUpEffect powerUpEffect : witherData.getActivePowerUpEffects())
@@ -189,6 +188,7 @@ class PowerUpHelper
             {
                powerUpEffect.adjustEffect(-1);
             }
+            break;
          }
       }
    }
