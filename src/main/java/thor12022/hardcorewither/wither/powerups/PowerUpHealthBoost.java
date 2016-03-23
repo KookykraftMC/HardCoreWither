@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.powerUps;
+package thor12022.hardcorewither.wither.powerups;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;

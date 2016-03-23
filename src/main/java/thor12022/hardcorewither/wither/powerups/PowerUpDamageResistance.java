@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.powerUps;
+package thor12022.hardcorewither.wither.powerups;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

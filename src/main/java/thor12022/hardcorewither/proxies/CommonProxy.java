@@ -9,11 +9,11 @@ import thor12022.hardcorewither.blocks.BlockRegistry;
 import thor12022.hardcorewither.compatability.TinkersConstructHandler;
 import thor12022.hardcorewither.compatability.WitherChargingHandler;
 import thor12022.hardcorewither.entity.EntityRegistry;
-import thor12022.hardcorewither.handlers.WitherAffinityHandler;
 import thor12022.hardcorewither.items.ItemRegistry;
 import thor12022.hardcorewither.items.MaterialHelper;
 import thor12022.hardcorewither.potions.PotionRegistry;
-import thor12022.hardcorewither.powerUps.WitherHandler;
+import thor12022.hardcorewither.wither.WitherAffinityHandler;
+import thor12022.hardcorewither.wither.WitherHandler;
 
 public class CommonProxy
 {

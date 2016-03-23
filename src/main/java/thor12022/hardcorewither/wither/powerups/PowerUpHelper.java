@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.powerUps;
+package thor12022.hardcorewither.wither.powerups;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,7 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.util.BlockPos;
 import thor12022.hardcorewither.command.AbstractSubCommand;
 import thor12022.hardcorewither.command.CommandManager;
+import thor12022.hardcorewither.wither.WitherData;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.api.IPowerUp;
 import thor12022.hardcorewither.api.PowerUpRegistry;

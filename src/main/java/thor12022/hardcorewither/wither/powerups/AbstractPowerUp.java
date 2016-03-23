@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.powerUps;
+package thor12022.hardcorewither.wither.powerups;
 
 import thor12022.hardcorewither.api.IPowerUp;
 import thor12022.hardcorewither.config.Config;

@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.handlers;
+package thor12022.hardcorewither.wither;
 
 import java.util.Map;
 
@@ -17,8 +17,8 @@ import thor12022.hardcorewither.api.WitherAffinityRegistry;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.enchantment.EnchantmentRegistry;
-import thor12022.hardcorewither.powerUps.PowerUpHelper;
 import thor12022.hardcorewither.util.TextHelper;
+import thor12022.hardcorewither.wither.powerups.PowerUpHelper;
 
 @Configurable(sectionName="WitherAffinity")
 public class WitherAffinityHandler

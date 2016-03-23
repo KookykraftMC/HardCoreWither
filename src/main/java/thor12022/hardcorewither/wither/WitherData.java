@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.powerUps;
+package thor12022.hardcorewither.wither;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,6 +14,7 @@ import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.api.IPowerUp;
 import thor12022.hardcorewither.api.InvalidPowerUpException;
+import thor12022.hardcorewither.wither.powerups.PowerUpEffect;
 
 class WitherData implements IExtendedEntityProperties
 {
