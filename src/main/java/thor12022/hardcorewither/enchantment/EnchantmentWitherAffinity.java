@@ -9,7 +9,7 @@ import thor12022.hardcorewither.ModInformation;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 
-@Configurable
+@Configurable(sectionName="WitherAffinity")
 public class EnchantmentWitherAffinity extends Enchantment
 {
    static final String NAME = "witherAffinity";

@@ -46,7 +46,6 @@ public class WitherHandler implements INBTStorageClass
    private int largestPowerUp;
    
    private PlayerHandler   playerHandler  =  new PlayerHandler();
-   private PowerUpHelper  powerUpHelper =  new PowerUpHelper();
    
    public WitherHandler()
    {
@@ -94,7 +93,7 @@ public class WitherHandler implements INBTStorageClass
                {
                   powerUpSize = ++largestPowerUp;
                }
-               powerUpHelper.powerUpWither(witherData, (int)Math.round(powerUpSize));   
+               PowerUpHelper.powerUpWither(witherData, (int)Math.round(powerUpSize));   
             }
          }
       }

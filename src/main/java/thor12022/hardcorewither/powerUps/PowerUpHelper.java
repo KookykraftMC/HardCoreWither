@@ -14,7 +14,7 @@ import thor12022.hardcorewither.api.PowerUpRegistry;
 
 public class PowerUpHelper
 {   
-   static
+   static void register()
    {
       if(!PowerUpRegistry.register(new PowerUpBlazeMinionSpawner()))
       {
@@ -48,9 +48,11 @@ public class PowerUpHelper
       {
          HardcoreWither.LOGGER.warn("Cannot register " + PowerUpDamageResistance.class.getName());
       }
+      
+      CommandManager.getInstance().registerSubCommand(spawnCommand);
    }
    
-   AbstractSubCommand spawnCommand = new AbstractSubCommand()
+   static AbstractSubCommand spawnCommand = new AbstractSubCommand()
    {
       @Override
       public final String getCommandUsage(ICommandSender sender)
@@ -105,14 +107,7 @@ public class PowerUpHelper
          }
       }
    };
-   
-   /**
-    * Default constructor
-    */
-   public PowerUpHelper()
-   {
-      CommandManager.getInstance().registerSubCommand(spawnCommand);
-   }
+
    
    /**
     * Apply an amount of Power Ups to a certain Wither
@@ -120,9 +115,9 @@ public class PowerUpHelper
     * @param sizeOfPowerUp this many levels of Power Ups
     * @note wither should not have had Power Ups applied to it already
     */
-   void powerUpWither(WitherData witherData, int sizeOfPowerUp)
+   static void powerUpWither(WitherData witherData, int sizeOfPowerUp)
    {
-      if(witherData.getActivePowerUpEffects() == 0)
+      if(witherData.getActivePowerUpEffects().size() == 0)
       {
          int usedStrength = 0;
          ArrayList<IPowerUp> validPowerUps = new ArrayList<IPowerUp>(PowerUpRegistry.getAll());
@@ -160,6 +155,32 @@ public class PowerUpHelper
       else
       {
          HardcoreWither.LOGGER.debug("Attempting to re-powerup Wither");
+      }
+   }
+   
+   /**
+    * Randomly removes one level from a random PowerUp the Wither has
+    * @param witherData apply power ups to this
+    * @pre wither should have had Power Ups applied to it already
+    */
+   static public void reduceWitherPowerUp(EntityWither wither)
+   {
+      WitherData witherData = WitherData.getWitherData(wither);
+      int effectPosition = HardcoreWither.RAND.nextInt(witherData.getActivePowerUpEffects().size());
+      int currIndex = 0;
+      for(PowerUpEffect powerUpEffect : witherData.getActivePowerUpEffects())
+      {
+         if(currIndex++ == effectPosition)
+         {
+            if(powerUpEffect.getStrength() == 1)
+            {
+               witherData.removePowerUpEffect(powerUpEffect.getName());
+            }
+            else
+            {
+               powerUpEffect.adjustEffect(-1);
+            }
+         }
       }
    }
 }
