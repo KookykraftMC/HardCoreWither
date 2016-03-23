@@ -8,7 +8,7 @@ import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 
 @Configurable
-class PowerUpHealthBoost extends AbstractPowerUp
+public class PowerUpHealthBoost extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 128;
    private final static int DEFAULT_MIN_LEVEL = 1;
@@ -16,7 +16,7 @@ class PowerUpHealthBoost extends AbstractPowerUp
    @Config(minFloat = 1f, maxFloat = 10f)
    private static float healthBoostMultiplier = 1.1f;
 
-   protected PowerUpHealthBoost()
+   public PowerUpHealthBoost()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
       HardcoreWither.CONFIG.register(this);

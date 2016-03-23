@@ -25,7 +25,6 @@ import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.handlers.PlayerHandler;
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
 import thor12022.hardcorewither.util.TextHelper;
-import thor12022.hardcorewither.wither.powerups.PowerUpHelper;
 
 @Configurable(sectionName="Wither")
 public class WitherHandler implements INBTStorageClass

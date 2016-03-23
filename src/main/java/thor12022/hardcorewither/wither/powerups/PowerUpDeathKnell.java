@@ -7,7 +7,7 @@ import thor12022.hardcorewither.config.Configurable;
 import net.minecraft.entity.boss.EntityWither;
 
 @Configurable
-class PowerUpDeathKnell extends AbstractPowerUp
+public class PowerUpDeathKnell extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 10;
    private final static int DEFAULT_MIN_LEVEL = 1;
@@ -15,7 +15,7 @@ class PowerUpDeathKnell extends AbstractPowerUp
    @Config(minFloat = 0f, maxFloat = 10f)
    private static float knellStrengthMultiplier = 0.6666667f;
    
-   protected PowerUpDeathKnell()
+   public PowerUpDeathKnell()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
       HardcoreWither.CONFIG.register(this);   

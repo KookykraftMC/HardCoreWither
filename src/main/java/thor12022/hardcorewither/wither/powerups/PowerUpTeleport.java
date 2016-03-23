@@ -9,7 +9,7 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.nbt.NBTTagCompound;
 
 @Configurable
-class PowerUpTeleport extends AbstractPowerUp
+public class PowerUpTeleport extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
    private final static int DEFAULT_MIN_LEVEL = 4;
@@ -51,7 +51,7 @@ class PowerUpTeleport extends AbstractPowerUp
    }
    
    
-   protected PowerUpTeleport()
+   public PowerUpTeleport()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
       HardcoreWither.CONFIG.register(this);   

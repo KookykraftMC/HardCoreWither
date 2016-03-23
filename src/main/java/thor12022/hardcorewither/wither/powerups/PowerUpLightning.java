@@ -10,7 +10,7 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.nbt.NBTTagCompound;
 
 @Configurable
-class PowerUpLightning extends AbstractPowerUp
+public class PowerUpLightning extends AbstractPowerUp
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
    private final static int DEFAULT_MIN_LEVEL = 1;
@@ -51,7 +51,7 @@ class PowerUpLightning extends AbstractPowerUp
       }
    }
    
-   protected PowerUpLightning()
+   public PowerUpLightning()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
       HardcoreWither.CONFIG.register(this);

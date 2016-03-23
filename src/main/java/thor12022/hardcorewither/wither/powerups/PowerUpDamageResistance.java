@@ -60,7 +60,7 @@ public class PowerUpDamageResistance extends AbstractPowerUp
       }
    }
    
-   protected PowerUpDamageResistance()
+   public PowerUpDamageResistance()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH);
       HardcoreWither.CONFIG.register(this);   

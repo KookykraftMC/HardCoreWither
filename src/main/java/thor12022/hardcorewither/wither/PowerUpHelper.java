@@ -1,4 +1,4 @@
-package thor12022.hardcorewither.wither.powerups;
+package thor12022.hardcorewither.wither;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,15 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.util.BlockPos;
 import thor12022.hardcorewither.command.AbstractSubCommand;
 import thor12022.hardcorewither.command.CommandManager;
-import thor12022.hardcorewither.wither.WitherData;
+import thor12022.hardcorewither.wither.powerups.PowerUpBlazeMinionSpawner;
+import thor12022.hardcorewither.wither.powerups.PowerUpDamageResistance;
+import thor12022.hardcorewither.wither.powerups.PowerUpDeathKnell;
+import thor12022.hardcorewither.wither.powerups.PowerUpEffect;
+import thor12022.hardcorewither.wither.powerups.PowerUpGhastMinionSpawner;
+import thor12022.hardcorewither.wither.powerups.PowerUpHealthBoost;
+import thor12022.hardcorewither.wither.powerups.PowerUpLightning;
+import thor12022.hardcorewither.wither.powerups.PowerUpSkeletonMinionSpawner;
+import thor12022.hardcorewither.wither.powerups.PowerUpTeleport;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.api.IPowerUp;
 import thor12022.hardcorewither.api.PowerUpRegistry;

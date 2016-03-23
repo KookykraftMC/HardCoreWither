@@ -7,12 +7,12 @@ import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.entity.EntityBlazeMinion;
 
 @Configurable
-class PowerUpBlazeMinionSpawner extends AbstractPowerUpMinionSpawner
+public class PowerUpBlazeMinionSpawner extends AbstractPowerUpMinionSpawner
 {
    private final static int DEFAULT_MAX_STRENGTH = 20;
    private final static int DEFAULT_MIN_LEVEL = 2;
    
-   protected PowerUpBlazeMinionSpawner()
+   public PowerUpBlazeMinionSpawner()
    {
       super(DEFAULT_MIN_LEVEL, DEFAULT_MAX_STRENGTH, EntityBlazeMinion.LOCALIZED_NAME);
       HardcoreWither.CONFIG.register(this);

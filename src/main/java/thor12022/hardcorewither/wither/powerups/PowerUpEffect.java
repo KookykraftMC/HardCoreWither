@@ -7,14 +7,14 @@ import thor12022.hardcorewither.api.IPowerUpStateData;
 import thor12022.hardcorewither.api.InvalidPowerUpException;
 import thor12022.hardcorewither.api.PowerUpRegistry;
 
-class PowerUpEffect
+public class PowerUpEffect
 {
    private String powerUpName;
    private IPowerUpStateData powerUpData;
    private final EntityWither ownerWither;
    private int strength;
    
-   static PowerUpEffect createFromNbt(EntityWither ownerWither, NBTTagCompound tag) throws InvalidPowerUpException
+   public static PowerUpEffect createFromNbt(EntityWither ownerWither, NBTTagCompound tag) throws InvalidPowerUpException
    {
       String name = tag.getString("powerUpId");
       int strength = tag.getInteger("strength");
@@ -27,7 +27,7 @@ class PowerUpEffect
       return effect;
    }
    
-   PowerUpEffect(EntityWither wither, String powerUpName, int strength) throws InvalidPowerUpException
+   public PowerUpEffect(EntityWither wither, String powerUpName, int strength) throws InvalidPowerUpException
    {
       ownerWither = wither;
       this.powerUpName = powerUpName;
@@ -46,7 +46,7 @@ class PowerUpEffect
     *    or greater than that allowed by the Power Up
     * @todo currently replaces existing with a new one, should actually affect it
     */
-   int adjustEffect(int amount)
+   public int adjustEffect(int amount)
    {
       strength += amount;
       if(strength <= 0)
@@ -70,7 +70,7 @@ class PowerUpEffect
       return strength;
    }
    
-   void updateEffect()
+   public void updateEffect()
    {
       try
       {
@@ -84,7 +84,7 @@ class PowerUpEffect
       }
    }
    
-   void onDeathEffect()
+   public void onDeathEffect()
    {
       try
       {
@@ -98,12 +98,12 @@ class PowerUpEffect
       }
    }
    
-   String getName()
+   public String getName()
    {
       return powerUpName;
    }
    
-   int getStrength()
+   public int getStrength()
    {
       return strength;
    }

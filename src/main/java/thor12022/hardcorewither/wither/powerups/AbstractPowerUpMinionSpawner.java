@@ -10,7 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 @Configurable
-public abstract class AbstractPowerUpMinionSpawner extends AbstractPowerUp
+abstract class AbstractPowerUpMinionSpawner extends AbstractPowerUp
 {
    protected static class Data extends IPowerUpStateData
    {

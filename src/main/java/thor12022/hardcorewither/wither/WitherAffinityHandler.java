@@ -18,7 +18,6 @@ import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
 import thor12022.hardcorewither.enchantment.EnchantmentRegistry;
 import thor12022.hardcorewither.util.TextHelper;
-import thor12022.hardcorewither.wither.powerups.PowerUpHelper;
 
 @Configurable(sectionName="WitherAffinity")
 public class WitherAffinityHandler
