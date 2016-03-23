@@ -1,5 +1,6 @@
 package thor12022.hardcorewither.powerUps;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,9 +43,9 @@ class WitherData implements IExtendedEntityProperties
    /**
    * @returns number of PowerUpEffects active on this Wither
    */
-  int getActivePowerUpEffects()
+  Collection<PowerUpEffect> getActivePowerUpEffects()
   {
-     return activePowerUps.size();
+     return activePowerUps.values();
   }
    
    /**

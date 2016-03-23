@@ -194,14 +194,16 @@ public class WitherHandler implements INBTStorageClass
     * +--largestPowerUp : n  
     */
    @Override
-   public void writeToNBT(NBTTagCompound nbt)
+   public NBTTagCompound serializeNBT()
    {
+      NBTTagCompound nbt = new NBTTagCompound();
       nbt.setInteger("formatVersion", NBT_FORMAT);
       nbt.setInteger("largestPowerUp", largestPowerUp );
+      return nbt;
    }
 
    @Override
-   public void readFromNBT(NBTTagCompound nbt)
+   public void deserializeNBT(NBTTagCompound nbt)
    {
       int formatVersion = nbt.getInteger("formatVersion");
       if(formatVersion < NBT_FORMAT)

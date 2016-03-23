@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import thor12022.hardcorewither.HardcoreWither;
@@ -85,13 +84,9 @@ public class DataStoreManager
          {
             FileOutputStream fileOutputStream = new FileOutputStream(saveFile);
             NBTTagCompound globalNbt = new NBTTagCompound();
-            Iterator iter = storageClasses.keySet().iterator();
-            while (iter.hasNext()) 
+            for(INBTStorageClass theClass : storageClasses.keySet()) 
             {
-               NBTTagCompound classNbt = new NBTTagCompound();
-               INBTStorageClass theClass = (INBTStorageClass)iter.next();
-               theClass.writeToNBT(classNbt);
-               globalNbt.setTag(storageClasses.get(theClass), classNbt);
+               globalNbt.setTag(storageClasses.get(theClass), theClass.serializeNBT());
             }
             CompressedStreamTools.writeCompressed(globalNbt, fileOutputStream );
             fileOutputStream.close();
@@ -141,11 +136,9 @@ public class DataStoreManager
          {
             FileInputStream fileInputStream = new FileInputStream( saveFile );
             NBTTagCompound globalNbt = CompressedStreamTools.readCompressed( fileInputStream );
-            Iterator iter = storageClasses.keySet().iterator();
-            while (iter.hasNext()) 
+            for(INBTStorageClass theClass : storageClasses.keySet()) 
             {
-               INBTStorageClass theClass = (INBTStorageClass)iter.next();
-               theClass.readFromNBT(globalNbt.getCompoundTag(storageClasses.get(theClass)));
+               theClass.deserializeNBT(globalNbt.getCompoundTag(storageClasses.get(theClass)));
             }
             HardcoreWither.LOGGER.debug("Data loaded" );
             fileInputStream.close();

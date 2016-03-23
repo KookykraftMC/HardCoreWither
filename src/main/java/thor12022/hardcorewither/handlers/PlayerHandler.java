@@ -35,16 +35,18 @@ public class PlayerHandler implements INBTStorageClass
    }
    
    @Override
-   public void writeToNBT(NBTTagCompound nbt)
+   public NBTTagCompound serializeNBT()
    {
+      NBTTagCompound nbt = new NBTTagCompound();
       for(UUID uuid : playerXp.keySet())
       {
          nbt.setDouble(uuid.toString(), playerXp.get(uuid));
       }
+      return nbt;
    }
    
    @Override
-   public void readFromNBT(NBTTagCompound nbt)
+   public void deserializeNBT(NBTTagCompound nbt)
    {
       for(String tag : nbt.getKeySet()) 
       {

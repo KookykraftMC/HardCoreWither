@@ -1,12 +1,15 @@
 package thor12022.hardcorewither.interfaces;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.INBTSerializable;
 
-public interface INBTStorageClass
+public interface INBTStorageClass extends INBTSerializable<NBTTagCompound>
 {
-   public void writeToNBT(NBTTagCompound nbt);
+   @Override
+   public NBTTagCompound serializeNBT();
    
-   public void readFromNBT(NBTTagCompound nbt);
+   @Override
+   public void deserializeNBT(NBTTagCompound nbt);
    
    public void resetNBT();
 }
