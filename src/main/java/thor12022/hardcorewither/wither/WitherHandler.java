@@ -2,7 +2,9 @@ package thor12022.hardcorewither.wither;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,12 +18,16 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import thor12022.hardcorewither.HardcoreWither;
 import thor12022.hardcorewither.ModInformation;
+import thor12022.hardcorewither.api.WitherAffinityRegistry;
 import thor12022.hardcorewither.config.Config;
 import thor12022.hardcorewither.config.Configurable;
+import thor12022.hardcorewither.enchantment.EnchantmentRegistry;
 import thor12022.hardcorewither.handlers.PlayerHandler;
 import thor12022.hardcorewither.interfaces.INBTStorageClass;
 import thor12022.hardcorewither.util.TextHelper;
@@ -52,6 +58,7 @@ public class WitherHandler implements INBTStorageClass
       HardcoreWither.DATA_STORE.addStorageClass(this, "witherData");
       
       HardcoreWither.CONFIG.register(this);
+      HardcoreWither.CONFIG.register(WitherAffinityHelper.class);
       MinecraftForge.EVENT_BUS.register(this);
    }
    
@@ -110,6 +117,47 @@ public class WitherHandler implements INBTStorageClass
             if(data != null)
             {
                data.update();
+            }
+         }
+      }
+   }
+   
+   @SubscribeEvent
+   public void onLivingHurtEvent(LivingHurtEvent event)
+   {
+      if(event.entity instanceof EntityWither && 
+         event.source.getEntity() instanceof EntityPlayer)
+      {
+         EntityPlayer player = (EntityPlayer) event.source.getEntity();
+         ItemStack weaponStack = player.getHeldItem();
+         if(WitherAffinityRegistry.isRegistered(weaponStack.getItem()))
+         {
+            Map<Integer, Integer> enchantMap = EnchantmentHelper.getEnchantments(weaponStack);
+            Integer witherAffinityLevel = enchantMap.get(EnchantmentRegistry.witherAffinity.effectId);
+            
+            if(event.entityLiving.getHealth() <= 0)
+            {
+               if(witherAffinityLevel == null)
+               {
+                  enchantMap.put(EnchantmentRegistry.witherAffinity.effectId, 1);
+                  EnchantmentHelper.setEnchantments(enchantMap, weaponStack);
+               }
+            }
+            else
+            {
+               WitherAffinityHelper.setWitherAffinityXp(weaponStack, WitherAffinityHelper.getWitherAffinityXp(weaponStack) + Math.round(event.ammount));
+                           
+               if(WitherAffinityHelper.shouldWitherAffinityLevelUp(weaponStack, witherAffinityLevel))
+               {
+                  enchantMap.put(EnchantmentRegistry.witherAffinity.effectId, witherAffinityLevel + 1);
+                  EnchantmentHelper.setEnchantments(enchantMap, weaponStack);
+               }
+               
+               // Roll under the target for 2nd Ed flashbacks
+               if(HardcoreWither.RAND.nextFloat() < WitherAffinityHelper.chanceCalc(witherAffinityLevel))
+               {
+                  PowerUpHelper.reduceWitherPowerUp((EntityWither) event.entity);
+               }
             }
          }
       }
@@ -185,6 +233,21 @@ public class WitherHandler implements INBTStorageClass
                }
             }
          }
+      }
+   }
+   
+
+   @SubscribeEvent
+   public void onTooltipEvent(ItemTooltipEvent event)
+   {
+      int witherAffinityLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentRegistry.witherAffinity.effectId, event.itemStack);
+      if(witherAffinityLevel > 0)
+      {
+         int witherAffinityXp = WitherAffinityHelper.getWitherAffinityXp(event.itemStack);
+         String witherAffinityLine = TextHelper.localize("tooltip." + ModInformation.ID + ".witherAffinity") + ": " +  witherAffinityXp + "/" + WitherAffinityHelper.xpCalc(witherAffinityLevel);
+         
+         event.toolTip.add(witherAffinityLine);
+         event.toolTip.add("");         
       }
    }
    

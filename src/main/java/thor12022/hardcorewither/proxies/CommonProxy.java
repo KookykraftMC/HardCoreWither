@@ -12,7 +12,6 @@ import thor12022.hardcorewither.entity.EntityRegistry;
 import thor12022.hardcorewither.items.ItemRegistry;
 import thor12022.hardcorewither.items.MaterialHelper;
 import thor12022.hardcorewither.potions.PotionRegistry;
-import thor12022.hardcorewither.wither.WitherAffinityHandler;
 import thor12022.hardcorewither.wither.WitherHandler;
 
 public class CommonProxy
@@ -22,7 +21,6 @@ public class CommonProxy
    protected PotionRegistry            potionRegistry;
    protected EntityRegistry            entityRegistry;
    protected TinkersConstructHandler   tiCoRegistry;
-   protected WitherAffinityHandler     witherAffinityHandler;
    protected WitherChargingHandler     witherChargingHandler;
    protected WitherHandler             witherHandler;
    protected EventHandler              eventHandler;   
@@ -60,7 +58,6 @@ public class CommonProxy
       potionRegistry          =  new PotionRegistry();
       entityRegistry          =  new EntityRegistry();
       tiCoRegistry            =  new TinkersConstructHandler();
-      witherAffinityHandler   =  new WitherAffinityHandler();
       witherChargingHandler   =  new WitherChargingHandler();
       witherHandler           =  new WitherHandler();
       eventHandler            =  new EventHandler();

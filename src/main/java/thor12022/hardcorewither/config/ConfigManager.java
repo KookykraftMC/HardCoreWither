@@ -34,9 +34,17 @@ public class ConfigManager
          Configurable annotation = ((Class<?>)target).getAnnotation(Configurable.class);
          if(annotation != null)
          {
-            configClasses.add(((Class<?>)target));
-            processConfigClass(((Class<?>)target));
-            configuration.save();
+            try
+            {
+               Class.forName(((Class) target).getName());
+               configClasses.add(((Class<?>)target));
+               processConfigClass(((Class<?>)target));
+               configuration.save();
+            }
+            catch(ClassNotFoundException e)
+            {
+               HardcoreWither.LOGGER.error(e);
+            }
          }
       }
       else
