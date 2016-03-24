@@ -144,7 +144,7 @@ abstract class AbstractPowerUpMinionSpawner extends AbstractPowerUp
       data.playerRange = defaultPlayerRange;
       data.spawnRange = defaultSpawnRange;
       data.resetSpawnerToData();
-      return null;
+      return data;
    }
 
 }
