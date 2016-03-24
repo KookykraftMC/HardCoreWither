@@ -147,7 +147,10 @@ class WitherData implements IExtendedEntityProperties
          {            
             HardcoreWither.LOGGER.error(e);
             HardcoreWither.LOGGER.error("Error Occured while updating PowerUp " + powerUp.getName() + ", removing.");
-            activePowerUps.remove(powerUp);
+            activePowerUps.remove(powerUp.getName());
+            // skip the rest of this update, or suffer the wrath of ConcurrentModificationException,
+            //    alternatively, switch the for loop to use Iterators, then it would be fine
+            break;
          }
       }
    }
